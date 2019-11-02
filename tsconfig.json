@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "outDir": "./dist/",
+        "sourceMap": true,
+        "strict": true,
+        "noImplicitReturns": true,
+        "noImplicitAny": true,
+        "module": "es6",
+        "moduleResolution": "node",
+        "target": "esnext",
+        "allowJs": true,
+        "jsx": "react",
+        "types": ["gapi", "gapi.auth2", "gapi.client", "gapi.client.gmail"],
+        "plugins": [
+            { "transform": "ts-optchain/transform" },
+        ]
+    },
+    "include": [
+        "./src/**/*"
+    ]
+}
