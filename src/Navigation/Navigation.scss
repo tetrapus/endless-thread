@@ -1,0 +1,37 @@
+.Navigation {
+  box-shadow: 0 0 4px #888888;
+  position: sticky;
+  top: 0;
+  background-color: white;
+  display: flex;
+  justify-content: flex-end;
+  z-index: 100;
+}
+
+.Image {
+    height: 42px;
+    border-radius: 3px;
+    margin: 4px;
+}
+
+.Identity {
+    align-self: center;
+    margin: 4px;
+    display: flex;
+    flex-direction: column;
+}
+
+.Email {
+    color: grey;
+    font-size: 13px;
+}
+
+.Name {
+    align-self: flex-end;
+}
+
+.LogOut {
+    border: none;
+    display: flex;
+    align-items: center;
+}

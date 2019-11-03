@@ -1,7 +1,6 @@
 import * as React from "react";
-import { decode } from "../base64util";
-import { oc } from "ts-optchain";
 import { Thread } from "./Thread";
+import './ThreadList.scss';
 
 interface Props {
   email?: string;
@@ -55,7 +54,7 @@ class ThreadList extends React.Component<Props, State> {
 
   render() {
     return (
-      <div>
+      <div className="ThreadList">
         {this.state.threadsList.map((thread) => (
           <Thread key={thread.id} thread={thread}></Thread>
         ))}

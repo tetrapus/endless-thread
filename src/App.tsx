@@ -1,25 +1,34 @@
 import * as React from "react";
 import { ThreadList } from "./EmailViewer/ThreadList";
 
-import 'normalize.css';
+import "normalize.css";
+import { Navigation } from "./Navigation/Navigation";
+import { Spinner } from "./EmailViewer/UI/Spinner";
+import { Logo } from "./EmailViewer/UI/Logo";
 
-class App extends React.Component<{}, { auth?: boolean; email?: string }> {
+interface State {
+  profile?: gapi.auth2.BasicProfile;
+  auth?: boolean;
+}
+
+class App extends React.Component<{}, State> {
   constructor(props: Readonly<{}>) {
     super(props);
 
     this.state = {
-      auth: undefined,
-      email: undefined
+      profile: undefined,
+      auth: undefined
     };
-    gapi.load("client:auth2", () => {
+    gapi.load("client:auth2", async () => {
       gapi.auth2.init({
         client_id:
           "404459806580-5a49qah83cbdrtchkhntvite1o56rnmc.apps.googleusercontent.com"
       });
       const authClient = gapi.auth2.getAuthInstance();
-      this.setState({
-        auth: authClient.isSignedIn.get()
-      });
+      authClient.then(() => this.handleAuthChange(authClient.isSignedIn.get()));
+      authClient.isSignedIn.listen(authState =>
+        this.handleAuthChange(authState)
+      );
     });
   }
 
@@ -27,36 +36,42 @@ class App extends React.Component<{}, { auth?: boolean; email?: string }> {
     return (
       <div>
         {this.state.auth === undefined ? (
-          <div>Loading</div>
-        ) : this.state.auth ? (
           <div>
-            <div>Authenticated as {this.state.email}</div>
-            <ThreadList email={this.state.email}></ThreadList>
+            <Logo></Logo>
+            <Spinner></Spinner>
+          </div>
+        ) : this.state.profile ? (
+          <div>
+            <Navigation profile={this.state.profile}></Navigation>
+            <ThreadList email={this.state.profile.getEmail()}></ThreadList>
           </div>
         ) : (
-          <button onClick={() => this.handleLogin()}>Log In</button>
+          <div>
+            <Logo></Logo>
+            <button onClick={() => this.handleLogin()}>Log In</button>
+          </div>
         )}
       </div>
     );
   }
 
-  handleLogin() {
-    gapi.auth2
-      .getAuthInstance()
-      .signIn({
-        scope:
-          "profile https://mail.google.com/ https://www.googleapis.com/auth/gmail.modify https://www.googleapis.com/auth/gmail.readonly"
-      })
-      .then(() => {
-        this.setState({
-          email: gapi.auth2
+  handleAuthChange(isAuthenticated: boolean) {
+    this.setState({
+      profile: isAuthenticated
+        ? gapi.auth2
             .getAuthInstance()
             .currentUser.get()
             .getBasicProfile()
-            .getEmail(),
-          auth: true
-        });
-      });
+        : undefined,
+      auth: isAuthenticated
+    });
+  }
+
+  handleLogin() {
+    gapi.auth2.getAuthInstance().signIn({
+      scope:
+        "profile https://mail.google.com/ https://www.googleapis.com/auth/gmail.modify https://www.googleapis.com/auth/gmail.readonly"
+    });
   }
 }
 
