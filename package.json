@@ -1,15 +1,18 @@
 {
   "name": "endless-thread",
   "version": "0.0.1",
-  "description": "",
+  "description": "An infinite scrolling gmail client.",
   "main": "index.js",
   "keywords": [],
-  "author": "",
+  "author": "Joey Tuong",
   "license": "MIT",
+  "homepage": "http://tetrapus.github.io/endless-thread/",
   "scripts": {
     "clean": "rm dist/bundle.js",
     "start": "parcel -p 8080 src/index.html",
-    "build-prod": "parcel build src/index.html"
+    "build-prod": "parcel build src/index.html --public-url ./",
+    "predeploy": "parcel build src/index.html --public-url ./",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@babel/runtime": "^7.6.3",
@@ -34,6 +37,7 @@
     "@babel/preset-typescript": "^7.6.0",
     "@types/react": "^16.9.11",
     "@types/react-dom": "^16.9.3",
+    "gh-pages": "^2.1.1",
     "parcel-bundler": "^1.12.4",
     "prettier": "^1.18.2",
     "sass": "^1.23.3",
