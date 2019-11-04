@@ -20,8 +20,7 @@ class App extends React.Component<{}, State> {
     };
     gapi.load("client:auth2", async () => {
       gapi.auth2.init({
-        client_id:
-          "404459806580-5a49qah83cbdrtchkhntvite1o56rnmc.apps.googleusercontent.com"
+        client_id: process.env.GOOGLE_CLIENT_ID
       });
       const authClient = gapi.auth2.getAuthInstance();
       authClient.then(() => this.handleAuthChange(authClient.isSignedIn.get()));

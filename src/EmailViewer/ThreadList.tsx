@@ -8,19 +8,36 @@ interface Props {
 }
 
 interface State {
-  threadsList?: ReadonlyArray<gapi.client.gmail.Thread>;
+  threadsList: ReadonlyArray<gapi.client.gmail.Thread>;
+  labels: ReadonlyArray<gapi.client.gmail.Label>;
 }
 
 class ThreadList extends React.Component<Props, State> {
   constructor(props: Readonly<Props>) {
     super(props);
-    this.state = { threadsList: [] };
+    this.state = { threadsList: [], labels: [] };
     gapi.client
       .load(
         "https://content.googleapis.com/discovery/v1/apis/gmail/v1/rest",
         "1"
       )
-      .then(() => this.populateThreadList());
+      .then(() => {
+        this.populateLabels();
+        this.populateThreadList();
+      });
+  }
+
+  async populateLabels() {
+    if (!this.props.email) {
+      return;
+    }
+    return gapi.client.gmail.users.labels
+      .list({
+        userId: this.props.email
+      })
+      .then(response => {
+        this.setState({ labels: response.result.labels || [] });
+      });
   }
 
   async populateThreadList() {
@@ -57,7 +74,7 @@ class ThreadList extends React.Component<Props, State> {
       <div className="ThreadList">
         {this.state.threadsList && this.state.threadsList.length ? (
           this.state.threadsList.map(thread => (
-            <Thread key={thread.id} thread={thread}></Thread>
+            <Thread key={thread.id} thread={thread} labels={this.state.labels}></Thread>
           ))
         ) : (
           <Spinner></Spinner>

@@ -9,9 +9,9 @@
   "homepage": "http://tetrapus.github.io/endless-thread/",
   "scripts": {
     "clean": "rm dist/bundle.js",
-    "start": "parcel -p 8080 src/index.html",
-    "build-prod": "parcel build src/index.html --public-url ./",
-    "predeploy": "parcel build src/index.html --public-url ./",
+    "start": "GOOGLE_CLIENT_ID=404459806580-5a49qah83cbdrtchkhntvite1o56rnmc.apps.googleusercontent.com parcel -p 8080 src/index.html",
+    "build-prod": "GOOGLE_CLIENT_ID=967747671320-0ghlv5jtg7nagi7gm788ve175d0bh6m2.apps.googleusercontent.com parcel build src/index.html --public-url ./",
+    "predeploy": "GOOGLE_CLIENT_ID=967747671320-0ghlv5jtg7nagi7gm788ve175d0bh6m2.apps.googleusercontent.com parcel build src/index.html --public-url ./",
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
@@ -21,6 +21,7 @@
     "@types/gapi.client": "^1.0.1",
     "@types/gapi.client.gmail": "^1.0.1",
     "@types/html-entities": "^1.2.16",
+    "@types/node": "^12.12.5",
     "html-entities": "^1.2.1",
     "normalize.css": "^8.0.1",
     "react": "^16.11.0",

@@ -10,7 +10,7 @@
         "target": "esnext",
         "allowJs": true,
         "jsx": "react",
-        "types": ["gapi", "gapi.auth2", "gapi.client", "gapi.client.gmail"],
+        "types": ["gapi", "gapi.auth2", "gapi.client", "gapi.client.gmail", "node"],
         "plugins": [
             { "transform": "ts-optchain/transform" },
         ]
