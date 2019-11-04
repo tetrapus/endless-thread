@@ -57,7 +57,7 @@ class Message extends React.Component<Props, State> {
             ? [this.state.parts[0]]
             : this.state.parts.slice(1)
           ).map(part => (
-            <div className="EmailBody">{this.getPartViewer(part)}</div>
+            <div key={part.partId} className="EmailBody">{this.getPartViewer(part)}</div>
           ))
         )}
       </div>

@@ -15,7 +15,6 @@ class ThreadList extends React.Component<Props, State> {
   constructor(props: Readonly<Props>) {
     super(props);
     this.state = { threadsList: [] };
-    gapi.client.setApiKey("AIzaSyC5P4vHj8ciDb-1l9W1aiLlYEmjzX_MRNM");
     gapi.client
       .load(
         "https://content.googleapis.com/discovery/v1/apis/gmail/v1/rest",
