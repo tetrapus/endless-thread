@@ -34153,6 +34153,7 @@ function (_React$Component) {
         }
       }, React.createElement(_Spinner.Spinner, null)) : (this.state.parts.length == 1 ? [this.state.parts[0]] : this.state.parts.slice(1)).map(function (part) {
         return React.createElement("div", {
+          key: part.partId,
           className: "EmailBody"
         }, _this2.getPartViewer(part));
       }));
@@ -34325,7 +34326,6 @@ function (_React$Component) {
     _this.state = {
       threadsList: []
     };
-    gapi.client.setApiKey("AIzaSyC5P4vHj8ciDb-1l9W1aiLlYEmjzX_MRNM");
     gapi.client.load("https://content.googleapis.com/discovery/v1/apis/gmail/v1/rest", "1").then(function () {
       return _this.populateThreadList();
     });
@@ -34918,7 +34918,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49682" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56832" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
