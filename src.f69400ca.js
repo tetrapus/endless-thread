@@ -32669,36 +32669,6 @@ function _defineProperty(obj, key, value) {
 }
 
 module.exports = _defineProperty;
-},{}],"../node_modules/ts-optchain/dist/proxy/index.js":[function(require,module,exports) {
-"use strict";
-/**
- * Copyright (C) 2019-present, Rimeto, LLC.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function (obj) { return typeof obj; }; } else { _typeof = function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-/**
- * Proxy based implementation of optional chaining w/ default values.
- */
-
-function oc(data) {
-  return new Proxy(function (defaultValue) {
-    return data == null ? defaultValue : data;
-  }, {
-    get: function (target, key) {
-      var obj = target();
-      return oc(_typeof(obj) === 'object' ? obj[key] : undefined);
-    }
-  });
-}
-
-exports.oc = oc;
 },{}],"../node_modules/@babel/runtime/helpers/arrayWithoutHoles.js":[function(require,module,exports) {
 function _arrayWithoutHoles(arr) {
   if (Array.isArray(arr)) {
@@ -32735,7 +32705,37 @@ function _toConsumableArray(arr) {
 }
 
 module.exports = _toConsumableArray;
-},{"./arrayWithoutHoles":"../node_modules/@babel/runtime/helpers/arrayWithoutHoles.js","./iterableToArray":"../node_modules/@babel/runtime/helpers/iterableToArray.js","./nonIterableSpread":"../node_modules/@babel/runtime/helpers/nonIterableSpread.js"}],"../node_modules/react-visibility-sensor/dist/visibility-sensor.js":[function(require,module,exports) {
+},{"./arrayWithoutHoles":"../node_modules/@babel/runtime/helpers/arrayWithoutHoles.js","./iterableToArray":"../node_modules/@babel/runtime/helpers/iterableToArray.js","./nonIterableSpread":"../node_modules/@babel/runtime/helpers/nonIterableSpread.js"}],"../node_modules/ts-optchain/dist/proxy/index.js":[function(require,module,exports) {
+"use strict";
+/**
+ * Copyright (C) 2019-present, Rimeto, LLC.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function (obj) { return typeof obj; }; } else { _typeof = function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+/**
+ * Proxy based implementation of optional chaining w/ default values.
+ */
+
+function oc(data) {
+  return new Proxy(function (defaultValue) {
+    return data == null ? defaultValue : data;
+  }, {
+    get: function (target, key) {
+      var obj = target();
+      return oc(_typeof(obj) === 'object' ? obj[key] : undefined);
+    }
+  });
+}
+
+exports.oc = oc;
+},{}],"../node_modules/react-visibility-sensor/dist/visibility-sensor.js":[function(require,module,exports) {
 var define;
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -34193,13 +34193,20 @@ function (_React$Component) {
 }(React.Component);
 
 exports.Message = Message;
-},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","react":"../node_modules/react/index.js","react-visibility-sensor":"../node_modules/react-visibility-sensor/dist/visibility-sensor.js","./UI/Spinner":"EmailViewer/UI/Spinner.tsx","./Message.scss":"EmailViewer/Message.scss","html-entities":"../node_modules/html-entities/index.js","./MessageTypes/HtmlMessage":"EmailViewer/MessageTypes/HtmlMessage.tsx","./MessageTypes/TextMessage":"EmailViewer/MessageTypes/TextMessage.tsx","../base64util":"base64util.ts"}],"EmailViewer/Thread.tsx":[function(require,module,exports) {
+},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","react":"../node_modules/react/index.js","react-visibility-sensor":"../node_modules/react-visibility-sensor/dist/visibility-sensor.js","./UI/Spinner":"EmailViewer/UI/Spinner.tsx","./Message.scss":"EmailViewer/Message.scss","html-entities":"../node_modules/html-entities/index.js","./MessageTypes/HtmlMessage":"EmailViewer/MessageTypes/HtmlMessage.tsx","./MessageTypes/TextMessage":"EmailViewer/MessageTypes/TextMessage.tsx","../base64util":"base64util.ts"}],"EmailViewer/Thread.scss":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"EmailViewer/Thread.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.Thread = void 0;
+
+var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
 
 var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
 
@@ -34217,11 +34224,17 @@ var _tsOptchain = require("ts-optchain");
 
 var _Message = require("./Message");
 
+require("./Thread.scss");
+
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function isDefined(x) {
+  return x !== undefined;
+}
 
 var Thread =
 /*#__PURE__*/
@@ -34229,11 +34242,14 @@ function (_React$Component) {
   (0, _inherits2.default)(Thread, _React$Component);
 
   function Thread(props) {
+    var _ref;
+
     var _this;
 
     (0, _classCallCheck2.default)(this, Thread);
     _this = (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(Thread).call(this, props));
     var thread = _this.props.thread;
+    console.log(thread);
 
     if (!thread.messages) {
       return (0, _possibleConstructorReturn2.default)(_this);
@@ -34244,9 +34260,19 @@ function (_React$Component) {
       return header.name == "Subject";
     });
     var subject = subjectHeader ? subjectHeader.value || "Unknown" : "Unknown";
+    var labels = Array.from(new Set((_ref = []).concat.apply(_ref, (0, _toConsumableArray2.default)(thread.messages.map(function (message) {
+      return message.labelIds || [];
+    })))));
     _this.state = {
       subject: subject,
-      messages: thread.messages
+      messages: thread.messages,
+      labels: labels.map(function (name) {
+        return _this.props.labels.find(function (label) {
+          return label.id == name;
+        });
+      }).filter(isDefined).filter(function (label) {
+        return label.type === "user";
+      })
     };
     return _this;
   }
@@ -34254,19 +34280,39 @@ function (_React$Component) {
   (0, _createClass2.default)(Thread, [{
     key: "render",
     value: function render() {
-      return React.createElement("div", null, React.createElement("h1", null, this.state.subject), this.state.messages.map(function (message) {
+      var _this2 = this;
+
+      return React.createElement("div", null, React.createElement("h1", null, this.state.subject), React.createElement("div", null, this.state.labels.map(function (label) {
+        return React.createElement("span", {
+          className: "Label",
+          key: label.id,
+          style: _this2.getLabelStyle(label)
+        }, label.name);
+      })), this.state.messages.map(function (message) {
         return React.createElement(_Message.Message, {
           message: message,
           key: message.id
         });
       }));
     }
+  }, {
+    key: "getLabelStyle",
+    value: function getLabelStyle(label) {
+      var color = label.color || {
+        backgroundColor: "white",
+        textColor: "black"
+      };
+      return {
+        backgroundColor: color.backgroundColor,
+        color: color.textColor
+      };
+    }
   }]);
   return Thread;
 }(React.Component);
 
 exports.Thread = Thread;
-},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","ts-optchain":"../node_modules/ts-optchain/dist/proxy/index.js","./Message":"EmailViewer/Message.tsx"}],"EmailViewer/ThreadList.scss":[function(require,module,exports) {
+},{"@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","ts-optchain":"../node_modules/ts-optchain/dist/proxy/index.js","./Message":"EmailViewer/Message.tsx","./Thread.scss":"EmailViewer/Thread.scss"}],"EmailViewer/ThreadList.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -34279,9 +34325,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.ThreadList = void 0;
 
-var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
-
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
 
@@ -34324,21 +34370,25 @@ function (_React$Component) {
     (0, _classCallCheck2.default)(this, ThreadList);
     _this = (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(ThreadList).call(this, props));
     _this.state = {
-      threadsList: []
+      threadsList: [],
+      labels: []
     };
     gapi.client.load("https://content.googleapis.com/discovery/v1/apis/gmail/v1/rest", "1").then(function () {
-      return _this.populateThreadList();
+      _this.populateLabels();
+
+      _this.populateThreadList();
     });
     return _this;
   }
 
   (0, _createClass2.default)(ThreadList, [{
-    key: "populateThreadList",
+    key: "populateLabels",
     value: function () {
-      var _populateThreadList = (0, _asyncToGenerator2.default)(
+      var _populateLabels = (0, _asyncToGenerator2.default)(
       /*#__PURE__*/
       _regenerator.default.mark(function _callee() {
-        var email, threadsResponse, batch, miniThreads, threads;
+        var _this2 = this;
+
         return _regenerator.default.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -34351,15 +34401,56 @@ function (_React$Component) {
                 return _context.abrupt("return");
 
               case 2:
+                return _context.abrupt("return", gapi.client.gmail.users.labels.list({
+                  userId: this.props.email
+                }).then(function (response) {
+                  _this2.setState({
+                    labels: response.result.labels || []
+                  });
+                }));
+
+              case 3:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function populateLabels() {
+        return _populateLabels.apply(this, arguments);
+      }
+
+      return populateLabels;
+    }()
+  }, {
+    key: "populateThreadList",
+    value: function () {
+      var _populateThreadList = (0, _asyncToGenerator2.default)(
+      /*#__PURE__*/
+      _regenerator.default.mark(function _callee2() {
+        var email, threadsResponse, batch, miniThreads, threads;
+        return _regenerator.default.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                if (this.props.email) {
+                  _context2.next = 2;
+                  break;
+                }
+
+                return _context2.abrupt("return");
+
+              case 2:
                 email = this.props.email;
-                _context.next = 5;
+                _context2.next = 5;
                 return gapi.client.gmail.users.threads.list({
                   userId: email,
                   maxResults: 10
                 });
 
               case 5:
-                threadsResponse = _context.sent;
+                threadsResponse = _context2.sent;
                 // Handle the results here (response.result has the parsed body).
                 batch = gapi.client.newBatch();
                 miniThreads = threadsResponse.result.threads || [];
@@ -34369,11 +34460,11 @@ function (_React$Component) {
                     userId: email
                   }));
                 });
-                _context.next = 11;
+                _context2.next = 11;
                 return batch;
 
               case 11:
-                threads = _context.sent;
+                threads = _context2.sent;
                 this.setState({
                   threadsList: Object.values(threads.result).map(function (response) {
                     var details = response.result;
@@ -34383,10 +34474,10 @@ function (_React$Component) {
 
               case 13:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee, this);
+        }, _callee2, this);
       }));
 
       function populateThreadList() {
@@ -34398,12 +34489,15 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this3 = this;
+
       return React.createElement("div", {
         className: "ThreadList"
       }, this.state.threadsList && this.state.threadsList.length ? this.state.threadsList.map(function (thread) {
         return React.createElement(_Thread.Thread, {
           key: thread.id,
-          thread: thread
+          thread: thread,
+          labels: _this3.state.labels
         });
       }) : React.createElement(_Spinner.Spinner, null));
     }
@@ -34412,7 +34506,7 @@ function (_React$Component) {
 }(React.Component);
 
 exports.ThreadList = ThreadList;
-},{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","./Thread":"EmailViewer/Thread.tsx","./ThreadList.scss":"EmailViewer/ThreadList.scss","./UI/Spinner":"EmailViewer/UI/Spinner.tsx"}],"../node_modules/normalize.css/normalize.css":[function(require,module,exports) {
+},{"@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","./Thread":"EmailViewer/Thread.tsx","./ThreadList.scss":"EmailViewer/ThreadList.scss","./UI/Spinner":"EmailViewer/UI/Spinner.tsx"}],"../node_modules/normalize.css/normalize.css":[function(require,module,exports) {
 
         var reloadCSS = require('_css_loader');
         module.hot.dispose(reloadCSS);
@@ -34918,7 +35012,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56832" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65072" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

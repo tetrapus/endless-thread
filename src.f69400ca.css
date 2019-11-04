@@ -54,6 +54,14 @@
   background-color: white;
   padding: 12px 16px;
 }
+.Label {
+  margin: 3px;
+  padding: 4px 8px;
+  font-size: 12px;
+  border-radius: 3px;
+  box-shadow: 1px 1px 3px grey;
+  display: inline-block;
+}
 .ThreadList {
   max-width: 800px;
   margin: auto;
