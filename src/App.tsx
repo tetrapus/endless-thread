@@ -3,8 +3,7 @@ import { ThreadList } from "./EmailViewer/ThreadList";
 
 import "normalize.css";
 import { Navigation } from "./Navigation/Navigation";
-import { Spinner } from "./EmailViewer/UI/Spinner";
-import { Logo } from "./EmailViewer/UI/Logo";
+import { Login } from "./Login/Login";
 
 interface State {
   profile?: gapi.auth2.BasicProfile;
@@ -33,25 +32,13 @@ class App extends React.Component<{}, State> {
   }
 
   render() {
-    return (
+    return this.state.auth && this.state.profile ? (
       <div>
-        {this.state.auth === undefined ? (
-          <div>
-            <Logo></Logo>
-            <Spinner></Spinner>
-          </div>
-        ) : this.state.profile ? (
-          <div>
-            <Navigation profile={this.state.profile}></Navigation>
-            <ThreadList email={this.state.profile.getEmail()}></ThreadList>
-          </div>
-        ) : (
-          <div>
-            <Logo></Logo>
-            <button onClick={() => this.handleLogin()}>Log In</button>
-          </div>
-        )}
+        <Navigation profile={this.state.profile}></Navigation>
+        <ThreadList email={this.state.profile.getEmail()}></ThreadList>
       </div>
+    ) : (
+      <Login loading={this.state.auth === undefined}></Login>
     );
   }
 
@@ -64,13 +51,6 @@ class App extends React.Component<{}, State> {
             .getBasicProfile()
         : undefined,
       auth: isAuthenticated
-    });
-  }
-
-  handleLogin() {
-    gapi.auth2.getAuthInstance().signIn({
-      scope:
-        "profile https://mail.google.com/ https://www.googleapis.com/auth/gmail.modify https://www.googleapis.com/auth/gmail.readonly"
     });
   }
 }

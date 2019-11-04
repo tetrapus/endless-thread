@@ -1,85 +1,85 @@
 import * as React from "react";
-import { decode } from "../base64util";
-import { oc } from "ts-optchain";
 import VisibilitySensor from "react-visibility-sensor";
 import { Spinner } from "./UI/Spinner";
-import './Message.scss';
+import "./Message.scss";
+import { Html5Entities } from "html-entities";
+import { HtmlMessage } from "./MessageTypes/HtmlMessage";
+import { TextMessage } from "./MessageTypes/TextMessage";
+import { decode } from "../base64util";
 
 interface Props {
   message: gapi.client.gmail.Message;
 }
 interface State {
   expanded?: boolean;
-  mounted: boolean;
+  parts: gapi.client.gmail.MessagePart[];
 }
 
-declare const caja: {
-  load: (arg0: Element, arg1: any, arg2: any) => void;
-  policy: {
-    net: {
-      ALL: number;
-    };
-  };
+const unfoldParts = (
+  part: gapi.client.gmail.MessagePart
+): gapi.client.gmail.MessagePart[] => {
+  if (part.parts) {
+    return ([] as gapi.client.gmail.MessagePart[]).concat(
+      ...part.parts.map(part => unfoldParts(part))
+    );
+  } else {
+    return [part];
+  }
 };
 
 class Message extends React.Component<Props, State> {
-  renderTarget: React.RefObject<HTMLDivElement>;
-  source: string;
+  parts: gapi.client.gmail.MessagePart[] = [];
 
   constructor(props: Readonly<Props>) {
     super(props);
-    console.log(props);
+    const part = props.message.payload;
+
     this.state = {
       expanded: undefined,
-      mounted: false
+      parts: part ? unfoldParts(part) : []
     };
-    this.renderTarget = React.createRef();
-    const parts = oc(props.message).payload.parts([]);
-    if (!parts.find(part => part.mimeType == "text/html")) {
-      this.source = "";
-    } else {
-      this.source = decode(
-        oc(parts.find(part => part.mimeType == "text/html")).body.data("")
-      );
-    }
-  }
-
-  componentDidMount() {
-    this.setState({mounted: true});
   }
 
   render() {
     return (
-      <div onClick={() => this.renderMessage()}>
-        <div className="Snippet">{this.props.message.snippet}</div>
-        {this.state.expanded === undefined && this.state.mounted && (
+      <div>
+        <div className="Snippet">
+          {new Html5Entities().decode(this.props.message.snippet || "")}
+        </div>
+        {this.state.expanded === undefined ? (
           <VisibilitySensor
             onChange={isVisible => this.handleVisibilityChange(isVisible)}
           >
             <Spinner></Spinner>
           </VisibilitySensor>
+        ) : (
+          (this.state.parts.length == 1
+            ? [this.state.parts[0]]
+            : this.state.parts.slice(1)
+          ).map(part => (
+            <div className="EmailBody">{this.getPartViewer(part)}</div>
+          ))
         )}
-        <div ref={this.renderTarget} className="EmailBody"></div>
       </div>
     );
+  }
+
+  getPartViewer(part: gapi.client.gmail.MessagePart) {
+    if (!part.body || !part.body.data) {
+      return;
+    }
+    const data = decode(part.body.data);
+    if (part.mimeType == "text/html") {
+      return <HtmlMessage key={part.partId} data={data}></HtmlMessage>;
+    } else {
+      return <TextMessage key={part.partId} data={data}></TextMessage>;
+    }
   }
 
   handleVisibilityChange(isVisible: boolean) {
     if (isVisible) {
       this.setState({ expanded: true });
-      this.renderMessage();
     }
-  }
-
-  renderMessage(): void {
-    if (!this.renderTarget.current) {
-      console.log("Err: unmounted rendertarget");
-      return;
-    }
-
-    caja.load(this.renderTarget.current, caja.policy.net.ALL, (frame: any) => {
-      frame.code(`data:text/html;base64,${this.source}`, "text/html").run();
-    });
   }
 }
 

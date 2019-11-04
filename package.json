@@ -17,6 +17,8 @@
     "@types/gapi.auth2": "^0.0.50",
     "@types/gapi.client": "^1.0.1",
     "@types/gapi.client.gmail": "^1.0.1",
+    "@types/html-entities": "^1.2.16",
+    "html-entities": "^1.2.1",
     "normalize.css": "^8.0.1",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",

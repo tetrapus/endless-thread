@@ -1,13 +1,14 @@
 import * as React from "react";
 import { Thread } from "./Thread";
-import './ThreadList.scss';
+import "./ThreadList.scss";
+import { Spinner } from "./UI/Spinner";
 
 interface Props {
   email?: string;
 }
 
 interface State {
-  threadsList: ReadonlyArray<gapi.client.gmail.Thread>;
+  threadsList?: ReadonlyArray<gapi.client.gmail.Thread>;
 }
 
 class ThreadList extends React.Component<Props, State> {
@@ -55,9 +56,13 @@ class ThreadList extends React.Component<Props, State> {
   render() {
     return (
       <div className="ThreadList">
-        {this.state.threadsList.map((thread) => (
-          <Thread key={thread.id} thread={thread}></Thread>
-        ))}
+        {this.state.threadsList && this.state.threadsList.length ? (
+          this.state.threadsList.map(thread => (
+            <Thread key={thread.id} thread={thread}></Thread>
+          ))
+        ) : (
+          <Spinner></Spinner>
+        )}
       </div>
     );
   }
