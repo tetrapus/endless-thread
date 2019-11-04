@@ -5,12 +5,12 @@ import "./Thread.scss";
 
 interface ThreadProps {
   thread: gapi.client.gmail.Thread;
-  labels: gapi.client.gmail.Label[];
+  labels: ReadonlyArray<gapi.client.gmail.Label>;
 }
 interface ThreadState {
   subject: string;
   messages: ReadonlyArray<gapi.client.gmail.Message>;
-  labels: gapi.client.gmail.Label[];
+  labels: ReadonlyArray<gapi.client.gmail.Label>;
 }
 
 function isDefined<T>(x: T | undefined): x is T {

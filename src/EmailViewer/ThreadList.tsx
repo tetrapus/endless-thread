@@ -47,7 +47,8 @@ class ThreadList extends React.Component<Props, State> {
     const email = this.props.email;
     const threadsResponse = await gapi.client.gmail.users.threads.list({
       userId: email,
-      maxResults: 10
+      maxResults: 10,
+      labelIds: "UNREAD"
     });
     // Handle the results here (response.result has the parsed body).
     const batch = gapi.client.newBatch();
