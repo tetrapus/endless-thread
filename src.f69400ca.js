@@ -35058,6 +35058,7 @@ function (_React$Component) {
           labels: _this4.state.labels
         });
       }) : React.createElement(_Spinner.Spinner, null), React.createElement("button", {
+        className: "ReloadButton",
         onClick: function onClick() {
           _this4.populateThreadList();
 
@@ -35269,7 +35270,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59225" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54775" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

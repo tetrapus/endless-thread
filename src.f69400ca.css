@@ -252,6 +252,7 @@
 
 .ThreadContent {
   flex-grow: 1;
+  max-width: 100%;
 }
 
 .Chevron {
@@ -271,7 +272,20 @@
 .ThreadList {
   max-width: 800px;
   margin: auto;
-  padding: 0 16px;
+  padding: 0 16px 64px 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.ReloadButton {
+  border: 0;
+  background-color: white;
+  padding: 8px 16px;
+  margin: auto;
+  box-shadow: 1px 1px 4px grey;
+  border-radius: 3px;
+  font-size: 18px;
+  cursor: pointer;
 }
 .EmailViewer {
   min-height: 100vh;
