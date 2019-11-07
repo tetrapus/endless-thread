@@ -32652,24 +32652,134 @@ function _inherits(subClass, superClass) {
 }
 
 module.exports = _inherits;
-},{"./setPrototypeOf":"../node_modules/@babel/runtime/helpers/setPrototypeOf.js"}],"../node_modules/@babel/runtime/helpers/defineProperty.js":[function(require,module,exports) {
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
+},{"./setPrototypeOf":"../node_modules/@babel/runtime/helpers/setPrototypeOf.js"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+var bundleURL = null;
+
+function getBundleURLCached() {
+  if (!bundleURL) {
+    bundleURL = getBundleURL();
   }
 
-  return obj;
+  return bundleURL;
 }
 
-module.exports = _defineProperty;
-},{}],"../node_modules/@babel/runtime/helpers/arrayWithoutHoles.js":[function(require,module,exports) {
+function getBundleURL() {
+  // Attempt to find the URL of the current script and use that as the base URL
+  try {
+    throw new Error();
+  } catch (err) {
+    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
+
+    if (matches) {
+      return getBaseURL(matches[0]);
+    }
+  }
+
+  return '/';
+}
+
+function getBaseURL(url) {
+  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)\/[^/]+$/, '$1') + '/';
+}
+
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+},{}],"../node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
+var bundle = require('./bundle-url');
+
+function updateLink(link) {
+  var newLink = link.cloneNode();
+
+  newLink.onload = function () {
+    link.remove();
+  };
+
+  newLink.href = link.href.split('?')[0] + '?' + Date.now();
+  link.parentNode.insertBefore(newLink, link.nextSibling);
+}
+
+var cssTimeout = null;
+
+function reloadCSS() {
+  if (cssTimeout) {
+    return;
+  }
+
+  cssTimeout = setTimeout(function () {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+
+    for (var i = 0; i < links.length; i++) {
+      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
+        updateLink(links[i]);
+      }
+    }
+
+    cssTimeout = null;
+  }, 50);
+}
+
+module.exports = reloadCSS;
+},{"./bundle-url":"../node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"EmailViewer/UI/Logo.scss":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"EmailViewer/UI/Logo.tsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Logo = void 0;
+
+var React = _interopRequireWildcard(require("react"));
+
+require("./Logo.scss");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+var Logo = function Logo() {
+  return React.createElement("div", {
+    className: "Logo"
+  }, "endless thread");
+};
+
+exports.Logo = Logo;
+},{"react":"../node_modules/react/index.js","./Logo.scss":"EmailViewer/UI/Logo.scss"}],"EmailViewer/UI/Spinner.scss":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"EmailViewer/UI/Spinner.tsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Spinner = void 0;
+
+require("./Spinner.scss");
+
+var React = _interopRequireWildcard(require("react"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+var Spinner = function Spinner() {
+  return React.createElement("div", {
+    className: "spinner"
+  }, React.createElement("div", {
+    className: "double-bounce1"
+  }), React.createElement("div", {
+    className: "double-bounce2"
+  }));
+};
+
+exports.Spinner = Spinner;
+},{"./Spinner.scss":"EmailViewer/UI/Spinner.scss","react":"../node_modules/react/index.js"}],"../node_modules/@babel/runtime/helpers/arrayWithoutHoles.js":[function(require,module,exports) {
 function _arrayWithoutHoles(arr) {
   if (Array.isArray(arr)) {
     for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
@@ -32705,7 +32815,439 @@ function _toConsumableArray(arr) {
 }
 
 module.exports = _toConsumableArray;
-},{"./arrayWithoutHoles":"../node_modules/@babel/runtime/helpers/arrayWithoutHoles.js","./iterableToArray":"../node_modules/@babel/runtime/helpers/iterableToArray.js","./nonIterableSpread":"../node_modules/@babel/runtime/helpers/nonIterableSpread.js"}],"../node_modules/ts-optchain/dist/proxy/index.js":[function(require,module,exports) {
+},{"./arrayWithoutHoles":"../node_modules/@babel/runtime/helpers/arrayWithoutHoles.js","./iterableToArray":"../node_modules/@babel/runtime/helpers/iterableToArray.js","./nonIterableSpread":"../node_modules/@babel/runtime/helpers/nonIterableSpread.js"}],"../node_modules/@babel/runtime/helpers/arrayWithHoles.js":[function(require,module,exports) {
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
+module.exports = _arrayWithHoles;
+},{}],"../node_modules/@babel/runtime/helpers/iterableToArrayLimit.js":[function(require,module,exports) {
+function _iterableToArrayLimit(arr, i) {
+  if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) {
+    return;
+  }
+
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _e = undefined;
+
+  try {
+    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+
+module.exports = _iterableToArrayLimit;
+},{}],"../node_modules/@babel/runtime/helpers/nonIterableRest.js":[function(require,module,exports) {
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance");
+}
+
+module.exports = _nonIterableRest;
+},{}],"../node_modules/@babel/runtime/helpers/slicedToArray.js":[function(require,module,exports) {
+var arrayWithHoles = require("./arrayWithHoles");
+
+var iterableToArrayLimit = require("./iterableToArrayLimit");
+
+var nonIterableRest = require("./nonIterableRest");
+
+function _slicedToArray(arr, i) {
+  return arrayWithHoles(arr) || iterableToArrayLimit(arr, i) || nonIterableRest();
+}
+
+module.exports = _slicedToArray;
+},{"./arrayWithHoles":"../node_modules/@babel/runtime/helpers/arrayWithHoles.js","./iterableToArrayLimit":"../node_modules/@babel/runtime/helpers/iterableToArrayLimit.js","./nonIterableRest":"../node_modules/@babel/runtime/helpers/nonIterableRest.js"}],"EmailViewer/UI/EndlessThread.tsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.EndlessThread = void 0;
+
+var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
+
+var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
+
+var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
+
+var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var React = _interopRequireWildcard(require("react"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var EndlessThread =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2.default)(EndlessThread, _React$Component);
+
+  function EndlessThread(props) {
+    var _this;
+
+    (0, _classCallCheck2.default)(this, EndlessThread);
+    _this = (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(EndlessThread).call(this, props));
+    _this.state = {
+      path: []
+    };
+    _this.svgRef = React.createRef();
+    return _this;
+  }
+
+  (0, _createClass2.default)(EndlessThread, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      if (!this.svgRef.current) {
+        throw Error("No host element to bind");
+      }
+
+      var hostDimensions = this.svgRef.current.getClientRects()[0];
+      var bounds = {
+        x: [0, hostDimensions.width],
+        y: [0, hostDimensions.height]
+      };
+
+      var randint = function randint(max) {
+        return Math.floor(Math.random() * max);
+      };
+
+      var clip = function clip(n, _ref) {
+        var _ref2 = (0, _slicedToArray2.default)(_ref, 2),
+            min = _ref2[0],
+            max = _ref2[1];
+
+        return Math.min(max, Math.max(min, n));
+      };
+
+      this.setState({
+        path: [this.props.initial || {
+          x: clip(randint(hostDimensions.width), bounds.x),
+          y: clip(randint(hostDimensions.height), bounds.y)
+        }]
+      });
+      this.timer = setInterval(
+      /*#__PURE__*/
+      (0, _asyncToGenerator2.default)(
+      /*#__PURE__*/
+      _regenerator.default.mark(function _callee() {
+        var path, last;
+        return _regenerator.default.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                path = _this2.state.path;
+                last = path[path.length - 1];
+
+                _this2.setState({
+                  path: [].concat((0, _toConsumableArray2.default)(path), [{
+                    x: clip(last.x + randint(21) - 10, bounds.x),
+                    y: clip(last.y + randint(21) - 10, bounds.y)
+                  }])
+                });
+
+              case 3:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      })), 75);
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      if (this.timer) {
+        clearInterval(this.timer);
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var path = this.state.path;
+      return React.createElement("svg", {
+        style: {
+          position: "fixed",
+          height: "100%",
+          width: "100%",
+          opacity: 0.6,
+          zIndex: -1
+        },
+        ref: this.svgRef
+      }, path.length && React.createElement("path", {
+        d: "M".concat(path[0].x, " ").concat(path[0].y, " ").concat(path.slice(1).map(function (_ref4) {
+          var x = _ref4.x,
+              y = _ref4.y;
+          return "L" + x + " " + y;
+        }).join(" ")),
+        stroke: "#e02a28",
+        fill: "none"
+      }));
+    }
+  }]);
+  return EndlessThread;
+}(React.Component);
+
+exports.EndlessThread = EndlessThread;
+},{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/slicedToArray":"../node_modules/@babel/runtime/helpers/slicedToArray.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js"}],"Homepage/Login.scss":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"Homepage/Login.tsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Login = void 0;
+
+var React = _interopRequireWildcard(require("react"));
+
+var _Logo = require("../EmailViewer/UI/Logo");
+
+var _Spinner = require("../EmailViewer/UI/Spinner");
+
+var _EndlessThread = require("../EmailViewer/UI/EndlessThread");
+
+require("./Login.scss");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+var handleLogin = function handleLogin() {
+  gapi.auth2.getAuthInstance().signIn({
+    scope: "profile https://mail.google.com/ https://www.googleapis.com/auth/gmail.modify https://www.googleapis.com/auth/gmail.readonly"
+  });
+};
+
+var Login = function Login(_ref) {
+  var loading = _ref.loading;
+  return React.createElement("div", null, React.createElement(_EndlessThread.EndlessThread, {
+    initial: {
+      x: window.innerWidth / 2,
+      y: 250
+    }
+  }), React.createElement(_EndlessThread.EndlessThread, {
+    initial: {
+      x: window.innerWidth / 2,
+      y: 250
+    }
+  }), React.createElement(_EndlessThread.EndlessThread, {
+    initial: {
+      x: window.innerWidth / 2,
+      y: 250
+    }
+  }), React.createElement(_EndlessThread.EndlessThread, {
+    initial: {
+      x: window.innerWidth / 2,
+      y: 250
+    }
+  }), React.createElement(_EndlessThread.EndlessThread, {
+    initial: {
+      x: window.innerWidth / 2,
+      y: 250
+    }
+  }), React.createElement("div", {
+    className: "LoginSection"
+  }, React.createElement(_Logo.Logo, null), loading ? React.createElement(_Spinner.Spinner, null) : React.createElement("a", {
+    className: "LoginButton",
+    onClick: handleLogin
+  }, React.createElement("div", {
+    id: "logo"
+  }, React.createElement("div", {
+    className: "g-line"
+  }), React.createElement("span", {
+    className: "red"
+  }), React.createElement("span", {
+    className: "yellow"
+  }), React.createElement("span", {
+    className: "green"
+  }), React.createElement("span", {
+    className: "blue"
+  })), "Sign in with Google")));
+};
+
+exports.Login = Login;
+},{"react":"../node_modules/react/index.js","../EmailViewer/UI/Logo":"EmailViewer/UI/Logo.tsx","../EmailViewer/UI/Spinner":"EmailViewer/UI/Spinner.tsx","../EmailViewer/UI/EndlessThread":"EmailViewer/UI/EndlessThread.tsx","./Login.scss":"Homepage/Login.scss"}],"EmailViewer/Navigation/Navigation.scss":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"EmailViewer/UI/Icon.tsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Icon = void 0;
+
+var React = _interopRequireWildcard(require("react"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+var Icon = function Icon(_ref) {
+  var type = _ref.type,
+      _ref$size = _ref.size,
+      size = _ref$size === void 0 ? 32 : _ref$size,
+      _ref$fill = _ref.fill,
+      fill = _ref$fill === void 0 ? "#aaa" : _ref$fill,
+      className = _ref.className;
+
+  switch (type) {
+    case "close":
+      return React.createElement("svg", {
+        "aria-hidden": "true",
+        focusable: "false",
+        role: "img",
+        xmlns: "http://www.w3.org/2000/svg",
+        viewBox: "0 0 320 512",
+        width: size,
+        height: size
+      }, React.createElement("path", {
+        fill: fill,
+        d: "M193.94 256L296.5 153.44l21.15-21.15c3.12-3.12 3.12-8.19 0-11.31l-22.63-22.63c-3.12-3.12-8.19-3.12-11.31 0L160 222.06 36.29 98.34c-3.12-3.12-8.19-3.12-11.31 0L2.34 120.97c-3.12 3.12-3.12 8.19 0 11.31L126.06 256 2.34 379.71c-3.12 3.12-3.12 8.19 0 11.31l22.63 22.63c3.12 3.12 8.19 3.12 11.31 0L160 289.94 262.56 392.5l21.15 21.15c3.12 3.12 8.19 3.12 11.31 0l22.63-22.63c3.12-3.12 3.12-8.19 0-11.31L193.94 256z"
+      }));
+
+    case "expand":
+      return React.createElement("svg", {
+        "aria-hidden": "true",
+        focusable: "false",
+        role: "img",
+        xmlns: "http://www.w3.org/2000/svg",
+        viewBox: "0 0 448 512",
+        width: size,
+        height: size
+      }, React.createElement("path", {
+        fill: fill,
+        d: "M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+      }));
+
+    case "collapse":
+      return React.createElement("svg", {
+        "aria-hidden": "true",
+        focusable: "false",
+        role: "img",
+        xmlns: "http://www.w3.org/2000/svg",
+        viewBox: "0 0 448 512",
+        width: size,
+        height: size
+      }, React.createElement("path", {
+        fill: fill,
+        d: "M240.971 130.524l194.343 194.343c9.373 9.373 9.373 24.569 0 33.941l-22.667 22.667c-9.357 9.357-24.522 9.375-33.901.04L224 227.495 69.255 381.516c-9.379 9.335-24.544 9.317-33.901-.04l-22.667-22.667c-9.373-9.373-9.373-24.569 0-33.941L207.03 130.525c9.372-9.373 24.568-9.373 33.941-.001z"
+      }));
+
+    case "done":
+      return React.createElement("svg", {
+        "aria-hidden": "true",
+        focusable: "false",
+        role: "img",
+        xmlns: "http://www.w3.org/2000/svg",
+        viewBox: "0 0 512 512",
+        width: size,
+        height: size
+      }, React.createElement("path", {
+        fill: fill,
+        d: "M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"
+      }));
+  }
+};
+
+exports.Icon = Icon;
+},{"react":"../node_modules/react/index.js"}],"EmailViewer/Navigation/Navigation.tsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Navigation = void 0;
+
+var React = _interopRequireWildcard(require("react"));
+
+require("./Navigation.scss");
+
+var _Logo = require("../UI/Logo");
+
+var _Icon = require("../UI/Icon");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+var Navigation = function Navigation(_ref) {
+  var profile = _ref.profile;
+  return React.createElement("div", {
+    className: "Navigation"
+  }, React.createElement(_Logo.Logo, null), React.createElement("div", {
+    className: "Identity"
+  }, React.createElement("div", {
+    className: "Name"
+  }, profile.getName()), React.createElement("div", {
+    className: "Email"
+  }, profile.getEmail())), React.createElement("img", {
+    className: "Image",
+    src: profile.getImageUrl()
+  }), React.createElement("button", {
+    className: "LogOut",
+    onClick: function onClick() {
+      return gapi.auth2.getAuthInstance().signOut();
+    }
+  }, React.createElement(_Icon.Icon, {
+    type: "close"
+  })));
+};
+
+exports.Navigation = Navigation;
+},{"react":"../node_modules/react/index.js","./Navigation.scss":"EmailViewer/Navigation/Navigation.scss","../UI/Logo":"EmailViewer/UI/Logo.tsx","../UI/Icon":"EmailViewer/UI/Icon.tsx"}],"../node_modules/@babel/runtime/helpers/defineProperty.js":[function(require,module,exports) {
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+module.exports = _defineProperty;
+},{}],"../node_modules/ts-optchain/dist/proxy/index.js":[function(require,module,exports) {
 "use strict";
 /**
  * Copyright (C) 2019-present, Rimeto, LLC.
@@ -33332,106 +33874,7 @@ module.exports = ReactPropTypesSecret;
 /***/ })
 /******/ ]);
 });
-},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
-var bundleURL = null;
-
-function getBundleURLCached() {
-  if (!bundleURL) {
-    bundleURL = getBundleURL();
-  }
-
-  return bundleURL;
-}
-
-function getBundleURL() {
-  // Attempt to find the URL of the current script and use that as the base URL
-  try {
-    throw new Error();
-  } catch (err) {
-    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
-
-    if (matches) {
-      return getBaseURL(matches[0]);
-    }
-  }
-
-  return '/';
-}
-
-function getBaseURL(url) {
-  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)\/[^/]+$/, '$1') + '/';
-}
-
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-},{}],"../node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
-var bundle = require('./bundle-url');
-
-function updateLink(link) {
-  var newLink = link.cloneNode();
-
-  newLink.onload = function () {
-    link.remove();
-  };
-
-  newLink.href = link.href.split('?')[0] + '?' + Date.now();
-  link.parentNode.insertBefore(newLink, link.nextSibling);
-}
-
-var cssTimeout = null;
-
-function reloadCSS() {
-  if (cssTimeout) {
-    return;
-  }
-
-  cssTimeout = setTimeout(function () {
-    var links = document.querySelectorAll('link[rel="stylesheet"]');
-
-    for (var i = 0; i < links.length; i++) {
-      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
-        updateLink(links[i]);
-      }
-    }
-
-    cssTimeout = null;
-  }, 50);
-}
-
-module.exports = reloadCSS;
-},{"./bundle-url":"../node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"EmailViewer/UI/Spinner.scss":[function(require,module,exports) {
-var reloadCSS = require('_css_loader');
-
-module.hot.dispose(reloadCSS);
-module.hot.accept(reloadCSS);
-},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"EmailViewer/UI/Spinner.tsx":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Spinner = void 0;
-
-require("./Spinner.scss");
-
-var React = _interopRequireWildcard(require("react"));
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-var Spinner = function Spinner() {
-  return React.createElement("div", {
-    className: "spinner"
-  }, React.createElement("div", {
-    className: "double-bounce1"
-  }), React.createElement("div", {
-    className: "double-bounce2"
-  }));
-};
-
-exports.Spinner = Spinner;
-},{"./Spinner.scss":"EmailViewer/UI/Spinner.scss","react":"../node_modules/react/index.js"}],"EmailViewer/Message.scss":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js"}],"EmailViewer/Message.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -34004,8 +34447,9 @@ function (_React$Component) {
         return;
       }
 
+      var data = btoa(atob(this.props.data).replace(/<div><strong>REPOSITORY<.*/, '').replace(/<div><strong>TASK DETAIL<.*/, ''));
       caja.load(this.renderTarget.current, caja.policy.net.ALL, function (frame) {
-        frame.code("data:text/html;base64,".concat(_this2.props.data), "text/html").run(function () {
+        frame.code("data:text/html;base64,".concat(data), "text/html").run(function () {
           return _this2.setState({
             loading: false
           });
@@ -34103,6 +34547,8 @@ var _TextMessage = require("./MessageTypes/TextMessage");
 
 var _base64util = require("../base64util");
 
+var _tsOptchain = require("ts-optchain");
+
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -34117,7 +34563,7 @@ var unfoldParts = function unfoldParts(part) {
       return unfoldParts(part);
     })));
   } else {
-    return [part];
+    return part.mimeType == "text/x-amp-html" ? [] : [part];
   }
 };
 
@@ -34145,18 +34591,30 @@ function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      return React.createElement("div", null, React.createElement("div", {
+      var isUnread = (0, _tsOptchain.oc)(this.props).message.labelIds([]).includes("UNREAD");
+      return React.createElement("div", null, isUnread || React.createElement("div", {
         className: "Snippet"
-      }, new _htmlEntities.Html5Entities().decode(this.props.message.snippet || "")), this.state.expanded === undefined ? React.createElement(_reactVisibilitySensor.default, {
+      }, new _htmlEntities.Html5Entities().decode(this.props.message.snippet || "")), isUnread && (this.state.expanded === undefined ? React.createElement(_reactVisibilitySensor.default, {
         onChange: function onChange(isVisible) {
           return _this2.handleVisibilityChange(isVisible);
         }
-      }, React.createElement(_Spinner.Spinner, null)) : (this.state.parts.length == 1 ? [this.state.parts[0]] : this.state.parts.slice(1)).map(function (part) {
+      }, React.createElement(_Spinner.Spinner, null)) : this.getVisibleParts(this.state.parts).map(function (part) {
         return React.createElement("div", {
           key: part.partId,
           className: "EmailBody"
         }, _this2.getPartViewer(part));
-      }));
+      })));
+    }
+  }, {
+    key: "getVisibleParts",
+    value: function getVisibleParts(parts) {
+      if (parts.length == 1) {
+        return [parts[0]];
+      } else {
+        return parts.filter(function (part) {
+          return part.mimeType != "text/plain";
+        });
+      }
     }
   }, {
     key: "getPartViewer",
@@ -34193,7 +34651,7 @@ function (_React$Component) {
 }(React.Component);
 
 exports.Message = Message;
-},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","react":"../node_modules/react/index.js","react-visibility-sensor":"../node_modules/react-visibility-sensor/dist/visibility-sensor.js","./UI/Spinner":"EmailViewer/UI/Spinner.tsx","./Message.scss":"EmailViewer/Message.scss","html-entities":"../node_modules/html-entities/index.js","./MessageTypes/HtmlMessage":"EmailViewer/MessageTypes/HtmlMessage.tsx","./MessageTypes/TextMessage":"EmailViewer/MessageTypes/TextMessage.tsx","../base64util":"base64util.ts"}],"EmailViewer/Thread.scss":[function(require,module,exports) {
+},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","react":"../node_modules/react/index.js","react-visibility-sensor":"../node_modules/react-visibility-sensor/dist/visibility-sensor.js","./UI/Spinner":"EmailViewer/UI/Spinner.tsx","./Message.scss":"EmailViewer/Message.scss","html-entities":"../node_modules/html-entities/index.js","./MessageTypes/HtmlMessage":"EmailViewer/MessageTypes/HtmlMessage.tsx","./MessageTypes/TextMessage":"EmailViewer/MessageTypes/TextMessage.tsx","../base64util":"base64util.ts","ts-optchain":"../node_modules/ts-optchain/dist/proxy/index.js"}],"EmailViewer/Thread.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -34205,6 +34663,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.Thread = void 0;
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 
 var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
 
@@ -34226,11 +34686,17 @@ var _Message = require("./Message");
 
 require("./Thread.scss");
 
+var _Icon = require("./UI/Icon");
+
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function isDefined(x) {
   return x !== undefined;
@@ -34242,8 +34708,6 @@ function (_React$Component) {
   (0, _inherits2.default)(Thread, _React$Component);
 
   function Thread(props) {
-    var _ref;
-
     var _this;
 
     (0, _classCallCheck2.default)(this, Thread);
@@ -34255,24 +34719,8 @@ function (_React$Component) {
       return (0, _possibleConstructorReturn2.default)(_this);
     }
 
-    var firstMessage = thread.messages[0];
-    var subjectHeader = (0, _tsOptchain.oc)(firstMessage).payload.headers([]).find(function (header) {
-      return header.name == "Subject";
-    });
-    var subject = subjectHeader ? subjectHeader.value || "Unknown" : "Unknown";
-    var labels = Array.from(new Set((_ref = []).concat.apply(_ref, (0, _toConsumableArray2.default)(thread.messages.map(function (message) {
-      return message.labelIds || [];
-    })))));
     _this.state = {
-      subject: subject,
-      messages: thread.messages,
-      labels: labels.map(function (name) {
-        return _this.props.labels.find(function (label) {
-          return label.id == name;
-        });
-      }).filter(isDefined).filter(function (label) {
-        return label.type === "user";
-      })
+      thread: thread
     };
     return _this;
   }
@@ -34280,20 +34728,108 @@ function (_React$Component) {
   (0, _createClass2.default)(Thread, [{
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _ref,
+          _this2 = this;
 
-      return React.createElement("div", null, React.createElement("h1", null, this.state.subject), React.createElement("div", null, this.state.labels.map(function (label) {
+      var thread = this.state.thread;
+
+      if (!thread.messages) {
+        throw Error(":(");
+      }
+
+      var firstMessage = thread.messages[0];
+      var subjectHeader = (0, _tsOptchain.oc)(firstMessage).payload.headers([]).find(function (header) {
+        return header.name == "Subject";
+      });
+      var subject = subjectHeader ? subjectHeader.value || "Unknown" : "Unknown";
+      var labelNames = Array.from(new Set((_ref = []).concat.apply(_ref, (0, _toConsumableArray2.default)(thread.messages.map(function (message) {
+        return message.labelIds || [];
+      })))));
+      var labels = labelNames.map(function (name) {
+        return _this2.props.labels.find(function (label) {
+          return label.id == name;
+        });
+      }).filter(isDefined).filter(function (label) {
+        return label.type === "user";
+      });
+      var unread = !!labelNames.find(function (name) {
+        return name == "UNREAD";
+      });
+      return React.createElement("div", {
+        className: "ThreadContainer"
+      }, React.createElement("div", {
+        className: "ThreadContent"
+      }, React.createElement("div", {
+        className: "ThreadInfo"
+      }, React.createElement("h1", {
+        className: "Subject"
+      }, subject)), React.createElement("div", {
+        className: "LabelList"
+      }, labels.map(function (label) {
         return React.createElement("span", {
           className: "Label",
           key: label.id,
           style: _this2.getLabelStyle(label)
         }, label.name);
-      })), this.state.messages.map(function (message) {
+      })), thread.messages.map(function (message) {
         return React.createElement(_Message.Message, {
           message: message,
           key: message.id
         });
-      }));
+      })), React.createElement("div", {
+        className: "Chevron " + (unread ? "collapsed" : "expanded"),
+        onClick: function onClick() {
+          return _this2.handleChevronClick(unread);
+        }
+      }, React.createElement(_Icon.Icon, {
+        type: "collapse",
+        size: 32
+      })));
+    }
+  }, {
+    key: "handleChevronClick",
+    value: function handleChevronClick(unread) {
+      var _this3 = this;
+
+      if (!this.props.thread.id) {
+        return;
+      }
+
+      var resource = unread ? {
+        removeLabelIds: ["UNREAD"]
+      } : {
+        addLabelIds: ["UNREAD"]
+      };
+      gapi.client.gmail.users.threads.modify({
+        userId: "jtuong@freelancer.com",
+        id: this.props.thread.id,
+        resource: resource
+      }).then(function (response) {
+        if (!_this3.state.thread.messages) {
+          return;
+        }
+
+        var updates = response.result.messages || [];
+        console.log(_objectSpread({}, _this3.state.thread, {
+          messages: _this3.state.thread.messages.map(function (message) {
+            return _objectSpread({}, message, {}, updates.find(function (update) {
+              return update.id == message.id;
+            }) || {});
+          })
+        }));
+
+        _this3.setState({
+          thread: _objectSpread({}, _this3.state.thread, {
+            messages: _this3.state.thread.messages.map(function (message) {
+              return _objectSpread({}, message, {}, updates.find(function (update) {
+                return update.id == message.id;
+              }) || {});
+            })
+          })
+        });
+      }, function () {
+        console.log(":(!");
+      });
     }
   }, {
     key: "getLabelStyle",
@@ -34312,7 +34848,7 @@ function (_React$Component) {
 }(React.Component);
 
 exports.Thread = Thread;
-},{"@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","ts-optchain":"../node_modules/ts-optchain/dist/proxy/index.js","./Message":"EmailViewer/Message.tsx","./Thread.scss":"EmailViewer/Thread.scss"}],"EmailViewer/ThreadList.scss":[function(require,module,exports) {
+},{"@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","ts-optchain":"../node_modules/ts-optchain/dist/proxy/index.js","./Message":"EmailViewer/Message.tsx","./Thread.scss":"EmailViewer/Thread.scss","./UI/Icon":"EmailViewer/UI/Icon.tsx"}],"EmailViewer/ThreadList.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -34373,48 +34909,69 @@ function (_React$Component) {
       threadsList: [],
       labels: []
     };
-    gapi.client.load("https://content.googleapis.com/discovery/v1/apis/gmail/v1/rest", "1").then(function () {
-      _this.populateLabels();
-
-      _this.populateThreadList();
-    });
     return _this;
   }
 
   (0, _createClass2.default)(ThreadList, [{
-    key: "populateLabels",
-    value: function () {
-      var _populateLabels = (0, _asyncToGenerator2.default)(
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      gapi.client.load("https://content.googleapis.com/discovery/v1/apis/gmail/v1/rest", "1").then(
+      /*#__PURE__*/
+      (0, _asyncToGenerator2.default)(
       /*#__PURE__*/
       _regenerator.default.mark(function _callee() {
-        var _this2 = this;
-
         return _regenerator.default.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                _this2.populateLabels();
+
+                _this2.populateThreadList();
+
+              case 2:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      })));
+    }
+  }, {
+    key: "populateLabels",
+    value: function () {
+      var _populateLabels = (0, _asyncToGenerator2.default)(
+      /*#__PURE__*/
+      _regenerator.default.mark(function _callee2() {
+        var _this3 = this;
+
+        return _regenerator.default.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
                 if (this.props.email) {
-                  _context.next = 2;
+                  _context2.next = 2;
                   break;
                 }
 
-                return _context.abrupt("return");
+                return _context2.abrupt("return");
 
               case 2:
-                return _context.abrupt("return", gapi.client.gmail.users.labels.list({
+                return _context2.abrupt("return", gapi.client.gmail.users.labels.list({
                   userId: this.props.email
                 }).then(function (response) {
-                  _this2.setState({
+                  _this3.setState({
                     labels: response.result.labels || []
                   });
                 }));
 
               case 3:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee, this);
+        }, _callee2, this);
       }));
 
       function populateLabels() {
@@ -34428,29 +34985,30 @@ function (_React$Component) {
     value: function () {
       var _populateThreadList = (0, _asyncToGenerator2.default)(
       /*#__PURE__*/
-      _regenerator.default.mark(function _callee2() {
+      _regenerator.default.mark(function _callee3() {
         var email, threadsResponse, batch, miniThreads, threads;
-        return _regenerator.default.wrap(function _callee2$(_context2) {
+        return _regenerator.default.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
                 if (this.props.email) {
-                  _context2.next = 2;
+                  _context3.next = 2;
                   break;
                 }
 
-                return _context2.abrupt("return");
+                return _context3.abrupt("return");
 
               case 2:
                 email = this.props.email;
-                _context2.next = 5;
+                _context3.next = 5;
                 return gapi.client.gmail.users.threads.list({
                   userId: email,
-                  maxResults: 10
+                  maxResults: 10,
+                  labelIds: "UNREAD"
                 });
 
               case 5:
-                threadsResponse = _context2.sent;
+                threadsResponse = _context3.sent;
                 // Handle the results here (response.result has the parsed body).
                 batch = gapi.client.newBatch();
                 miniThreads = threadsResponse.result.threads || [];
@@ -34460,11 +35018,11 @@ function (_React$Component) {
                     userId: email
                   }));
                 });
-                _context2.next = 11;
+                _context3.next = 11;
                 return batch;
 
               case 11:
-                threads = _context2.sent;
+                threads = _context3.sent;
                 this.setState({
                   threadsList: Object.values(threads.result).map(function (response) {
                     var details = response.result;
@@ -34474,10 +35032,10 @@ function (_React$Component) {
 
               case 13:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2, this);
+        }, _callee3, this);
       }));
 
       function populateThreadList() {
@@ -34489,7 +35047,7 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       return React.createElement("div", {
         className: "ThreadList"
@@ -34497,365 +35055,68 @@ function (_React$Component) {
         return React.createElement(_Thread.Thread, {
           key: thread.id,
           thread: thread,
-          labels: _this3.state.labels
+          labels: _this4.state.labels
         });
-      }) : React.createElement(_Spinner.Spinner, null));
+      }) : React.createElement(_Spinner.Spinner, null), React.createElement("button", {
+        onClick: function onClick() {
+          _this4.populateThreadList();
+
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+          });
+        }
+      }, "Reload"));
     }
   }]);
   return ThreadList;
 }(React.Component);
 
 exports.ThreadList = ThreadList;
-},{"@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","./Thread":"EmailViewer/Thread.tsx","./ThreadList.scss":"EmailViewer/ThreadList.scss","./UI/Spinner":"EmailViewer/UI/Spinner.tsx"}],"../node_modules/normalize.css/normalize.css":[function(require,module,exports) {
+},{"@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","./Thread":"EmailViewer/Thread.tsx","./ThreadList.scss":"EmailViewer/ThreadList.scss","./UI/Spinner":"EmailViewer/UI/Spinner.tsx"}],"EmailViewer/EmailViewer.scss":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"EmailViewer/EmailViewer.tsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.EmailViewer = void 0;
+
+var React = _interopRequireWildcard(require("react"));
+
+var _Navigation = require("./Navigation/Navigation");
+
+var _ThreadList = require("./ThreadList");
+
+require("./EmailViewer.scss");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+var EmailViewer = function EmailViewer(_ref) {
+  var profile = _ref.profile;
+  return React.createElement("div", {
+    className: "EmailViewer"
+  }, React.createElement(_Navigation.Navigation, {
+    profile: profile
+  }), React.createElement(_ThreadList.ThreadList, {
+    email: profile.getEmail()
+  }));
+};
+
+exports.EmailViewer = EmailViewer;
+},{"react":"../node_modules/react/index.js","./Navigation/Navigation":"EmailViewer/Navigation/Navigation.tsx","./ThreadList":"EmailViewer/ThreadList.tsx","./EmailViewer.scss":"EmailViewer/EmailViewer.scss"}],"../node_modules/normalize.css/normalize.css":[function(require,module,exports) {
 
         var reloadCSS = require('_css_loader');
         module.hot.dispose(reloadCSS);
         module.hot.accept(reloadCSS);
       
-},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"Navigation/Navigation.scss":[function(require,module,exports) {
-var reloadCSS = require('_css_loader');
-
-module.hot.dispose(reloadCSS);
-module.hot.accept(reloadCSS);
-},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"EmailViewer/UI/Logo.scss":[function(require,module,exports) {
-var reloadCSS = require('_css_loader');
-
-module.hot.dispose(reloadCSS);
-module.hot.accept(reloadCSS);
-},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"EmailViewer/UI/Logo.tsx":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Logo = void 0;
-
-var React = _interopRequireWildcard(require("react"));
-
-require("./Logo.scss");
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-var Logo = function Logo() {
-  return React.createElement("div", {
-    className: "Logo"
-  }, "endless thread");
-};
-
-exports.Logo = Logo;
-},{"react":"../node_modules/react/index.js","./Logo.scss":"EmailViewer/UI/Logo.scss"}],"Navigation/Navigation.tsx":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Navigation = void 0;
-
-var React = _interopRequireWildcard(require("react"));
-
-require("./Navigation.scss");
-
-var _Logo = require("../EmailViewer/UI/Logo");
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-var Navigation = function Navigation(_ref) {
-  var profile = _ref.profile;
-  return React.createElement("div", {
-    className: "Navigation"
-  }, React.createElement(_Logo.Logo, null), React.createElement("div", {
-    className: "Identity"
-  }, React.createElement("div", {
-    className: "Name"
-  }, profile.getName()), React.createElement("div", {
-    className: "Email"
-  }, profile.getEmail())), React.createElement("img", {
-    className: "Image",
-    src: profile.getImageUrl()
-  }), React.createElement("button", {
-    className: "LogOut",
-    onClick: function onClick() {
-      return gapi.auth2.getAuthInstance().signOut();
-    }
-  }, React.createElement("svg", {
-    "aria-hidden": "true",
-    focusable: "false",
-    "data-prefix": "fal",
-    "data-icon": "times",
-    role: "img",
-    xmlns: "http://www.w3.org/2000/svg",
-    viewBox: "0 0 320 512",
-    width: "24",
-    height: "24"
-  }, React.createElement("path", {
-    fill: "#aaa",
-    d: "M193.94 256L296.5 153.44l21.15-21.15c3.12-3.12 3.12-8.19 0-11.31l-22.63-22.63c-3.12-3.12-8.19-3.12-11.31 0L160 222.06 36.29 98.34c-3.12-3.12-8.19-3.12-11.31 0L2.34 120.97c-3.12 3.12-3.12 8.19 0 11.31L126.06 256 2.34 379.71c-3.12 3.12-3.12 8.19 0 11.31l22.63 22.63c3.12 3.12 8.19 3.12 11.31 0L160 289.94 262.56 392.5l21.15 21.15c3.12 3.12 8.19 3.12 11.31 0l22.63-22.63c3.12-3.12 3.12-8.19 0-11.31L193.94 256z"
-  }))));
-};
-
-exports.Navigation = Navigation;
-},{"react":"../node_modules/react/index.js","./Navigation.scss":"Navigation/Navigation.scss","../EmailViewer/UI/Logo":"EmailViewer/UI/Logo.tsx"}],"../node_modules/@babel/runtime/helpers/arrayWithHoles.js":[function(require,module,exports) {
-function _arrayWithHoles(arr) {
-  if (Array.isArray(arr)) return arr;
-}
-
-module.exports = _arrayWithHoles;
-},{}],"../node_modules/@babel/runtime/helpers/iterableToArrayLimit.js":[function(require,module,exports) {
-function _iterableToArrayLimit(arr, i) {
-  if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) {
-    return;
-  }
-
-  var _arr = [];
-  var _n = true;
-  var _d = false;
-  var _e = undefined;
-
-  try {
-    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
-      _arr.push(_s.value);
-
-      if (i && _arr.length === i) break;
-    }
-  } catch (err) {
-    _d = true;
-    _e = err;
-  } finally {
-    try {
-      if (!_n && _i["return"] != null) _i["return"]();
-    } finally {
-      if (_d) throw _e;
-    }
-  }
-
-  return _arr;
-}
-
-module.exports = _iterableToArrayLimit;
-},{}],"../node_modules/@babel/runtime/helpers/nonIterableRest.js":[function(require,module,exports) {
-function _nonIterableRest() {
-  throw new TypeError("Invalid attempt to destructure non-iterable instance");
-}
-
-module.exports = _nonIterableRest;
-},{}],"../node_modules/@babel/runtime/helpers/slicedToArray.js":[function(require,module,exports) {
-var arrayWithHoles = require("./arrayWithHoles");
-
-var iterableToArrayLimit = require("./iterableToArrayLimit");
-
-var nonIterableRest = require("./nonIterableRest");
-
-function _slicedToArray(arr, i) {
-  return arrayWithHoles(arr) || iterableToArrayLimit(arr, i) || nonIterableRest();
-}
-
-module.exports = _slicedToArray;
-},{"./arrayWithHoles":"../node_modules/@babel/runtime/helpers/arrayWithHoles.js","./iterableToArrayLimit":"../node_modules/@babel/runtime/helpers/iterableToArrayLimit.js","./nonIterableRest":"../node_modules/@babel/runtime/helpers/nonIterableRest.js"}],"EmailViewer/UI/EndlessThread.tsx":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.EndlessThread = void 0;
-
-var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
-
-var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
-
-var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
-
-var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
-
-var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
-
-var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
-
-var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
-
-var React = _interopRequireWildcard(require("react"));
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var EndlessThread =
-/*#__PURE__*/
-function (_React$Component) {
-  (0, _inherits2.default)(EndlessThread, _React$Component);
-
-  function EndlessThread(props) {
-    var _this;
-
-    (0, _classCallCheck2.default)(this, EndlessThread);
-    _this = (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(EndlessThread).call(this, props));
-    _this.state = {
-      path: []
-    };
-    _this.svgRef = React.createRef();
-    return _this;
-  }
-
-  (0, _createClass2.default)(EndlessThread, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      if (!this.svgRef.current) {
-        throw Error("No host element to bind");
-      }
-
-      var hostDimensions = this.svgRef.current.getClientRects()[0];
-      var bounds = {
-        x: [0, hostDimensions.width],
-        y: [0, hostDimensions.height]
-      };
-
-      var randint = function randint(max) {
-        return Math.floor(Math.random() * max);
-      };
-
-      var clip = function clip(n, _ref) {
-        var _ref2 = (0, _slicedToArray2.default)(_ref, 2),
-            min = _ref2[0],
-            max = _ref2[1];
-
-        return Math.min(max, Math.max(min, n));
-      };
-
-      this.setState({
-        path: [this.props.initial || {
-          x: clip(randint(hostDimensions.width), bounds.x),
-          y: clip(randint(hostDimensions.height), bounds.y)
-        }]
-      });
-      setInterval(function () {
-        var path = _this2.state.path;
-        var last = path[path.length - 1];
-
-        _this2.setState({
-          path: [].concat((0, _toConsumableArray2.default)(path), [{
-            x: clip(last.x + randint(21) - 10, bounds.x),
-            y: clip(last.y + randint(21) - 10, bounds.y)
-          }])
-        });
-      }, 75);
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var path = this.state.path;
-      return React.createElement("svg", {
-        style: {
-          position: "fixed",
-          height: "100%",
-          width: "100%",
-          opacity: 0.6,
-          zIndex: -1
-        },
-        ref: this.svgRef
-      }, path.length && React.createElement("path", {
-        d: "M".concat(path[0].x, " ").concat(path[0].y, " ").concat(path.slice(1).map(function (_ref3) {
-          var x = _ref3.x,
-              y = _ref3.y;
-          return "L" + x + " " + y;
-        }).join(" ")),
-        stroke: "#e02a28",
-        fill: "none"
-      }));
-    }
-  }]);
-  return EndlessThread;
-}(React.Component);
-
-exports.EndlessThread = EndlessThread;
-},{"@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/helpers/slicedToArray":"../node_modules/@babel/runtime/helpers/slicedToArray.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js"}],"Login/Login.scss":[function(require,module,exports) {
-var reloadCSS = require('_css_loader');
-
-module.hot.dispose(reloadCSS);
-module.hot.accept(reloadCSS);
-},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"Login/Login.tsx":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Login = void 0;
-
-var React = _interopRequireWildcard(require("react"));
-
-var _Logo = require("../EmailViewer/UI/Logo");
-
-var _Spinner = require("../EmailViewer/UI/Spinner");
-
-var _EndlessThread = require("../EmailViewer/UI/EndlessThread");
-
-require("./Login.scss");
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-var handleLogin = function handleLogin() {
-  gapi.auth2.getAuthInstance().signIn({
-    scope: "profile https://mail.google.com/ https://www.googleapis.com/auth/gmail.modify https://www.googleapis.com/auth/gmail.readonly"
-  });
-};
-
-var Login = function Login(_ref) {
-  var loading = _ref.loading;
-  return React.createElement("div", null, React.createElement(_EndlessThread.EndlessThread, {
-    initial: {
-      x: window.innerWidth / 2,
-      y: 250
-    }
-  }), React.createElement(_EndlessThread.EndlessThread, {
-    initial: {
-      x: window.innerWidth / 2,
-      y: 250
-    }
-  }), React.createElement(_EndlessThread.EndlessThread, {
-    initial: {
-      x: window.innerWidth / 2,
-      y: 250
-    }
-  }), React.createElement(_EndlessThread.EndlessThread, {
-    initial: {
-      x: window.innerWidth / 2,
-      y: 250
-    }
-  }), React.createElement(_EndlessThread.EndlessThread, {
-    initial: {
-      x: window.innerWidth / 2,
-      y: 250
-    }
-  }), React.createElement("div", {
-    className: "LoginSection"
-  }, React.createElement(_Logo.Logo, null), loading ? React.createElement(_Spinner.Spinner, null) : React.createElement("a", {
-    className: "LoginButton",
-    onClick: handleLogin
-  }, React.createElement("div", {
-    id: "logo"
-  }, React.createElement("div", {
-    className: "g-line"
-  }), React.createElement("span", {
-    className: "red"
-  }), React.createElement("span", {
-    className: "yellow"
-  }), React.createElement("span", {
-    className: "green"
-  }), React.createElement("span", {
-    className: "blue"
-  })), "Sign in with Google")));
-};
-
-exports.Login = Login;
-},{"react":"../node_modules/react/index.js","../EmailViewer/UI/Logo":"EmailViewer/UI/Logo.tsx","../EmailViewer/UI/Spinner":"EmailViewer/UI/Spinner.tsx","../EmailViewer/UI/EndlessThread":"EmailViewer/UI/EndlessThread.tsx","./Login.scss":"Login/Login.scss"}],"app.tsx":[function(require,module,exports) {
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"app.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -34879,13 +35140,11 @@ var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits
 
 var React = _interopRequireWildcard(require("react"));
 
-var _ThreadList = require("./EmailViewer/ThreadList");
+var _Login = require("./Homepage/Login");
+
+var _EmailViewer = require("./EmailViewer/EmailViewer");
 
 require("normalize.css");
-
-var _Navigation = require("./Navigation/Navigation");
-
-var _Login = require("./Login/Login");
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
@@ -34941,11 +35200,9 @@ function (_React$Component) {
   (0, _createClass2.default)(App, [{
     key: "render",
     value: function render() {
-      return this.state.auth && this.state.profile ? React.createElement("div", null, React.createElement(_Navigation.Navigation, {
+      return this.state.auth && this.state.profile ? React.createElement(_EmailViewer.EmailViewer, {
         profile: this.state.profile
-      }), React.createElement(_ThreadList.ThreadList, {
-        email: this.state.profile.getEmail()
-      })) : React.createElement(_Login.Login, {
+      }) : React.createElement(_Login.Login, {
         loading: this.state.auth === undefined
       });
     }
@@ -34962,7 +35219,7 @@ function (_React$Component) {
 }(React.Component);
 
 exports.App = App;
-},{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","./EmailViewer/ThreadList":"EmailViewer/ThreadList.tsx","normalize.css":"../node_modules/normalize.css/normalize.css","./Navigation/Navigation":"Navigation/Navigation.tsx","./Login/Login":"Login/Login.tsx"}],"styles.scss":[function(require,module,exports) {
+},{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","./Homepage/Login":"Homepage/Login.tsx","./EmailViewer/EmailViewer":"EmailViewer/EmailViewer.tsx","normalize.css":"../node_modules/normalize.css/normalize.css"}],"styles.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -35012,7 +35269,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65072" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59225" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
