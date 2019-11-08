@@ -33009,7 +33009,7 @@ function (_React$Component) {
               y = _ref4.y;
           return "L" + x + " " + y;
         }).join(" ")),
-        stroke: "#e02a28",
+        stroke: "black",
         fill: "none"
       }));
     }
@@ -35270,7 +35270,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54775" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62265" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
