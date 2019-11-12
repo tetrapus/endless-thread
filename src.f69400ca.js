@@ -34624,6 +34624,26 @@ var define;
     return {Base64: global.Base64}
 }));
 
+},{}],"helpers.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.isDefined = isDefined;
+exports.definitely = definitely;
+
+function isDefined(x) {
+  return x !== undefined;
+}
+
+function definitely(x) {
+  if (isDefined(x)) {
+    return x;
+  }
+
+  throw Error("I trusted you :(");
+}
 },{}],"EmailViewer/MessageTypes/HtmlMessage.tsx":[function(require,module,exports) {
 "use strict";
 
@@ -34647,6 +34667,8 @@ var React = _interopRequireWildcard(require("react"));
 var _Spinner = require("../UI/Spinner");
 
 var _jsBase = require("js-base64");
+
+var _helpers = require("../../helpers");
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
@@ -34681,6 +34703,8 @@ function (_React$Component) {
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
+      var _this2 = this;
+
       if (!this.renderTarget.current) {
         console.log("Err: unmounted rendertarget");
         return;
@@ -34691,32 +34715,33 @@ function (_React$Component) {
       var uriPolicy = {
         rewrite: function rewrite(uri) {
           if (uri.domain_ === "attachments" && uri.scheme_ == "https") {
-            return uri.path_.slice(1);
+            var part = _this2.props.attachments[uri.path_.slice(1)];
+
+            if (!part) {
+              console.log("Uh oh!", uri, _this2.props.attachments);
+            }
+
+            return "data:".concat(part.mimeType, ";base64,").concat((0, _helpers.definitely)(part.body).data);
           }
 
           return uri;
         }
       };
-      console.log(caja.policy.net.ALL);
-      /*
-      caja.load(this.renderTarget.current, uriPolicy, (frame: any) => {
-        frame
-          .code(`data:text/html;base64,${data}`, "text/html")
-          .run(() => this.setState({ loading: false }));
-      });
-      */
-
-      this.renderTarget.current.innerHTML = this.props.data;
-      this.setState({
-        loading: false
-      });
+      caja.load(this.renderTarget.current, uriPolicy, function (frame) {
+        frame.code("data:text/html;base64,".concat(data), "text/html").run(function () {
+          return _this2.setState({
+            loading: false
+          });
+        });
+      }); //this.renderTarget.current.innerHTML = Base64.decode(data);
+      //this.setState({loading: false});
     }
   }]);
   return HtmlMessage;
 }(React.Component);
 
 exports.HtmlMessage = HtmlMessage;
-},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","../UI/Spinner":"EmailViewer/UI/Spinner.tsx","js-base64":"../node_modules/js-base64/base64.js"}],"EmailViewer/MessageTypes/TextMessage.tsx":[function(require,module,exports) {
+},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","../UI/Spinner":"EmailViewer/UI/Spinner.tsx","js-base64":"../node_modules/js-base64/base64.js","../../helpers":"helpers.ts"}],"EmailViewer/MessageTypes/TextMessage.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -34725,6 +34750,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.TextMessage = void 0;
 
 var React = _interopRequireWildcard(require("react"));
+
+var _jsBase = require("js-base64");
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
@@ -34736,11 +34763,11 @@ var TextMessage = function TextMessage(_ref) {
     style: {
       whiteSpace: "pre-line"
     }
-  }, atob(data));
+  }, _jsBase.Base64.atob(data));
 };
 
 exports.TextMessage = TextMessage;
-},{"react":"../node_modules/react/index.js"}],"../node_modules/base64-js/index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","js-base64":"../node_modules/js-base64/base64.js"}],"../node_modules/base64-js/index.js":[function(require,module,exports) {
 'use strict'
 
 exports.byteLength = byteLength
@@ -36881,9 +36908,9 @@ var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/ge
 
 var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
 
-var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
-
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
 
 var React = _interopRequireWildcard(require("react"));
 
@@ -36902,6 +36929,8 @@ var _TextMessage = require("./MessageTypes/TextMessage");
 var _tsOptchain = require("ts-optchain");
 
 var _urlsafeBase = require("urlsafe-base64");
+
+var _helpers = require("../helpers");
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
@@ -36922,29 +36951,45 @@ var unfoldParts = function unfoldParts(part) {
     });
     return supported ? unfoldParts(supported[supported.length - 1]) : [];
   } else if (part.mimeType == "multipart/related" && part.parts) {
-    var root = unfoldParts(part.parts[0]);
-    var related = part.parts.slice(1);
-    return root.map(function (subPart) {
-      var data = (0, _urlsafeBase.decode)((0, _tsOptchain.oc)(subPart).body.data("")).toString("utf8");
-      related.forEach(function (part) {
-        var id = (0, _tsOptchain.oc)(part).headers([]).find(function (header) {
-          return header.name == "X-Attachment-Id";
-        });
-        var encoded = Base64.btoa((0, _urlsafeBase.decode)((0, _tsOptchain.oc)(part).body.data("")).toString('binary'));
-
-        if (!id) {
+    var newParts = part.parts.flatMap(unfoldParts);
+    var main = (0, _helpers.definitely)(newParts[0]);
+    var data = (0, _urlsafeBase.decode)((0, _helpers.definitely)((0, _helpers.definitely)(main.body).data)).toString("utf8").replace(/cid:/, // `data:${part.mimeType};base64,${encoded}`
+    "https://attachments/");
+    return [_objectSpread({}, main, {
+      body: _objectSpread({}, main.body, {
+        data: (0, _urlsafeBase.encode)(Buffer.from(data, "utf8"))
+      })
+    })].concat((0, _toConsumableArray2.default)(newParts.slice(1)));
+    /*
+    const root = unfoldParts(part.parts[0]);
+    const related = part.parts.slice(1);
+    return root.map(subPart => {
+      let data = decode(oc(subPart).body.data("")).toString("utf8");
+      related.forEach(part => {
+        const id = oc(part)
+          .headers([])
+          .find(header => header.name == "X-Attachment-Id");
+        const encoded = Base64.btoa(
+          decode(oc(part).body.data("")).toString("binary")
+        );
+             if (!id) {
           throw Error();
         }
-
-        data = data.replace("cid:".concat(id.value), "data:".concat(part.mimeType, ";base64,").concat(encoded) // `https://attachments/${id.value}`
+        data = data.replace(
+          `cid:${id.value}`,
+          // `data:${part.mimeType};base64,${encoded}`
+          `https://attachments/${id.value}`
         );
       });
-      return _objectSpread({}, subPart, {
-        body: _objectSpread({}, subPart.body, {
-          data: (0, _urlsafeBase.encode)(Buffer.from(data, "utf8"))
-        })
-      });
+      return {
+        ...subPart,
+        body: {
+          ...subPart.body,
+          data: encode(Buffer.from(data, "utf8"))
+        }
+      };
     });
+    */
   } else if (part.mimeType == "multipart/mixed" && part.parts) {
     var _ref;
 
@@ -36985,12 +37030,10 @@ function (_React$Component) {
         onChange: function onChange(isVisible) {
           return _this2.handleVisibilityChange(isVisible);
         }
-      }, React.createElement(_Spinner.Spinner, null)) : this.getVisibleParts(parts).map(function (part) {
-        return React.createElement("div", {
-          key: part.partId,
-          className: "EmailBody"
-        }, _this2.getPartViewer(part));
-      })));
+      }, React.createElement(_Spinner.Spinner, null)) : React.createElement("div", {
+        key: parts[0].partId,
+        className: "EmailBody"
+      }, this.getPartViewer(parts[0], parts.slice(1)))));
     }
   }, {
     key: "getVisibleParts",
@@ -37005,7 +37048,7 @@ function (_React$Component) {
     }
   }, {
     key: "getPartViewer",
-    value: function getPartViewer(part) {
+    value: function getPartViewer(part, attachments) {
       if (!part.body || !part.body.data) {
         return;
       }
@@ -37013,9 +37056,16 @@ function (_React$Component) {
       var data = (0, _urlsafeBase.decode)(part.body.data).toString("utf8");
 
       if (part.mimeType == "text/html") {
+        var attachmentMap = Object.fromEntries(attachments.map(function (attachment) {
+          var idHeader = (0, _helpers.definitely)(attachment.headers).find(function (header) {
+            return header.name == "Content-Id";
+          });
+          return idHeader ? [(0, _helpers.definitely)(idHeader.value).slice(1, -1), attachment] : undefined;
+        }).filter(_helpers.isDefined));
         return React.createElement(_HtmlMessage.HtmlMessage, {
           key: part.partId,
-          data: data
+          data: data,
+          attachments: attachmentMap
         });
       } else {
         return React.createElement(_TextMessage.TextMessage, {
@@ -37038,7 +37088,7 @@ function (_React$Component) {
 }(React.Component);
 
 exports.Message = Message;
-},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","react":"../node_modules/react/index.js","react-visibility-sensor":"../node_modules/react-visibility-sensor/dist/visibility-sensor.js","./UI/Spinner":"EmailViewer/UI/Spinner.tsx","./Message.scss":"EmailViewer/Message.scss","html-entities":"../node_modules/html-entities/index.js","./MessageTypes/HtmlMessage":"EmailViewer/MessageTypes/HtmlMessage.tsx","./MessageTypes/TextMessage":"EmailViewer/MessageTypes/TextMessage.tsx","ts-optchain":"../node_modules/ts-optchain/dist/proxy/index.js","urlsafe-base64":"../node_modules/urlsafe-base64/index.js","buffer":"../node_modules/buffer/index.js"}],"EmailViewer/Thread.scss":[function(require,module,exports) {
+},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","react":"../node_modules/react/index.js","react-visibility-sensor":"../node_modules/react-visibility-sensor/dist/visibility-sensor.js","./UI/Spinner":"EmailViewer/UI/Spinner.tsx","./Message.scss":"EmailViewer/Message.scss","html-entities":"../node_modules/html-entities/index.js","./MessageTypes/HtmlMessage":"EmailViewer/MessageTypes/HtmlMessage.tsx","./MessageTypes/TextMessage":"EmailViewer/MessageTypes/TextMessage.tsx","ts-optchain":"../node_modules/ts-optchain/dist/proxy/index.js","urlsafe-base64":"../node_modules/urlsafe-base64/index.js","../helpers":"helpers.ts","buffer":"../node_modules/buffer/index.js"}],"EmailViewer/Thread.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -37085,6 +37135,8 @@ var _Spinner = require("./UI/Spinner");
 
 var _reactVisibilitySensor = _interopRequireDefault(require("react-visibility-sensor"));
 
+var _helpers = require("../helpers");
+
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -37094,18 +37146,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function isDefined(x) {
-  return x !== undefined;
-}
-
-function definitely(x) {
-  if (isDefined(x)) {
-    return x;
-  }
-
-  throw Error("I trusted you :(");
-}
 
 var getAttatchmentIds = function getAttatchmentIds(part) {
   if (part.parts) {
@@ -37134,9 +37174,9 @@ function () {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            ids = (_ref3 = []).concat.apply(_ref3, (0, _toConsumableArray2.default)(definitely(thread.messages).map(function (message) {
-              return getAttatchmentIds(definitely(message.payload)).map(function (id) {
-                return [id, definitely(message.id)];
+            ids = (_ref3 = []).concat.apply(_ref3, (0, _toConsumableArray2.default)((0, _helpers.definitely)(thread.messages).map(function (message) {
+              return getAttatchmentIds((0, _helpers.definitely)(message.payload)).map(function (id) {
+                return [id, (0, _helpers.definitely)(message.id)];
               });
             })));
 
@@ -37232,7 +37272,7 @@ function (_React$Component) {
         return _this2.props.labels.find(function (label) {
           return label.id == name;
         });
-      }).filter(isDefined).filter(function (label) {
+      }).filter(_helpers.isDefined).filter(function (label) {
         return label.type === "user";
       });
       var unread = !!labelNames.find(function (name) {
@@ -37263,7 +37303,7 @@ function (_React$Component) {
           message: message,
           key: message.id,
           email: _this2.props.email,
-          attachments: definitely(_this2.state.attachments)
+          attachments: (0, _helpers.definitely)(_this2.state.attachments)
         });
       })), React.createElement("div", {
         className: "Chevron " + (unread ? "collapsed" : "expanded"),
@@ -37314,7 +37354,7 @@ function (_React$Component) {
                 walkParts = function walkParts(part) {
                   return _objectSpread({}, part, {
                     body: attachments.find(function (attachment) {
-                      return attachment.attachmentId === definitely(part.body).attachmentId;
+                      return attachment.attachmentId === (0, _helpers.definitely)(part.body).attachmentId;
                     }) || part.body,
                     parts: part.parts ? part.parts.map(walkParts) : undefined
                   });
@@ -37322,9 +37362,9 @@ function (_React$Component) {
 
                 return _context2.abrupt("return", {
                   thread: _objectSpread({}, thread, {
-                    messages: (0, _toConsumableArray2.default)(definitely(thread.messages).map(function (message) {
+                    messages: (0, _toConsumableArray2.default)((0, _helpers.definitely)(thread.messages).map(function (message) {
                       return _objectSpread({}, message, {
-                        payload: walkParts(definitely(message.payload))
+                        payload: walkParts((0, _helpers.definitely)(message.payload))
                       });
                     }))
                   }),
@@ -37398,7 +37438,7 @@ function (_React$Component) {
 }(React.Component);
 
 exports.Thread = Thread;
-},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/slicedToArray":"../node_modules/@babel/runtime/helpers/slicedToArray.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","react":"../node_modules/react/index.js","ts-optchain":"../node_modules/ts-optchain/dist/proxy/index.js","./Message":"EmailViewer/Message.tsx","./Thread.scss":"EmailViewer/Thread.scss","./UI/Icon":"EmailViewer/UI/Icon.tsx","./UI/Spinner":"EmailViewer/UI/Spinner.tsx","react-visibility-sensor":"../node_modules/react-visibility-sensor/dist/visibility-sensor.js"}],"EmailViewer/ThreadList.scss":[function(require,module,exports) {
+},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/slicedToArray":"../node_modules/@babel/runtime/helpers/slicedToArray.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","react":"../node_modules/react/index.js","ts-optchain":"../node_modules/ts-optchain/dist/proxy/index.js","./Message":"EmailViewer/Message.tsx","./Thread.scss":"EmailViewer/Thread.scss","./UI/Icon":"EmailViewer/UI/Icon.tsx","./UI/Spinner":"EmailViewer/UI/Spinner.tsx","react-visibility-sensor":"../node_modules/react-visibility-sensor/dist/visibility-sensor.js","../helpers":"helpers.ts"}],"EmailViewer/ThreadList.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -37814,7 +37854,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61257" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55837" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
