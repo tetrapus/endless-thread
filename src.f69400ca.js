@@ -34644,130 +34644,7 @@ function definitely(x) {
 
   throw Error("I trusted you :(");
 }
-},{}],"EmailViewer/MessageTypes/HtmlMessage.tsx":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.HtmlMessage = void 0;
-
-var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
-
-var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
-
-var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
-
-var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
-
-var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
-
-var React = _interopRequireWildcard(require("react"));
-
-var _Spinner = require("../UI/Spinner");
-
-var _jsBase = require("js-base64");
-
-var _helpers = require("../../helpers");
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var HtmlMessage =
-/*#__PURE__*/
-function (_React$Component) {
-  (0, _inherits2.default)(HtmlMessage, _React$Component);
-
-  function HtmlMessage(props) {
-    var _this;
-
-    (0, _classCallCheck2.default)(this, HtmlMessage);
-    _this = (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(HtmlMessage).call(this, props));
-    _this.renderTarget = React.createRef();
-    _this.state = {
-      loading: true
-    };
-    return _this;
-  }
-
-  (0, _createClass2.default)(HtmlMessage, [{
-    key: "render",
-    value: function render() {
-      return React.createElement("div", null, this.state.loading && React.createElement(_Spinner.Spinner, null), React.createElement("div", {
-        ref: this.renderTarget
-      }));
-    }
-  }, {
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      if (!this.renderTarget.current) {
-        console.log("Err: unmounted rendertarget");
-        return;
-      }
-
-      var data = _jsBase.Base64.encode(this.props.data.replace(/<div><strong>REPOSITORY<.*/, "").replace(/<div><strong>TASK DETAIL<.*/, ""));
-
-      var uriPolicy = {
-        rewrite: function rewrite(uri) {
-          if (uri.domain_ === "attachments" && uri.scheme_ == "https") {
-            var part = _this2.props.attachments[uri.path_.slice(1)];
-
-            if (!part) {
-              console.log("Uh oh!", uri, _this2.props.attachments);
-            }
-
-            return "data:".concat(part.mimeType, ";base64,").concat((0, _helpers.definitely)(part.body).data);
-          }
-
-          return uri;
-        }
-      };
-      caja.load(this.renderTarget.current, uriPolicy, function (frame) {
-        frame.code("data:text/html;base64,".concat(data), "text/html").run(function () {
-          return _this2.setState({
-            loading: false
-          });
-        });
-      }); //this.renderTarget.current.innerHTML = Base64.decode(data);
-      //this.setState({loading: false});
-    }
-  }]);
-  return HtmlMessage;
-}(React.Component);
-
-exports.HtmlMessage = HtmlMessage;
-},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","../UI/Spinner":"EmailViewer/UI/Spinner.tsx","js-base64":"../node_modules/js-base64/base64.js","../../helpers":"helpers.ts"}],"EmailViewer/MessageTypes/TextMessage.tsx":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.TextMessage = void 0;
-
-var React = _interopRequireWildcard(require("react"));
-
-var _jsBase = require("js-base64");
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-var TextMessage = function TextMessage(_ref) {
-  var data = _ref.data;
-  return React.createElement("div", {
-    style: {
-      whiteSpace: "pre-line"
-    }
-  }, _jsBase.Base64.atob(data));
-};
-
-exports.TextMessage = TextMessage;
-},{"react":"../node_modules/react/index.js","js-base64":"../node_modules/js-base64/base64.js"}],"../node_modules/base64-js/index.js":[function(require,module,exports) {
+},{}],"../node_modules/base64-js/index.js":[function(require,module,exports) {
 'use strict'
 
 exports.byteLength = byteLength
@@ -36889,7 +36766,141 @@ exports.validate = function validate(base64) {
 },{"buffer":"../node_modules/buffer/index.js"}],"../node_modules/urlsafe-base64/index.js":[function(require,module,exports) {
 
 module.exports = require('./lib/urlsafe-base64');
-},{"./lib/urlsafe-base64":"../node_modules/urlsafe-base64/lib/urlsafe-base64.js"}],"EmailViewer/Message.tsx":[function(require,module,exports) {
+},{"./lib/urlsafe-base64":"../node_modules/urlsafe-base64/lib/urlsafe-base64.js"}],"EmailViewer/MessageTypes/HtmlMessage.scss":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"EmailViewer/MessageTypes/HtmlMessage.tsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.HtmlMessage = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var React = _interopRequireWildcard(require("react"));
+
+var _Spinner = require("../UI/Spinner");
+
+var _jsBase = require("js-base64");
+
+var _helpers = require("../../helpers");
+
+var _urlsafeBase = require("urlsafe-base64");
+
+require("./HtmlMessage.scss");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var HtmlMessage =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2.default)(HtmlMessage, _React$Component);
+
+  function HtmlMessage(props) {
+    var _this;
+
+    (0, _classCallCheck2.default)(this, HtmlMessage);
+    _this = (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(HtmlMessage).call(this, props));
+    _this.renderTarget = React.createRef();
+    _this.state = {
+      loading: true
+    };
+    return _this;
+  }
+
+  (0, _createClass2.default)(HtmlMessage, [{
+    key: "render",
+    value: function render() {
+      return React.createElement("div", null, this.state.loading && React.createElement(_Spinner.Spinner, null), React.createElement("div", {
+        ref: this.renderTarget
+      }));
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      if (!this.renderTarget.current) {
+        console.log("Err: unmounted rendertarget");
+        return;
+      }
+
+      var data = _jsBase.Base64.encode(this.props.data.replace(/<div><strong>REPOSITORY<.*/, "").replace(/<div><strong>TASK DETAIL<.*/, ""));
+
+      var uriPolicy = {
+        rewrite: function rewrite(uri) {
+          if (uri.domain_ === "attachments" && uri.scheme_ == "https") {
+            var part = _this2.props.attachments[uri.path_.slice(1)];
+
+            if (!part) {
+              console.log("Uh oh!", uri, _this2.props.attachments);
+            }
+
+            var _data = _jsBase.Base64.btoa((0, _urlsafeBase.decode)((0, _helpers.definitely)((0, _helpers.definitely)(part.body).data)).toString('binary'));
+
+            return "data:".concat(part.mimeType, ";base64,").concat(_data);
+          }
+
+          return uri;
+        }
+      };
+      caja.load(this.renderTarget.current, uriPolicy, function (frame) {
+        frame.code("data:text/html;base64,".concat(data), "text/html").run(function () {
+          return _this2.setState({
+            loading: false
+          });
+        });
+      }); //this.renderTarget.current.innerHTML = Base64.decode(data);
+      //this.setState({loading: false});
+    }
+  }]);
+  return HtmlMessage;
+}(React.Component);
+
+exports.HtmlMessage = HtmlMessage;
+},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","../UI/Spinner":"EmailViewer/UI/Spinner.tsx","js-base64":"../node_modules/js-base64/base64.js","../../helpers":"helpers.ts","urlsafe-base64":"../node_modules/urlsafe-base64/index.js","./HtmlMessage.scss":"EmailViewer/MessageTypes/HtmlMessage.scss"}],"EmailViewer/MessageTypes/TextMessage.tsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.TextMessage = void 0;
+
+var React = _interopRequireWildcard(require("react"));
+
+var _jsBase = require("js-base64");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+var TextMessage = function TextMessage(_ref) {
+  var data = _ref.data;
+  return React.createElement("div", {
+    style: {
+      whiteSpace: "pre-line"
+    }
+  }, _jsBase.Base64.atob(data));
+};
+
+exports.TextMessage = TextMessage;
+},{"react":"../node_modules/react/index.js","js-base64":"../node_modules/js-base64/base64.js"}],"EmailViewer/Message.tsx":[function(require,module,exports) {
 var Buffer = require("buffer").Buffer;
 "use strict";
 
@@ -37056,9 +37067,10 @@ function (_React$Component) {
       var data = (0, _urlsafeBase.decode)(part.body.data).toString("utf8");
 
       if (part.mimeType == "text/html") {
+        console.log(attachments);
         var attachmentMap = Object.fromEntries(attachments.map(function (attachment) {
           var idHeader = (0, _helpers.definitely)(attachment.headers).find(function (header) {
-            return header.name == "Content-Id";
+            return header.name == "Content-ID";
           });
           return idHeader ? [(0, _helpers.definitely)(idHeader.value).slice(1, -1), attachment] : undefined;
         }).filter(_helpers.isDefined));
@@ -37854,7 +37866,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55837" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56236" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
