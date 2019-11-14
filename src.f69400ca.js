@@ -36966,7 +36966,7 @@ var unfoldParts = function unfoldParts(part) {
   } else if (part.mimeType == "multipart/related" && part.parts) {
     var newParts = part.parts.flatMap(unfoldParts);
     var main = (0, _helpers.definitely)(newParts[0]);
-    var data = (0, _urlsafeBase.decode)((0, _helpers.definitely)((0, _helpers.definitely)(main.body).data)).toString("utf8").replace(/cid:/, // `data:${part.mimeType};base64,${encoded}`
+    var data = (0, _urlsafeBase.decode)((0, _helpers.definitely)((0, _helpers.definitely)(main.body).data)).toString("utf8").replace(/cid:/g, // `data:${part.mimeType};base64,${encoded}`
     "https://attachments/");
     return [_objectSpread({}, main, {
       body: _objectSpread({}, main.body, {
