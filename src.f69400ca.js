@@ -37477,7 +37477,7 @@ function (_React$Component) {
         }
 
         window.scrollTo({
-          top: _this4.elementRef.current.offsetTop + _this4.elementRef.current.offsetHeight,
+          top: _this4.elementRef.current.offsetTop + _this4.elementRef.current.offsetHeight - 64,
           behavior: "smooth"
         });
       });
