@@ -36841,7 +36841,7 @@ function (_React$Component) {
         return;
       }
 
-      var data = _jsBase.Base64.encode(this.props.data.replace(/<div><strong>REPOSITORY<.*/, "").replace(/<div><strong>TASK DETAIL<.*/, ""));
+      var data = _jsBase.Base64.encode(this.props.data.replace(/<div><strong>REPOSITORY<.*/, "").replace(/<div><strong>TASK DETAIL<.*/, "").replace(/<div><strong>EMAIL PREFERENCES<.*/, "").replace(/<div><strong>POST DETAIL<.*/, ""));
 
       var uriPolicy = {
         rewrite: function rewrite(uri) {
@@ -36852,7 +36852,7 @@ function (_React$Component) {
               console.log("Uh oh!", uri, _this2.props.attachments);
             }
 
-            var _data = _jsBase.Base64.btoa((0, _urlsafeBase.decode)((0, _helpers.definitely)((0, _helpers.definitely)(part.body).data)).toString('binary'));
+            var _data = _jsBase.Base64.btoa((0, _urlsafeBase.decode)((0, _helpers.definitely)((0, _helpers.definitely)(part.body).data)).toString("binary"));
 
             return "data:".concat(part.mimeType, ";base64,").concat(_data);
           }
@@ -36908,6 +36908,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.Message = void 0;
+
+var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
 
 var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
 
@@ -37035,16 +37037,43 @@ function (_React$Component) {
       var part = this.props.message.payload;
       var parts = part ? unfoldParts(part) : [];
       var isUnread = (0, _tsOptchain.oc)(this).props.message.labelIds([]).includes("UNREAD");
+      var fromHeader = (0, _tsOptchain.oc)(this).props.message.payload.headers([]).find(function (header) {
+        return header.name == "From";
+      });
       return React.createElement("div", null, isUnread || React.createElement("div", {
         className: "Snippet"
       }, new _htmlEntities.Html5Entities().decode(this.props.message.snippet || "")), isUnread && (this.state.expanded === undefined ? React.createElement(_reactVisibilitySensor.default, {
         onChange: function onChange(isVisible) {
           return _this2.handleVisibilityChange(isVisible);
         }
-      }, React.createElement(_Spinner.Spinner, null)) : React.createElement("div", {
+      }, React.createElement(_Spinner.Spinner, null)) : React.createElement("div", null, this.getSenderComponent(fromHeader), React.createElement("div", {
         key: parts[0].partId,
         className: "EmailBody"
-      }, this.getPartViewer(parts[0], parts.slice(1)))));
+      }, this.getPartViewer(parts[0], parts.slice(1))))));
+    }
+  }, {
+    key: "getSenderComponent",
+    value: function getSenderComponent(fromHeader) {
+      if (!fromHeader) {
+        return;
+      }
+
+      var parsed = /^(.*) <(.*)>$/.exec((0, _helpers.definitely)(fromHeader.value));
+
+      if (parsed) {
+        var _parsed = (0, _slicedToArray2.default)(parsed, 3),
+            _ = _parsed[0],
+            sender = _parsed[1],
+            address = _parsed[2];
+
+        return React.createElement("div", {
+          className: "Sender"
+        }, React.createElement("div", null, sender), React.createElement("div", {
+          className: "EmailAddress"
+        }, address));
+      }
+
+      return;
     }
   }, {
     key: "getVisibleParts",
@@ -37100,7 +37129,7 @@ function (_React$Component) {
 }(React.Component);
 
 exports.Message = Message;
-},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","react":"../node_modules/react/index.js","react-visibility-sensor":"../node_modules/react-visibility-sensor/dist/visibility-sensor.js","./UI/Spinner":"EmailViewer/UI/Spinner.tsx","./Message.scss":"EmailViewer/Message.scss","html-entities":"../node_modules/html-entities/index.js","./MessageTypes/HtmlMessage":"EmailViewer/MessageTypes/HtmlMessage.tsx","./MessageTypes/TextMessage":"EmailViewer/MessageTypes/TextMessage.tsx","ts-optchain":"../node_modules/ts-optchain/dist/proxy/index.js","urlsafe-base64":"../node_modules/urlsafe-base64/index.js","../helpers":"helpers.ts","buffer":"../node_modules/buffer/index.js"}],"EmailViewer/Thread.scss":[function(require,module,exports) {
+},{"@babel/runtime/helpers/slicedToArray":"../node_modules/@babel/runtime/helpers/slicedToArray.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","react":"../node_modules/react/index.js","react-visibility-sensor":"../node_modules/react-visibility-sensor/dist/visibility-sensor.js","./UI/Spinner":"EmailViewer/UI/Spinner.tsx","./Message.scss":"EmailViewer/Message.scss","html-entities":"../node_modules/html-entities/index.js","./MessageTypes/HtmlMessage":"EmailViewer/MessageTypes/HtmlMessage.tsx","./MessageTypes/TextMessage":"EmailViewer/MessageTypes/TextMessage.tsx","ts-optchain":"../node_modules/ts-optchain/dist/proxy/index.js","urlsafe-base64":"../node_modules/urlsafe-base64/index.js","../helpers":"helpers.ts","buffer":"../node_modules/buffer/index.js"}],"EmailViewer/Thread.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -37257,6 +37286,7 @@ function (_React$Component) {
       thread: thread,
       loading: true
     };
+    _this.elementRef = React.createRef();
     return _this;
   }
 
@@ -37291,7 +37321,8 @@ function (_React$Component) {
         return name == "UNREAD";
       });
       return React.createElement("div", {
-        className: "ThreadContainer"
+        className: "ThreadContainer",
+        ref: this.elementRef
       }, React.createElement("div", {
         className: "ThreadContent"
       }, React.createElement("div", {
@@ -37310,13 +37341,8 @@ function (_React$Component) {
         onChange: function onChange(visible) {
           return _this2.loadThread(visible);
         }
-      }, React.createElement(_Spinner.Spinner, null)) : thread.messages.map(function (message) {
-        return React.createElement(_Message.Message, {
-          message: message,
-          key: message.id,
-          email: _this2.props.email,
-          attachments: (0, _helpers.definitely)(_this2.state.attachments)
-        });
+      }, React.createElement(_Spinner.Spinner, null)) : thread.messages.map(function (message, idx, all) {
+        return _this2.getMessage(message, idx, all);
       })), React.createElement("div", {
         className: "Chevron " + (unread ? "collapsed" : "expanded"),
         onClick: function onClick() {
@@ -37326,6 +37352,20 @@ function (_React$Component) {
         type: "collapse",
         size: 32
       })));
+    }
+  }, {
+    key: "getMessage",
+    value: function getMessage(message, idx, all) {
+      var isUnread = function isUnread(message) {
+        return (0, _helpers.definitely)(message.labelIds).includes("UNREAD");
+      };
+
+      return React.createElement(_Message.Message, {
+        message: message,
+        key: message.id,
+        email: this.props.email,
+        attachments: (0, _helpers.definitely)(this.state.attachments)
+      });
     }
   }, {
     key: "loadThread",
@@ -37430,6 +37470,15 @@ function (_React$Component) {
               }) || {});
             })
           })
+        });
+
+        if (!_this4.elementRef.current) {
+          return;
+        }
+
+        window.scrollTo({
+          top: _this4.elementRef.current.offsetTop + _this4.elementRef.current.offsetHeight,
+          behavior: "smooth"
         });
       });
     }
@@ -37866,7 +37915,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56236" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64130" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
