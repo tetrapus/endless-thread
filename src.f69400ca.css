@@ -168,14 +168,9 @@
   background: #f44336;
 }
 .Navigation {
-  box-shadow: 0 0 4px #888888;
-  position: sticky;
-  top: 0;
-  background-color: white;
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  z-index: 100;
 }
 
 .Image {
