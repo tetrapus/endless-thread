@@ -37674,7 +37674,7 @@ function (_React$Component) {
                     var details = response.result;
                     return _objectSpread({}, details);
                   }).sort(function (a, b) {
-                    return parseInt((0, _helpers.definitely)(a.historyId)) - parseInt((0, _helpers.definitely)(b.historyId));
+                    return parseInt((0, _helpers.definitely)(b.historyId)) - parseInt((0, _helpers.definitely)(a.historyId));
                   })
                 });
 
