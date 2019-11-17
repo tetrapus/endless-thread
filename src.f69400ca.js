@@ -36900,7 +36900,242 @@ var TextMessage = function TextMessage(_ref) {
 };
 
 exports.TextMessage = TextMessage;
-},{"react":"../node_modules/react/index.js","js-base64":"../node_modules/js-base64/base64.js"}],"EmailViewer/Message.tsx":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","js-base64":"../node_modules/js-base64/base64.js"}],"../node_modules/react-timeago/lib/defaultFormatter.js":[function(require,module,exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = defaultFormatter;
+
+var _react = require('react');
+
+var React = _interopRequireWildcard(_react);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function defaultFormatter(value, unit, suffix) {
+  if (value !== 1) {
+    unit += 's';
+  }
+  return value + ' ' + unit + ' ' + suffix;
+}
+},{"react":"../node_modules/react/index.js"}],"../node_modules/react-timeago/lib/dateParser.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = dateParser;
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _toArray(arr) { return Array.isArray(arr) ? arr : Array.from(arr); }
+
+function dateParser(date) {
+  var parsed = new Date(date);
+  if (!Number.isNaN(parsed.valueOf())) {
+    return parsed;
+  }
+
+  var parts = String(date).match(/\d+/g);
+  if (parts == null || parts.length <= 2) {
+    return parsed;
+  } else {
+    var _parts$map = parts.map(function (x) {
+      return parseInt(x);
+    }),
+        _parts$map2 = _toArray(_parts$map),
+        firstP = _parts$map2[0],
+        secondP = _parts$map2[1],
+        restPs = _parts$map2.slice(2);
+
+    var correctedParts = [firstP, secondP - 1].concat(_toConsumableArray(restPs));
+    var isoDate = new Date(Date.UTC.apply(Date, _toConsumableArray(correctedParts)));
+    return isoDate;
+  }
+}
+},{}],"../node_modules/react-timeago/lib/index.js":[function(require,module,exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var React = _interopRequireWildcard(_react);
+
+var _defaultFormatter = require('./defaultFormatter');
+
+var _defaultFormatter2 = _interopRequireDefault(_defaultFormatter);
+
+var _dateParser = require('./dateParser');
+
+var _dateParser2 = _interopRequireDefault(_dateParser);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Component = React.Component;
+
+
+// Just some simple constants for readability
+var MINUTE = 60;
+var HOUR = MINUTE * 60;
+var DAY = HOUR * 24;
+var WEEK = DAY * 7;
+var MONTH = DAY * 30;
+var YEAR = DAY * 365;
+
+var TimeAgo = function (_Component) {
+  _inherits(TimeAgo, _Component);
+
+  function TimeAgo() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
+    _classCallCheck(this, TimeAgo);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = TimeAgo.__proto__ || Object.getPrototypeOf(TimeAgo)).call.apply(_ref, [this].concat(args))), _this), _this.isStillMounted = false, _this.tick = function (refresh) {
+      if (!_this.isStillMounted || !_this.props.live) {
+        return;
+      }
+
+      var then = (0, _dateParser2.default)(_this.props.date).valueOf();
+      if (!then) {
+        console.warn('[react-timeago] Invalid Date provided');
+        return;
+      }
+
+      var now = _this.props.now();
+      var seconds = Math.round(Math.abs(now - then) / 1000);
+
+      var unboundPeriod = seconds < MINUTE ? 1000 : seconds < HOUR ? 1000 * MINUTE : seconds < DAY ? 1000 * HOUR : 0;
+      var period = Math.min(Math.max(unboundPeriod, _this.props.minPeriod * 1000), _this.props.maxPeriod * 1000);
+
+      if (period) {
+        if (_this.timeoutId) {
+          clearTimeout(_this.timeoutId);
+        }
+        _this.timeoutId = setTimeout(_this.tick, period);
+      }
+
+      if (!refresh) {
+        _this.forceUpdate();
+      }
+    }, _temp), _possibleConstructorReturn(_this, _ret);
+  }
+
+  _createClass(TimeAgo, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.isStillMounted = true;
+      if (this.props.live) {
+        this.tick(true);
+      }
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(lastProps) {
+      if (this.props.live !== lastProps.live || this.props.date !== lastProps.date) {
+        if (!this.props.live && this.timeoutId) {
+          clearTimeout(this.timeoutId);
+        }
+        this.tick();
+      }
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      this.isStillMounted = false;
+      if (this.timeoutId) {
+        clearTimeout(this.timeoutId);
+        this.timeoutId = undefined;
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      /* eslint-disable no-unused-vars */
+      var _props = this.props,
+          date = _props.date,
+          formatter = _props.formatter,
+          Komponent = _props.component,
+          live = _props.live,
+          minPeriod = _props.minPeriod,
+          maxPeriod = _props.maxPeriod,
+          title = _props.title,
+          now = _props.now,
+          passDownProps = _objectWithoutProperties(_props, ['date', 'formatter', 'component', 'live', 'minPeriod', 'maxPeriod', 'title', 'now']);
+      /* eslint-enable no-unused-vars */
+
+
+      var then = (0, _dateParser2.default)(date).valueOf();
+      if (!then) {
+        return null;
+      }
+      var timeNow = now();
+      var seconds = Math.round(Math.abs(timeNow - then) / 1000);
+      var suffix = then < timeNow ? 'ago' : 'from now';
+
+      var _ref2 = seconds < MINUTE ? [Math.round(seconds), 'second'] : seconds < HOUR ? [Math.round(seconds / MINUTE), 'minute'] : seconds < DAY ? [Math.round(seconds / HOUR), 'hour'] : seconds < WEEK ? [Math.round(seconds / DAY), 'day'] : seconds < MONTH ? [Math.round(seconds / WEEK), 'week'] : seconds < YEAR ? [Math.round(seconds / MONTH), 'month'] : [Math.round(seconds / YEAR), 'year'],
+          _ref3 = _slicedToArray(_ref2, 2),
+          value = _ref3[0],
+          unit = _ref3[1];
+
+      var passDownTitle = typeof title === 'undefined' ? typeof date === 'string' ? date : (0, _dateParser2.default)(date).toISOString().substr(0, 16).replace('T', ' ') : title;
+
+      var spreadProps = Komponent === 'time' ? Object.assign({}, passDownProps, {
+        dateTime: (0, _dateParser2.default)(date).toISOString()
+      }) : passDownProps;
+
+      var nextFormatter = _defaultFormatter2.default.bind(null, value, unit, suffix);
+
+      return React.createElement(
+        Komponent,
+        _extends({}, spreadProps, { title: passDownTitle }),
+        formatter(value, unit, suffix, then, nextFormatter, now)
+      );
+    }
+  }]);
+
+  return TimeAgo;
+}(Component);
+
+TimeAgo.displayName = 'TimeAgo';
+TimeAgo.defaultProps = {
+  live: true,
+  component: 'time',
+  minPeriod: 0,
+  maxPeriod: Infinity,
+  formatter: _defaultFormatter2.default,
+  now: function now() {
+    return Date.now();
+  }
+};
+exports.default = TimeAgo;
+},{"react":"../node_modules/react/index.js","./defaultFormatter":"../node_modules/react-timeago/lib/defaultFormatter.js","./dateParser":"../node_modules/react-timeago/lib/dateParser.js"}],"EmailViewer/Message.tsx":[function(require,module,exports) {
 var Buffer = require("buffer").Buffer;
 "use strict";
 
@@ -36944,6 +37179,8 @@ var _tsOptchain = require("ts-optchain");
 var _urlsafeBase = require("urlsafe-base64");
 
 var _helpers = require("../helpers");
+
+var _reactTimeago = _interopRequireDefault(require("react-timeago"));
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
@@ -37042,14 +37279,22 @@ function (_React$Component) {
       });
       return React.createElement("div", null, isUnread || React.createElement("div", {
         className: "Snippet"
-      }, new _htmlEntities.Html5Entities().decode(this.props.message.snippet || "")), isUnread && (this.state.expanded === undefined ? React.createElement(_reactVisibilitySensor.default, {
+      }, React.createElement("div", {
+        className: "Timestamp SnippetFade"
+      }, React.createElement(_reactTimeago.default, {
+        date: parseInt((0, _helpers.definitely)(this.props.message.internalDate))
+      })), new _htmlEntities.Html5Entities().decode(this.props.message.snippet || "")), isUnread && (this.state.expanded === undefined ? React.createElement(_reactVisibilitySensor.default, {
         onChange: function onChange(isVisible) {
           return _this2.handleVisibilityChange(isVisible);
         }
       }, React.createElement(_Spinner.Spinner, null)) : React.createElement("div", null, this.getSenderComponent(fromHeader), React.createElement("div", {
         key: parts[0].partId,
         className: "EmailBody"
-      }, this.getPartViewer(parts[0], parts.slice(1))))));
+      }, React.createElement("div", {
+        className: "Timestamp"
+      }, React.createElement(_reactTimeago.default, {
+        date: parseInt((0, _helpers.definitely)(this.props.message.internalDate))
+      })), this.getPartViewer(parts[0], parts.slice(1))))));
     }
   }, {
     key: "getSenderComponent",
@@ -37058,19 +37303,20 @@ function (_React$Component) {
         return;
       }
 
-      var parsed = /^(.*) <(.*)>$/.exec((0, _helpers.definitely)(fromHeader.value));
+      var parsed = /^(.*) <(.*)@(.*)>$/.exec((0, _helpers.definitely)(fromHeader.value));
 
       if (parsed) {
-        var _parsed = (0, _slicedToArray2.default)(parsed, 3),
+        var _parsed = (0, _slicedToArray2.default)(parsed, 4),
             _ = _parsed[0],
             sender = _parsed[1],
-            address = _parsed[2];
+            address = _parsed[2],
+            domain = _parsed[3];
 
         return React.createElement("div", {
           className: "Sender"
         }, React.createElement("div", null, sender), React.createElement("div", {
           className: "EmailAddress"
-        }, address));
+        }, address, React.createElement("wbr", null), "@", domain));
       }
 
       return;
@@ -37129,7 +37375,7 @@ function (_React$Component) {
 }(React.Component);
 
 exports.Message = Message;
-},{"@babel/runtime/helpers/slicedToArray":"../node_modules/@babel/runtime/helpers/slicedToArray.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","react":"../node_modules/react/index.js","react-visibility-sensor":"../node_modules/react-visibility-sensor/dist/visibility-sensor.js","./UI/Spinner":"EmailViewer/UI/Spinner.tsx","./Message.scss":"EmailViewer/Message.scss","html-entities":"../node_modules/html-entities/index.js","./MessageTypes/HtmlMessage":"EmailViewer/MessageTypes/HtmlMessage.tsx","./MessageTypes/TextMessage":"EmailViewer/MessageTypes/TextMessage.tsx","ts-optchain":"../node_modules/ts-optchain/dist/proxy/index.js","urlsafe-base64":"../node_modules/urlsafe-base64/index.js","../helpers":"helpers.ts","buffer":"../node_modules/buffer/index.js"}],"EmailViewer/Thread.scss":[function(require,module,exports) {
+},{"@babel/runtime/helpers/slicedToArray":"../node_modules/@babel/runtime/helpers/slicedToArray.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","react":"../node_modules/react/index.js","react-visibility-sensor":"../node_modules/react-visibility-sensor/dist/visibility-sensor.js","./UI/Spinner":"EmailViewer/UI/Spinner.tsx","./Message.scss":"EmailViewer/Message.scss","html-entities":"../node_modules/html-entities/index.js","./MessageTypes/HtmlMessage":"EmailViewer/MessageTypes/HtmlMessage.tsx","./MessageTypes/TextMessage":"EmailViewer/MessageTypes/TextMessage.tsx","ts-optchain":"../node_modules/ts-optchain/dist/proxy/index.js","urlsafe-base64":"../node_modules/urlsafe-base64/index.js","../helpers":"helpers.ts","react-timeago":"../node_modules/react-timeago/lib/index.js","buffer":"../node_modules/buffer/index.js"}],"EmailViewer/Thread.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -37329,7 +37575,15 @@ function (_React$Component) {
         className: "ThreadInfo"
       }, React.createElement("h1", {
         className: "Subject"
-      }, subject)), React.createElement("div", {
+      }, subject), React.createElement("div", {
+        className: "Chevron " + (unread ? "collapsed" : "expanded"),
+        onClick: function onClick() {
+          return _this2.handleChevronClick(unread);
+        }
+      }, React.createElement(_Icon.Icon, {
+        type: "collapse",
+        size: 32
+      }))), React.createElement("div", {
         className: "LabelList"
       }, labels.map(function (label) {
         return React.createElement("span", {
@@ -37343,14 +37597,6 @@ function (_React$Component) {
         }
       }, React.createElement(_Spinner.Spinner, null)) : thread.messages.map(function (message, idx, all) {
         return _this2.getMessage(message, idx, all);
-      })), React.createElement("div", {
-        className: "Chevron " + (unread ? "collapsed" : "expanded"),
-        onClick: function onClick() {
-          return _this2.handleChevronClick(unread);
-        }
-      }, React.createElement(_Icon.Icon, {
-        type: "collapse",
-        size: 32
       })));
     }
   }, {
@@ -37919,7 +38165,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51010" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55287" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
