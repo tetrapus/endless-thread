@@ -1,0 +1,9 @@
+
+.gmail_quote:not(blockquote):not(:hover), .gmail_signature:not(:hover) {
+    height: 2rem;
+    filter: opacity(0.5);
+    overflow: hidden;
+    background-color: #ddd;
+    padding: 4px 8px;
+    border-top: 1px solid grey;
+}

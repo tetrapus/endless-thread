@@ -1,11 +1,8 @@
 .Navigation {
-  box-shadow: 0 0 4px #888888;
-  position: sticky;
-  top: 0;
   background-color: white;
   display: flex;
   justify-content: flex-end;
-  z-index: 100;
+  align-items: center;
 }
 
 .Image {
@@ -34,4 +31,5 @@
     border: none;
     display: flex;
     align-items: center;
+    background-color: white;
 }

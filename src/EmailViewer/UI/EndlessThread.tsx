@@ -1,5 +1,4 @@
 import * as React from "react";
-import { oc } from "ts-optchain";
 
 type Coordinate = {
   x: number;
@@ -16,6 +15,7 @@ type Props = {
 
 class EndlessThread extends React.Component<Props, State> {
   svgRef: React.RefObject<SVGSVGElement>;
+  timer?: NodeJS.Timeout;
   constructor(props: Readonly<Props>) {
     super(props);
     this.state = {
@@ -44,7 +44,7 @@ class EndlessThread extends React.Component<Props, State> {
         }
       ]
     });
-    setInterval(() => {
+    this.timer = setInterval(async () => {
       const path = this.state.path;
       const last = path[path.length - 1];
       this.setState({
@@ -57,6 +57,12 @@ class EndlessThread extends React.Component<Props, State> {
         ]
       });
     }, 75);
+  }
+
+  componentWillUnmount() {
+    if (this.timer) {
+      clearInterval(this.timer);
+    }
   }
 
   render() {
@@ -78,7 +84,7 @@ class EndlessThread extends React.Component<Props, State> {
               .slice(1)
               .map(({ x, y }) => "L" + x + " " + y)
               .join(" ")}`}
-            stroke="#e02a28"
+            stroke="black"
             fill="none"
           ></path>
         )}

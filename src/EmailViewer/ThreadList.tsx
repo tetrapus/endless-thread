@@ -2,9 +2,10 @@ import * as React from "react";
 import { Thread } from "./Thread";
 import "./ThreadList.scss";
 import { Spinner } from "./UI/Spinner";
+import { definitely } from "../helpers";
 
 interface Props {
-  email?: string;
+  email: string;
 }
 
 interface State {
@@ -16,12 +17,15 @@ class ThreadList extends React.Component<Props, State> {
   constructor(props: Readonly<Props>) {
     super(props);
     this.state = { threadsList: [], labels: [] };
+  }
+
+  componentDidMount() {
     gapi.client
       .load(
         "https://content.googleapis.com/discovery/v1/apis/gmail/v1/rest",
         "1"
       )
-      .then(() => {
+      .then(async () => {
         this.populateLabels();
         this.populateThreadList();
       });
@@ -41,9 +45,6 @@ class ThreadList extends React.Component<Props, State> {
   }
 
   async populateThreadList() {
-    if (!this.props.email) {
-      return;
-    }
     const email = this.props.email;
     const threadsResponse = await gapi.client.gmail.users.threads.list({
       userId: email,
@@ -62,11 +63,13 @@ class ThreadList extends React.Component<Props, State> {
       );
     });
     const threads = await batch;
+    // Walk all the threads and grab each attachment ID
+
     this.setState({
       threadsList: Object.values(threads.result).map(response => {
         const details = response.result as gapi.client.gmail.Thread;
         return { ...details };
-      })
+      }).sort((a, b) => parseInt(definitely(b.historyId)) - parseInt(definitely(a.historyId)))
     });
   }
 
@@ -75,11 +78,25 @@ class ThreadList extends React.Component<Props, State> {
       <div className="ThreadList">
         {this.state.threadsList && this.state.threadsList.length ? (
           this.state.threadsList.map(thread => (
-            <Thread key={thread.id} thread={thread} labels={this.state.labels}></Thread>
+            <Thread
+              key={thread.id}
+              thread={thread}
+              labels={this.state.labels}
+              email={this.props.email}
+            ></Thread>
           ))
         ) : (
           <Spinner></Spinner>
         )}
+        <button
+          className="ReloadButton"
+          onClick={() => {
+            this.populateThreadList();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
+        >
+          Reload
+        </button>
       </div>
     );
   }

@@ -1,9 +1,8 @@
 import * as React from "react";
-import { ThreadList } from "./EmailViewer/ThreadList";
+import { Login } from "./Homepage/Login";
+import { EmailViewer } from "./EmailViewer/EmailViewer";
 
 import "normalize.css";
-import { Navigation } from "./Navigation/Navigation";
-import { Login } from "./Login/Login";
 
 interface State {
   profile?: gapi.auth2.BasicProfile;
@@ -32,10 +31,7 @@ class App extends React.Component<{}, State> {
 
   render() {
     return this.state.auth && this.state.profile ? (
-      <div>
-        <Navigation profile={this.state.profile}></Navigation>
-        <ThreadList email={this.state.profile.getEmail()}></ThreadList>
-      </div>
+      <EmailViewer profile={this.state.profile}></EmailViewer>
     ) : (
       <Login loading={this.state.auth === undefined}></Login>
     );
