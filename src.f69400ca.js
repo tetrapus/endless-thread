@@ -34632,6 +34632,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.isDefined = isDefined;
 exports.definitely = definitely;
+exports.getValueByName = getValueByName;
 
 function isDefined(x) {
   return x !== undefined;
@@ -34643,6 +34644,13 @@ function definitely(x) {
   }
 
   throw Error("I trusted you :(");
+}
+
+function getValueByName(pairs, name) {
+  var pair = pairs.find(function (pair) {
+    return pair.name == name;
+  });
+  return pair ? pair.value : undefined;
 }
 },{}],"../node_modules/base64-js/index.js":[function(require,module,exports) {
 'use strict'
@@ -37203,43 +37211,12 @@ var unfoldParts = function unfoldParts(part) {
   } else if (part.mimeType == "multipart/related" && part.parts) {
     var newParts = part.parts.flatMap(unfoldParts);
     var main = (0, _helpers.definitely)(newParts[0]);
-    var data = (0, _urlsafeBase.decode)((0, _helpers.definitely)((0, _helpers.definitely)(main.body).data)).toString("utf8").replace(/cid:/g, // `data:${part.mimeType};base64,${encoded}`
-    "https://attachments/");
+    var data = (0, _urlsafeBase.decode)((0, _helpers.definitely)((0, _helpers.definitely)(main.body).data)).toString("utf8").replace(/cid:/g, "https://attachments/");
     return [_objectSpread({}, main, {
       body: _objectSpread({}, main.body, {
         data: (0, _urlsafeBase.encode)(Buffer.from(data, "utf8"))
       })
     })].concat((0, _toConsumableArray2.default)(newParts.slice(1)));
-    /*
-    const root = unfoldParts(part.parts[0]);
-    const related = part.parts.slice(1);
-    return root.map(subPart => {
-      let data = decode(oc(subPart).body.data("")).toString("utf8");
-      related.forEach(part => {
-        const id = oc(part)
-          .headers([])
-          .find(header => header.name == "X-Attachment-Id");
-        const encoded = Base64.btoa(
-          decode(oc(part).body.data("")).toString("binary")
-        );
-             if (!id) {
-          throw Error();
-        }
-        data = data.replace(
-          `cid:${id.value}`,
-          // `data:${part.mimeType};base64,${encoded}`
-          `https://attachments/${id.value}`
-        );
-      });
-      return {
-        ...subPart,
-        body: {
-          ...subPart.body,
-          data: encode(Buffer.from(data, "utf8"))
-        }
-      };
-    });
-    */
   } else if (part.mimeType == "multipart/mixed" && part.parts) {
     var _ref;
 
@@ -37277,17 +37254,17 @@ function (_React$Component) {
       var fromHeader = (0, _tsOptchain.oc)(this).props.message.payload.headers([]).find(function (header) {
         return header.name == "From";
       });
-      return React.createElement("div", null, isUnread || React.createElement("div", {
+      return React.createElement("div", null, isUnread || React.createElement("div", null, this.getSenderComponent(fromHeader, true), React.createElement("div", {
         className: "Snippet"
       }, React.createElement("div", {
         className: "Timestamp SnippetFade"
       }, React.createElement(_reactTimeago.default, {
         date: parseInt((0, _helpers.definitely)(this.props.message.internalDate))
-      })), new _htmlEntities.Html5Entities().decode(this.props.message.snippet || "")), isUnread && (this.state.expanded === undefined ? React.createElement(_reactVisibilitySensor.default, {
+      })), new _htmlEntities.Html5Entities().decode(this.props.message.snippet || ""))), isUnread && (this.state.expanded === undefined ? React.createElement(_reactVisibilitySensor.default, {
         onChange: function onChange(isVisible) {
           return _this2.handleVisibilityChange(isVisible);
         }
-      }, React.createElement(_Spinner.Spinner, null)) : React.createElement("div", null, this.getSenderComponent(fromHeader), React.createElement("div", {
+      }, React.createElement(_Spinner.Spinner, null)) : React.createElement("div", null, this.getSenderComponent(fromHeader, false), React.createElement("div", {
         key: parts[0].partId,
         className: "EmailBody"
       }, React.createElement("div", {
@@ -37298,9 +37275,21 @@ function (_React$Component) {
     }
   }, {
     key: "getSenderComponent",
-    value: function getSenderComponent(fromHeader) {
+    value: function getSenderComponent(fromHeader, condensed) {
       if (!fromHeader) {
         return;
+      }
+
+      if (this.props.previous) {
+        var prevHeaders = (0, _tsOptchain.oc)(this).props.previous.payload.headers([]);
+
+        if (prevHeaders) {
+          var prevFrom = (0, _helpers.getValueByName)(prevHeaders, 'From');
+
+          if (prevFrom === fromHeader.value) {
+            return;
+          }
+        }
       }
 
       var parsed = /^(.*) <(.*)@(.*)>$/.exec((0, _helpers.definitely)(fromHeader.value));
@@ -37313,10 +37302,12 @@ function (_React$Component) {
             domain = _parsed[3];
 
         return React.createElement("div", {
+          className: "SenderContainer"
+        }, React.createElement("div", {
           className: "Sender"
-        }, React.createElement("div", null, sender), React.createElement("div", {
+        }, React.createElement("div", null, sender), condensed || React.createElement("div", {
           className: "EmailAddress"
-        }, address, React.createElement("wbr", null), "@", domain));
+        }, address, React.createElement("wbr", null), "@", domain)));
       }
 
       return;
@@ -37610,7 +37601,8 @@ function (_React$Component) {
         message: message,
         key: message.id,
         email: this.props.email,
-        attachments: (0, _helpers.definitely)(this.state.attachments)
+        attachments: (0, _helpers.definitely)(this.state.attachments),
+        previous: all[idx - 1]
       });
     }
   }, {
@@ -38165,7 +38157,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55287" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53981" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -231,7 +231,7 @@
   background-color: white;
   height: 100%;
   padding: 4px 0px 4px 4px;
-  box-shadow: 0 0 4px 4px white;
+  box-shadow: 0 4px 4px 4px white;
 }
 
 .Sender {
@@ -247,6 +247,12 @@
   }
 }
 
+@media only screen and (min-width: 1200px) {
+  .SenderContainer {
+    position: sticky;
+    top: 2px;
+  }
+}
 .EmailAddress {
   font-size: 13px;
   color: grey;
