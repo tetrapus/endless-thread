@@ -37587,16 +37587,18 @@ function (_React$Component) {
           return _this2.loadThread(visible);
         }
       }, React.createElement(_Spinner.Spinner, null)) : thread.messages.map(function (message, idx, all) {
-        return _this2.getMessage(message, idx, all);
+        return React.createElement(_Message.Message, {
+          message: message,
+          key: message.id,
+          email: _this2.props.email,
+          attachments: (0, _helpers.definitely)(_this2.state.attachments),
+          previous: all[idx - 1]
+        });
       })));
     }
   }, {
     key: "getMessage",
     value: function getMessage(message, idx, all) {
-      var isUnread = function isUnread(message) {
-        return (0, _helpers.definitely)(message.labelIds).includes("UNREAD");
-      };
-
       return React.createElement(_Message.Message, {
         message: message,
         key: message.id,
@@ -37912,7 +37914,7 @@ function (_React$Component) {
                     var details = response.result;
                     return _objectSpread({}, details);
                   }).sort(function (a, b) {
-                    return parseInt((0, _helpers.definitely)(b.historyId)) - parseInt((0, _helpers.definitely)(a.historyId));
+                    return parseInt((0, _helpers.definitely)(a.historyId)) - parseInt((0, _helpers.definitely)(b.historyId));
                   })
                 });
 
@@ -38157,7 +38159,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53981" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61323" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
