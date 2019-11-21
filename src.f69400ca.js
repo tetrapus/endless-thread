@@ -37888,7 +37888,7 @@ function (_React$Component) {
                 _context3.next = 3;
                 return gapi.client.gmail.users.threads.list({
                   userId: email,
-                  maxResults: 10,
+                  maxResults: 20,
                   labelIds: "UNREAD"
                 });
 
@@ -37914,7 +37914,7 @@ function (_React$Component) {
                     var details = response.result;
                     return _objectSpread({}, details);
                   }).sort(function (a, b) {
-                    return parseInt((0, _helpers.definitely)(a.historyId)) - parseInt((0, _helpers.definitely)(b.historyId));
+                    return parseInt((0, _helpers.definitely)(b.historyId)) - parseInt((0, _helpers.definitely)(a.historyId));
                   })
                 });
 
@@ -38159,7 +38159,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61323" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63082" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
