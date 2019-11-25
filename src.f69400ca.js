@@ -37566,7 +37566,11 @@ function (_React$Component) {
         className: "ThreadInfo"
       }, React.createElement("h1", {
         className: "Subject"
-      }, subject), React.createElement("div", {
+      }, React.createElement("a", {
+        href: "http://mail.google.com/#inbox/" + thread.id,
+        target: "_blank",
+        className: "ThreadLink"
+      }, subject)), React.createElement("div", {
         className: "Chevron " + (unread ? "collapsed" : "expanded"),
         onClick: function onClick() {
           return _this2.handleChevronClick(unread);
@@ -38159,7 +38163,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63082" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56904" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
