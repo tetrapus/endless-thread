@@ -38103,6 +38103,7 @@ function (_React$Component) {
   }, {
     key: "handleAuthChange",
     value: function handleAuthChange(isAuthenticated) {
+      console.log(gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse(true));
       this.setState({
         profile: isAuthenticated ? gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile() : undefined,
         auth: isAuthenticated
@@ -38163,7 +38164,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56904" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59118" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
