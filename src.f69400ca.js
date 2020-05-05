@@ -33047,7 +33047,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 var handleLogin = function handleLogin() {
   gapi.auth2.getAuthInstance().signIn({
-    scope: "profile https://mail.google.com/ https://www.googleapis.com/auth/gmail.modify https://www.googleapis.com/auth/gmail.readonly"
+    scope: "profile https://www.googleapis.com/auth/calendar.events.readonly https://mail.google.com/ https://www.googleapis.com/auth/gmail.modify https://www.googleapis.com/auth/gmail.readonly"
   });
 };
 
@@ -37566,11 +37566,7 @@ function (_React$Component) {
         className: "ThreadInfo"
       }, React.createElement("h1", {
         className: "Subject"
-      }, React.createElement("a", {
-        href: "http://mail.google.com/#inbox/" + thread.id,
-        target: "_blank",
-        className: "ThreadLink"
-      }, subject)), React.createElement("div", {
+      }, subject), React.createElement("div", {
         className: "Chevron " + (unread ? "collapsed" : "expanded"),
         onClick: function onClick() {
           return _this2.handleChevronClick(unread);
@@ -37591,18 +37587,16 @@ function (_React$Component) {
           return _this2.loadThread(visible);
         }
       }, React.createElement(_Spinner.Spinner, null)) : thread.messages.map(function (message, idx, all) {
-        return React.createElement(_Message.Message, {
-          message: message,
-          key: message.id,
-          email: _this2.props.email,
-          attachments: (0, _helpers.definitely)(_this2.state.attachments),
-          previous: all[idx - 1]
-        });
+        return _this2.getMessage(message, idx, all);
       })));
     }
   }, {
     key: "getMessage",
     value: function getMessage(message, idx, all) {
+      var isUnread = function isUnread(message) {
+        return (0, _helpers.definitely)(message.labelIds).includes("UNREAD");
+      };
+
       return React.createElement(_Message.Message, {
         message: message,
         key: message.id,
@@ -37827,7 +37821,9 @@ function (_React$Component) {
 
                 _this2.populateThreadList();
 
-              case 2:
+                _this2.populateUnreadCount();
+
+              case 3:
               case "end":
                 return _context.stop();
             }
@@ -37836,9 +37832,9 @@ function (_React$Component) {
       })));
     }
   }, {
-    key: "populateLabels",
+    key: "populateUnreadCount",
     value: function () {
-      var _populateLabels = (0, _asyncToGenerator2.default)(
+      var _populateUnreadCount = (0, _asyncToGenerator2.default)(
       /*#__PURE__*/
       _regenerator.default.mark(function _callee2() {
         var _this3 = this;
@@ -37847,28 +37843,63 @@ function (_React$Component) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
+                return _context2.abrupt("return", gapi.client.gmail.users.labels.get({
+                  userId: "me",
+                  id: "INBOX"
+                }).then(function (response) {
+                  _this3.setState({
+                    unreadCount: response.result.threadsUnread
+                  });
+                }));
+
+              case 1:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      function populateUnreadCount() {
+        return _populateUnreadCount.apply(this, arguments);
+      }
+
+      return populateUnreadCount;
+    }()
+  }, {
+    key: "populateLabels",
+    value: function () {
+      var _populateLabels = (0, _asyncToGenerator2.default)(
+      /*#__PURE__*/
+      _regenerator.default.mark(function _callee3() {
+        var _this4 = this;
+
+        return _regenerator.default.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
                 if (this.props.email) {
-                  _context2.next = 2;
+                  _context3.next = 2;
                   break;
                 }
 
-                return _context2.abrupt("return");
+                return _context3.abrupt("return");
 
               case 2:
-                return _context2.abrupt("return", gapi.client.gmail.users.labels.list({
+                return _context3.abrupt("return", gapi.client.gmail.users.labels.list({
                   userId: this.props.email
                 }).then(function (response) {
-                  _this3.setState({
+                  _this4.setState({
                     labels: response.result.labels || []
                   });
                 }));
 
               case 3:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2, this);
+        }, _callee3, this);
       }));
 
       function populateLabels() {
@@ -37882,22 +37913,22 @@ function (_React$Component) {
     value: function () {
       var _populateThreadList = (0, _asyncToGenerator2.default)(
       /*#__PURE__*/
-      _regenerator.default.mark(function _callee3() {
+      _regenerator.default.mark(function _callee4() {
         var email, threadsResponse, batch, miniThreads, threads;
-        return _regenerator.default.wrap(function _callee3$(_context3) {
+        return _regenerator.default.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
                 email = this.props.email;
-                _context3.next = 3;
+                _context4.next = 3;
                 return gapi.client.gmail.users.threads.list({
                   userId: email,
-                  maxResults: 20,
+                  maxResults: 10,
                   labelIds: "UNREAD"
                 });
 
               case 3:
-                threadsResponse = _context3.sent;
+                threadsResponse = _context4.sent;
                 // Handle the results here (response.result has the parsed body).
                 batch = gapi.client.newBatch();
                 miniThreads = threadsResponse.result.threads || [];
@@ -37907,11 +37938,11 @@ function (_React$Component) {
                     userId: email
                   }));
                 });
-                _context3.next = 9;
+                _context4.next = 9;
                 return batch;
 
               case 9:
-                threads = _context3.sent;
+                threads = _context4.sent;
                 // Walk all the threads and grab each attachment ID
                 this.setState({
                   threadsList: Object.values(threads.result).map(function (response) {
@@ -37924,10 +37955,10 @@ function (_React$Component) {
 
               case 11:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3, this);
+        }, _callee4, this);
       }));
 
       function populateThreadList() {
@@ -37939,7 +37970,7 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
+      var _this5 = this;
 
       return React.createElement("div", {
         className: "ThreadList"
@@ -37947,13 +37978,13 @@ function (_React$Component) {
         return React.createElement(_Thread.Thread, {
           key: thread.id,
           thread: thread,
-          labels: _this4.state.labels,
-          email: _this4.props.email
+          labels: _this5.state.labels,
+          email: _this5.props.email
         });
       }) : React.createElement(_Spinner.Spinner, null), React.createElement("button", {
         className: "ReloadButton",
         onClick: function onClick() {
-          _this4.populateThreadList();
+          _this5.populateThreadList();
 
           window.scrollTo({
             top: 0,
@@ -37972,7 +38003,218 @@ var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"EmailViewer/EmailViewer.tsx":[function(require,module,exports) {
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"EmailViewer/FocusBar.scss":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"EmailViewer/FocusBar.tsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.FocusBar = void 0;
+
+var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
+
+var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
+
+var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+require("./FocusBar.scss");
+
+var _reactTimeago = _interopRequireDefault(require("react-timeago"));
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var FocusBar =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2.default)(FocusBar, _React$Component);
+
+  function FocusBar(props) {
+    var _this;
+
+    (0, _classCallCheck2.default)(this, FocusBar);
+    _this = (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(FocusBar).call(this, props));
+    _this.state = {
+      events: [],
+      skipped: []
+    };
+    return _this;
+  }
+
+  (0, _createClass2.default)(FocusBar, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      gapi.client.load("https://content.googleapis.com/discovery/v1/apis/calendar/v3/rest", "1").then(
+      /*#__PURE__*/
+      (0, _asyncToGenerator2.default)(
+      /*#__PURE__*/
+      _regenerator.default.mark(function _callee() {
+        return _regenerator.default.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _this2.populateCalendar();
+
+              case 1:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      })));
+    }
+  }, {
+    key: "skipEvent",
+    value: function skipEvent() {
+      if (this.state.nextEvent) {
+        var skipped = [].concat((0, _toConsumableArray2.default)(this.state.skipped), [this.state.nextEvent.id]);
+        var events = this.state.events.filter(function (event) {
+          return !skipped.includes(event.id);
+        });
+        var nextEvent = events[0];
+        this.setState({
+          skipped: skipped,
+          events: events,
+          nextEvent: nextEvent
+        });
+        console.log(this.state);
+      }
+    }
+  }, {
+    key: "populateCalendar",
+    value: function () {
+      var _populateCalendar = (0, _asyncToGenerator2.default)(
+      /*#__PURE__*/
+      _regenerator.default.mark(function _callee2() {
+        var _this3 = this;
+
+        return _regenerator.default.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                return _context2.abrupt("return", gapi.client.calendar.events.list({
+                  calendarId: "primary",
+                  orderBy: "startTime",
+                  singleEvents: true,
+                  timeMin: this.dateToLocalISO(new Date(Date.now()))
+                }).then(function (response) {
+                  _this3.setState({
+                    events: response.result.items,
+                    nextEvent: response.result.items[0]
+                  });
+
+                  setInterval(function () {
+                    var events = _this3.state.events.filter(function (event) {
+                      return new Date(event.end.dateTime) > new Date(Date.now() + 60000);
+                    });
+
+                    _this3.setState({
+                      events: events,
+                      nextEvent: events[0]
+                    });
+                  }, 30000);
+                }));
+
+              case 1:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function populateCalendar() {
+        return _populateCalendar.apply(this, arguments);
+      }
+
+      return populateCalendar;
+    }()
+  }, {
+    key: "dateToLocalISO",
+    value: function dateToLocalISO(date) {
+      var off = date.getTimezoneOffset();
+      var absoff = Math.abs(off);
+      return new Date(date.getTime() - off * 60 * 1000).toISOString().substr(0, 23) + (off > 0 ? "-" : "+") + (absoff / 60).toFixed(0).padStart(2, "0") + ":" + (absoff % 60).toString().padStart(2, "0");
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this4 = this;
+
+      if (!this.state.nextEvent) {
+        return _react.default.createElement("div", {
+          className: "FocusBar"
+        }, _react.default.createElement("div", {
+          className: "Content"
+        }, _react.default.createElement("div", {
+          className: "Event"
+        })));
+      }
+
+      var topEvent = this.state.nextEvent;
+
+      if (new Date(topEvent.start.dateTime) < new Date(Date.now() + 300000)) {
+        return _react.default.createElement("div", {
+          className: "FocusBar Active"
+        }, _react.default.createElement("div", {
+          className: "Content"
+        }, _react.default.createElement("div", {
+          className: "Event"
+        }, _react.default.createElement("a", {
+          href: topEvent.hangoutLink,
+          target: "_blank"
+        }, "\uD83D\uDDD3\uFE0F ", topEvent.summary)), _react.default.createElement("span", null, "Ends\xA0"), _react.default.createElement(_reactTimeago.default, {
+          date: topEvent.end.dateTime
+        }), _react.default.createElement("span", {
+          className: "ActionBar",
+          onClick: function onClick() {
+            return _this4.skipEvent();
+          }
+        }, "\u2713")));
+      }
+
+      return _react.default.createElement("div", {
+        className: "FocusBar"
+      }, _react.default.createElement("div", {
+        className: "Content"
+      }, _react.default.createElement("div", {
+        className: "Event"
+      }, _react.default.createElement("a", {
+        href: topEvent.hangoutLink,
+        target: "_blank"
+      }, "\uD83D\uDDD3\uFE0F ", topEvent.summary)), "Starts\xA0", _react.default.createElement(_reactTimeago.default, {
+        date: topEvent.start.dateTime
+      }), _react.default.createElement("span", {
+        className: "ActionBar",
+        onClick: function onClick() {
+          return _this4.skipEvent();
+        }
+      }, "\u2713")));
+    }
+  }]);
+  return FocusBar;
+}(_react.default.Component);
+
+exports.FocusBar = FocusBar;
+},{"@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","./FocusBar.scss":"EmailViewer/FocusBar.scss","react-timeago":"../node_modules/react-timeago/lib/index.js","react":"../node_modules/react/index.js"}],"EmailViewer/EmailViewer.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -37988,6 +38230,8 @@ var _ThreadList = require("./ThreadList");
 
 require("./EmailViewer.scss");
 
+var _FocusBar = require("./FocusBar");
+
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -37998,13 +38242,13 @@ var EmailViewer = function EmailViewer(_ref) {
     className: "EmailViewer"
   }, React.createElement(_Navigation.Navigation, {
     profile: profile
-  }), React.createElement(_ThreadList.ThreadList, {
+  }), React.createElement(_FocusBar.FocusBar, null), React.createElement(_ThreadList.ThreadList, {
     email: profile.getEmail() || ''
   }));
 };
 
 exports.EmailViewer = EmailViewer;
-},{"react":"../node_modules/react/index.js","./Navigation/Navigation":"EmailViewer/Navigation/Navigation.tsx","./ThreadList":"EmailViewer/ThreadList.tsx","./EmailViewer.scss":"EmailViewer/EmailViewer.scss"}],"../node_modules/normalize.css/normalize.css":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./Navigation/Navigation":"EmailViewer/Navigation/Navigation.tsx","./ThreadList":"EmailViewer/ThreadList.tsx","./EmailViewer.scss":"EmailViewer/EmailViewer.scss","./FocusBar":"EmailViewer/FocusBar.tsx"}],"../node_modules/normalize.css/normalize.css":[function(require,module,exports) {
 
         var reloadCSS = require('_css_loader');
         module.hot.dispose(reloadCSS);
@@ -38103,7 +38347,6 @@ function (_React$Component) {
   }, {
     key: "handleAuthChange",
     value: function handleAuthChange(isAuthenticated) {
-      console.log(gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse(true));
       this.setState({
         profile: isAuthenticated ? gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile() : undefined,
         auth: isAuthenticated
@@ -38164,7 +38407,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59118" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56208" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
