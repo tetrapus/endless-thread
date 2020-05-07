@@ -11,6 +11,7 @@ interface Props {
 interface State {
   threadsList: ReadonlyArray<gapi.client.gmail.Thread>;
   labels: ReadonlyArray<gapi.client.gmail.Label>;
+  unreadCount?: number;
 }
 
 class ThreadList extends React.Component<Props, State> {
@@ -28,6 +29,18 @@ class ThreadList extends React.Component<Props, State> {
       .then(async () => {
         this.populateLabels();
         this.populateThreadList();
+        this.populateUnreadCount();
+      });
+  }
+
+  async populateUnreadCount() {
+    return gapi.client.gmail.users.labels
+      .get({
+        userId: "me",
+        id: "INBOX",
+      })
+      .then((response) => {
+        this.setState({ unreadCount: response.result.threadsUnread });
       });
   }
 
@@ -37,9 +50,9 @@ class ThreadList extends React.Component<Props, State> {
     }
     return gapi.client.gmail.users.labels
       .list({
-        userId: this.props.email
+        userId: this.props.email,
       })
-      .then(response => {
+      .then((response) => {
         this.setState({ labels: response.result.labels || [] });
       });
   }
@@ -49,16 +62,16 @@ class ThreadList extends React.Component<Props, State> {
     const threadsResponse = await gapi.client.gmail.users.threads.list({
       userId: email,
       maxResults: 10,
-      labelIds: "UNREAD"
+      labelIds: "UNREAD",
     });
     // Handle the results here (response.result has the parsed body).
     const batch = gapi.client.newBatch();
     const miniThreads = threadsResponse.result.threads || [];
-    miniThreads.forEach(thread => {
+    miniThreads.forEach((thread) => {
       batch.add(
         gapi.client.gmail.users.threads.get({
           id: thread.id || "",
-          userId: email
+          userId: email,
         })
       );
     });
@@ -66,10 +79,16 @@ class ThreadList extends React.Component<Props, State> {
     // Walk all the threads and grab each attachment ID
 
     this.setState({
-      threadsList: Object.values(threads.result).map(response => {
-        const details = response.result as gapi.client.gmail.Thread;
-        return { ...details };
-      }).sort((a, b) => parseInt(definitely(b.historyId)) - parseInt(definitely(a.historyId)))
+      threadsList: Object.values(threads.result)
+        .map((response) => {
+          const details = response.result as gapi.client.gmail.Thread;
+          return { ...details };
+        })
+        .sort(
+          (a, b) =>
+            parseInt(definitely(b.historyId)) -
+            parseInt(definitely(a.historyId))
+        ),
     });
   }
 
@@ -77,7 +96,7 @@ class ThreadList extends React.Component<Props, State> {
     return (
       <div className="ThreadList">
         {this.state.threadsList && this.state.threadsList.length ? (
-          this.state.threadsList.map(thread => (
+          this.state.threadsList.map((thread) => (
             <Thread
               key={thread.id}
               thread={thread}

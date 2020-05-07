@@ -47,6 +47,8 @@ class App extends React.Component<{}, State> {
         : undefined,
       auth: isAuthenticated
     });
+    console.log(gapi.auth2
+      .getAuthInstance().currentUser.get().getAuthResponse());
   }
 }
 

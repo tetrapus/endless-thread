@@ -11,7 +11,7 @@ interface State {
 const handleLogin = () => {
   gapi.auth2.getAuthInstance().signIn({
     scope:
-      "profile https://mail.google.com/ https://www.googleapis.com/auth/gmail.modify https://www.googleapis.com/auth/gmail.readonly"
+      "profile https://www.googleapis.com/auth/calendar.events.readonly https://mail.google.com/ https://www.googleapis.com/auth/gmail.modify https://www.googleapis.com/auth/gmail.readonly"
   });
 }
 

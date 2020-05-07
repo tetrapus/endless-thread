@@ -1,0 +1,71 @@
+.RocketContainer {
+  max-width: 800px;
+  margin: auto;
+}
+
+.ChatMessage {
+  background-color: white;
+  border: 1px solid #ddd;
+  padding: 4px 8px;
+  margin-bottom: 4px;
+  position: relative;
+  overflow: scroll;
+  display: flex;
+}
+
+.ChatAction {
+  padding: 4px 8px;
+  margin-bottom: 4px;
+}
+
+.MessageAuthor {
+  @media only screen and (min-width: 1200px) {
+    position: absolute;
+    transform: translate(-100%);
+    padding: 4px;
+  }
+}
+
+p {
+  margin: 0;
+}
+
+.RoomTitle {
+  position: sticky;
+  top: 26px;
+  z-index: 101;
+  background: #eee;
+  box-shadow: 0 0 3px #eee;
+  padding: 16px;
+  margin: 0;
+}
+
+.ReadButton {
+  position: absolute;
+  right: 0;
+}
+
+.ChatMessageContent {
+  flex-grow: 1;
+}
+
+.MessageTimestamp {
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.RoomName {
+  text-decoration: none;
+  color: black;
+}
+
+.ReactionBox {
+  display: flex;
+  flex-direction: row-reverse;
+  transform: translateY(-1em);
+  height: 0;
+}
+
+.CustomEmoji {
+  height: 1em;
+}
