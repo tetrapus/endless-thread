@@ -33047,7 +33047,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 var handleLogin = function handleLogin() {
   gapi.auth2.getAuthInstance().signIn({
-    scope: "profile https://www.googleapis.com/auth/calendar.events.readonly https://mail.google.com/ https://www.googleapis.com/auth/gmail.modify https://www.googleapis.com/auth/gmail.readonly"
+    scope: "profile https://www.googleapis.com/auth/tasks https://www.googleapis.com/auth/calendar.events.readonly https://mail.google.com/ https://www.googleapis.com/auth/gmail.modify https://www.googleapis.com/auth/gmail.readonly"
   });
 };
 
@@ -37564,7 +37564,10 @@ function (_React$Component) {
         className: "ThreadInfo"
       }, React.createElement("h1", {
         className: "Subject"
-      }, subject), React.createElement("div", {
+      }, React.createElement("a", {
+        href: "https://mail.google.com/mail/u/0/#inbox/".concat(thread.id),
+        target: "_blank"
+      }, subject)), React.createElement("div", {
         className: "Chevron " + (unread ? "collapsed" : "expanded"),
         onClick: function onClick() {
           return _this2.handleChevronClick(unread);
@@ -38114,14 +38117,18 @@ function (_React$Component) {
                   singleEvents: true,
                   timeMin: this.dateToLocalISO(new Date(Date.now()))
                 }).then(function (response) {
+                  var events = response.result.items.filter(function (event) {
+                    return new Date(event.end.dateTime) > new Date(Date.now() + 60000) && new Date(event.start.dateTime) < new Date(Date.now() + 12 * 60 * 60 * 1000);
+                  });
+
                   _this3.setState({
-                    events: response.result.items,
-                    nextEvent: response.result.items[0]
+                    events: events,
+                    nextEvent: events[0]
                   });
 
                   setInterval(function () {
                     var events = _this3.state.events.filter(function (event) {
-                      return new Date(event.end.dateTime) > new Date(Date.now() + 60000);
+                      return new Date(event.end.dateTime) > new Date(Date.now() + 60000) && new Date(event.start.dateTime) < new Date(Date.now() + 12 * 60 * 60 * 1000);
                     });
 
                     _this3.setState({
@@ -38159,7 +38166,7 @@ function (_React$Component) {
 
       if (!this.state.nextEvent) {
         return _react.default.createElement("div", {
-          className: "FocusBar"
+          className: "FocusBar Inactive"
         }, _react.default.createElement("div", {
           className: "Content"
         }, _react.default.createElement("div", {
@@ -48037,7 +48044,7 @@ ReactMarkdown.types = allTypes;
 ReactMarkdown.renderers = defaultRenderers;
 ReactMarkdown.uriTransformer = uriTransformer;
 module.exports = ReactMarkdown;
-},{"xtend":"../node_modules/xtend/immutable.js","unified":"../node_modules/unified/index.js","remark-parse":"../node_modules/remark-parse/index.js","prop-types":"../node_modules/prop-types/index.js","mdast-add-list-metadata":"../node_modules/mdast-add-list-metadata/index.js","./plugins/naive-html":"../node_modules/react-markdown/lib/plugins/naive-html.js","./plugins/disallow-node":"../node_modules/react-markdown/lib/plugins/disallow-node.js","./ast-to-react":"../node_modules/react-markdown/lib/ast-to-react.js","./wrap-table-rows":"../node_modules/react-markdown/lib/wrap-table-rows.js","./get-definitions":"../node_modules/react-markdown/lib/get-definitions.js","./uri-transformer":"../node_modules/react-markdown/lib/uri-transformer.js","./renderers":"../node_modules/react-markdown/lib/renderers.js","./symbols":"../node_modules/react-markdown/lib/symbols.js"}],"EmailViewer/RocketChat/Markdown.tsx":[function(require,module,exports) {
+},{"xtend":"../node_modules/xtend/immutable.js","unified":"../node_modules/unified/index.js","remark-parse":"../node_modules/remark-parse/index.js","prop-types":"../node_modules/prop-types/index.js","mdast-add-list-metadata":"../node_modules/mdast-add-list-metadata/index.js","./plugins/naive-html":"../node_modules/react-markdown/lib/plugins/naive-html.js","./plugins/disallow-node":"../node_modules/react-markdown/lib/plugins/disallow-node.js","./ast-to-react":"../node_modules/react-markdown/lib/ast-to-react.js","./wrap-table-rows":"../node_modules/react-markdown/lib/wrap-table-rows.js","./get-definitions":"../node_modules/react-markdown/lib/get-definitions.js","./uri-transformer":"../node_modules/react-markdown/lib/uri-transformer.js","./renderers":"../node_modules/react-markdown/lib/renderers.js","./symbols":"../node_modules/react-markdown/lib/symbols.js"}],"EmailViewer/UI/Markdown.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -48056,11 +48063,19 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function Markdown(_ref) {
-  var source = _ref.source;
+  var source = _ref.source,
+      _ref$renderers = _ref.renderers,
+      renderers = _ref$renderers === void 0 ? {} : _ref$renderers;
+
+  if (!source) {
+    return null;
+  }
+
   return React.createElement(_reactMarkdown.default, {
-    source: source.replace(/^ +/gm, "").replace(/^/gm, "\n").replace(/<(.+)\|(.+)>/gm, function (a, b) {
-      return "[".concat(b, "](").concat(a, ")");
-    })
+    source: source.replace(/^ +/gm, "").replace(/^/gm, "\n").replace(/<(.+)\|(.+)>/gm, function (a, b, c) {
+      return "[".concat(c, "](").concat(b, ")");
+    }),
+    renderers: renderers
   });
 }
 },{"react-markdown":"../node_modules/react-markdown/lib/react-markdown.js","react":"../node_modules/react/index.js"}],"EmailViewer/RocketChat/RocketAttachment.tsx":[function(require,module,exports) {
@@ -48075,7 +48090,7 @@ var React = _interopRequireWildcard(require("react"));
 
 require("./RocketAttachment.scss");
 
-var _Markdown = require("./Markdown");
+var _Markdown = require("../UI/Markdown");
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
@@ -48109,9 +48124,9 @@ function RocketAttachment(_ref) {
     }, React.createElement("b", null, field.title), React.createElement(_Markdown.Markdown, {
       source: field.value
     }));
-  })) : "");
+  })) : null);
 }
-},{"react":"../node_modules/react/index.js","./RocketAttachment.scss":"EmailViewer/RocketChat/RocketAttachment.scss","./Markdown":"EmailViewer/RocketChat/Markdown.tsx"}],"../node_modules/classnames/index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./RocketAttachment.scss":"EmailViewer/RocketChat/RocketAttachment.scss","../UI/Markdown":"EmailViewer/UI/Markdown.tsx"}],"../node_modules/classnames/index.js":[function(require,module,exports) {
 var define;
 /*!
   Copyright (c) 2017 Jed Watson.
@@ -53341,11 +53356,13 @@ var _react = _interopRequireDefault(require("react"));
 
 var _RocketAttachment = require("./RocketAttachment");
 
-var _Markdown = require("./Markdown");
+var _Markdown = require("../UI/Markdown");
 
 var _reactTimeago = _interopRequireDefault(require("react-timeago"));
 
 var _reactEmojiRender = require("react-emoji-render");
+
+var _Icon = require("../UI/Icon");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -53389,7 +53406,8 @@ function (_React$Component) {
     (0, _classCallCheck2.default)(this, RocketChat);
     _this = (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(RocketChat).call(this, props));
     _this.state = {
-      unreads: {}
+      unreads: {},
+      emoji: {}
     };
     return _this;
   }
@@ -53420,7 +53438,6 @@ function (_React$Component) {
         expiresIn: authResponse.expires_in
       }).then(function (r) {
         _this3.setState({
-          info: JSON.stringify(r),
           credentials: function (_ref) {
             var userId = _ref.userId,
                 authToken = _ref.authToken;
@@ -53428,7 +53445,8 @@ function (_React$Component) {
               userId: userId,
               authToken: authToken
             };
-          }(r.data)
+          }(r.data),
+          whoami: r.data
         });
 
         _this3.updateAll();
@@ -53593,9 +53611,37 @@ function (_React$Component) {
       }
     }
   }, {
+    key: "renderTextWithEmoji",
+    value: function renderTextWithEmoji(value) {
+      var _this5 = this;
+
+      var tokens = value.split(/(:[^ ]+:)|(@[^ ]+)/);
+      return tokens.filter(function (a) {
+        return a;
+      }).map(function (token) {
+        if (token.match(/^:[^ ]+:$/)) {
+          return _this5.emoji(token);
+        } else if (token.match(/^@[^ ]+$/)) {
+          var classes = ["Highlight"];
+
+          if (["@here", "@channel"].includes(token)) {
+            classes.push("Highlight--passive");
+          } else if (token == "@" + _this5.state.whoami.me.username) {
+            classes.push("Highlight--active");
+          }
+
+          return _react.default.createElement("span", {
+            className: classes.join(" ")
+          }, token);
+        }
+
+        return token;
+      });
+    }
+  }, {
     key: "renderMessage",
     value: function renderMessage(message, previous) {
-      var _this5 = this;
+      var _this6 = this;
 
       var content;
 
@@ -53609,14 +53655,32 @@ function (_React$Component) {
           className: "ChatAction",
           key: message._id
         }, "joined");
-      } else {
+      } else if (message.t === "au") {
         content = _react.default.createElement("div", {
-          className: "ChatMessage",
+          className: "ChatAction",
+          key: message._id
+        }, "invited @", message.msg);
+      } else {
+        var mentions = message.mentions || [];
+        var passiveMention = mentions.find(function (mention) {
+          return ["here", "channel"].includes(mention._id);
+        });
+        var activeMention = mentions.find(function (mention) {
+          return mention.username == _this6.state.whoami.me.username;
+        });
+        content = _react.default.createElement("div", {
+          className: "ChatMessage ".concat(activeMention ? "ActiveMention" : passiveMention ? "PassiveMention" : ""),
           key: message._id
         }, _react.default.createElement("div", {
           className: "ChatMessageContent"
         }, _react.default.createElement(_Markdown.Markdown, {
-          source: message.msg
+          source: message.msg,
+          renderers: {
+            text: function text(_ref3) {
+              var value = _ref3.value;
+              return _this6.renderTextWithEmoji(value);
+            }
+          }
         }), (message.attachments || []).map(function (attachment, idx) {
           return _react.default.createElement(_RocketAttachment.RocketAttachment, {
             attachment: attachment,
@@ -53629,46 +53693,55 @@ function (_React$Component) {
         })));
       }
 
+      console.log(message.reactions);
       return _react.default.createElement("div", {
         className: "MessageContainer"
       }, !previous || message.u.username !== previous.u.username ? _react.default.createElement("div", {
         className: "MessageAuthor"
-      }, "@", message.u.username) : "", content, _react.default.createElement("div", {
+      }, message.u.name) : "", content, _react.default.createElement("div", {
         className: "ReactionBox"
-      }, Object.keys(message.reactions || {}).map(function (reaction) {
-        return _this5.emoji(reaction);
+      }, Object.entries(message.reactions || {}).map(function (_ref4) {
+        var _ref5 = (0, _slicedToArray2.default)(_ref4, 2),
+            reaction = _ref5[0],
+            reactors = _ref5[1];
+
+        return reactors.usernames.map(function () {
+          return _this6.emoji(reaction);
+        });
       })));
     }
   }, {
     key: "render",
     value: function render() {
-      var _this6 = this;
+      var _this7 = this;
 
       return _react.default.createElement("div", {
         className: "RocketContainer"
-      }, Object.entries(this.state.unreads).filter(function (_ref3) {
-        var _ref4 = (0, _slicedToArray2.default)(_ref3, 2),
-            room = _ref4[0],
-            details = _ref4[1];
+      }, Object.entries(this.state.unreads).filter(function (_ref6) {
+        var _ref7 = (0, _slicedToArray2.default)(_ref6, 2),
+            room = _ref7[0],
+            details = _ref7[1];
 
         return details.messages.length > 0;
-      }).map(function (_ref5) {
-        var _ref6 = (0, _slicedToArray2.default)(_ref5, 2),
-            room = _ref6[0],
-            details = _ref6[1];
+      }).map(function (_ref8) {
+        var _ref9 = (0, _slicedToArray2.default)(_ref8, 2),
+            room = _ref9[0],
+            details = _ref9[1];
 
         return _react.default.createElement("div", {
           className: "ChatRoom",
           key: details.room.rid
         }, _react.default.createElement("h3", {
           className: "RoomTitle"
-        }, Channel(details.room), _react.default.createElement("button", {
+        }, Channel(details.room), _react.default.createElement("span", {
           className: "ReadButton",
           onClick: function onClick() {
-            return _this6.markRead(details.room.rid);
+            return _this7.markRead(details.room.rid);
           }
-        }, "Mark Read")), details.messages.map(function (message, idx) {
-          return _this6.renderMessage(message, details.messages[idx - 1]);
+        }, _react.default.createElement(_Icon.Icon, {
+          type: "done"
+        }))), details.messages.map(function (message, idx) {
+          return _this7.renderMessage(message, details.messages[idx - 1]);
         }));
       }));
     }
@@ -53677,7 +53750,265 @@ function (_React$Component) {
 }(_react.default.Component);
 
 exports.RocketChat = RocketChat;
-},{"@babel/runtime/helpers/slicedToArray":"../node_modules/@babel/runtime/helpers/slicedToArray.js","@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","./RocketChat.scss":"EmailViewer/RocketChat/RocketChat.scss","react":"../node_modules/react/index.js","./RocketAttachment":"EmailViewer/RocketChat/RocketAttachment.tsx","./Markdown":"EmailViewer/RocketChat/Markdown.tsx","react-timeago":"../node_modules/react-timeago/lib/index.js","react-emoji-render":"../node_modules/react-emoji-render/lib/index.js"}],"EmailViewer/EmailViewer.tsx":[function(require,module,exports) {
+},{"@babel/runtime/helpers/slicedToArray":"../node_modules/@babel/runtime/helpers/slicedToArray.js","@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","./RocketChat.scss":"EmailViewer/RocketChat/RocketChat.scss","react":"../node_modules/react/index.js","./RocketAttachment":"EmailViewer/RocketChat/RocketAttachment.tsx","../UI/Markdown":"EmailViewer/UI/Markdown.tsx","react-timeago":"../node_modules/react-timeago/lib/index.js","react-emoji-render":"../node_modules/react-emoji-render/lib/index.js","../UI/Icon":"EmailViewer/UI/Icon.tsx"}],"EmailViewer/Tasks/Tasklist.scss":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"EmailViewer/Tasks/Tasklist.tsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Tasklist = void 0;
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
+
+var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _react = _interopRequireDefault(require("react"));
+
+require("./Tasklist.scss");
+
+var _Markdown = require("../UI/Markdown");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+var Tasklist =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2.default)(Tasklist, _React$Component);
+
+  function Tasklist(props) {
+    var _this;
+
+    (0, _classCallCheck2.default)(this, Tasklist);
+    _this = (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(Tasklist).call(this, props));
+    _this.state = {
+      tasks: []
+    };
+    return _this;
+  }
+
+  (0, _createClass2.default)(Tasklist, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      gapi.client.load("https://content.googleapis.com/discovery/v1/apis/tasks/v1/rest").then(function () {
+        return _this2.updateTasks();
+      });
+    }
+  }, {
+    key: "updateTasks",
+    value: function () {
+      var _updateTasks = (0, _asyncToGenerator2.default)(
+      /*#__PURE__*/
+      _regenerator.default.mark(function _callee() {
+        var tasks;
+        return _regenerator.default.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return gapi.client.tasks.tasks.list({
+                  tasklist: "@default",
+                  showCompleted: false
+                });
+
+              case 2:
+                tasks = _context.sent;
+                console.log(tasks);
+                this.setState({
+                  tasks: tasks.result.items.sort(function (a, b) {
+                    return parseInt(a.position) - parseInt(b.position);
+                  })
+                });
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function updateTasks() {
+        return _updateTasks.apply(this, arguments);
+      }
+
+      return updateTasks;
+    }()
+  }, {
+    key: "bumpTask",
+    value: function () {
+      var _bumpTask = (0, _asyncToGenerator2.default)(
+      /*#__PURE__*/
+      _regenerator.default.mark(function _callee2(taskId) {
+        return _regenerator.default.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return gapi.client.tasks.tasks.move({
+                  task: taskId,
+                  tasklist: "@default"
+                });
+
+              case 2:
+                _context2.next = 4;
+                return this.updateTasks();
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function bumpTask(_x) {
+        return _bumpTask.apply(this, arguments);
+      }
+
+      return bumpTask;
+    }()
+  }, {
+    key: "deferTask",
+    value: function () {
+      var _deferTask = (0, _asyncToGenerator2.default)(
+      /*#__PURE__*/
+      _regenerator.default.mark(function _callee3(taskId) {
+        return _regenerator.default.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return gapi.client.tasks.tasks.move({
+                  task: taskId,
+                  tasklist: "@default",
+                  previous: this.state.tasks[this.state.tasks.length - 1].id
+                });
+
+              case 2:
+                _context3.next = 4;
+                return this.updateTasks();
+
+              case 4:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function deferTask(_x2) {
+        return _deferTask.apply(this, arguments);
+      }
+
+      return deferTask;
+    }()
+  }, {
+    key: "completeTask",
+    value: function () {
+      var _completeTask = (0, _asyncToGenerator2.default)(
+      /*#__PURE__*/
+      _regenerator.default.mark(function _callee4(task) {
+        return _regenerator.default.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.next = 2;
+                return gapi.client.tasks.tasks.update({
+                  tasklist: "@default",
+                  task: task.id,
+                  resource: _objectSpread({}, task, {
+                    status: "completed"
+                  })
+                });
+
+              case 2:
+                _context4.next = 4;
+                return this.updateTasks();
+
+              case 4:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this);
+      }));
+
+      function completeTask(_x3) {
+        return _completeTask.apply(this, arguments);
+      }
+
+      return completeTask;
+    }()
+  }, {
+    key: "render",
+    value: function render() {
+      var _this3 = this;
+
+      return _react.default.createElement("div", {
+        className: "Tasklist"
+      }, this.state.tasks.map(function (task) {
+        return _react.default.createElement("div", {
+          className: "Task"
+        }, _react.default.createElement("div", null, _react.default.createElement("div", {
+          className: "TaskTitle"
+        }, task.title), _react.default.createElement("div", {
+          className: "TaskDetails"
+        }, _react.default.createElement(_Markdown.Markdown, {
+          source: task.notes || ""
+        }), task.links ? _react.default.createElement("div", {
+          className: "TaskLinks"
+        }, task.links.map(function (link) {
+          return _react.default.createElement("div", {
+            className: "TaskLink"
+          }, _react.default.createElement("a", {
+            href: link.link
+          }, link.description));
+        })) : "")), _react.default.createElement("div", {
+          className: "TaskActions"
+        }, _react.default.createElement("button", {
+          onClick: function onClick() {
+            return _this3.bumpTask(task.id);
+          }
+        }, "\u2B06\uFE0F"), _react.default.createElement("button", {
+          onClick: function onClick() {
+            return _this3.deferTask(task.id);
+          }
+        }, "\u2B07\uFE0F"), _react.default.createElement("button", {
+          onClick: function onClick() {
+            return _this3.completeTask(task);
+          }
+        }, "\u2611\uFE0F")));
+      }));
+    }
+  }]);
+  return Tasklist;
+}(_react.default.Component);
+
+exports.Tasklist = Tasklist;
+},{"@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","./Tasklist.scss":"EmailViewer/Tasks/Tasklist.scss","../UI/Markdown":"EmailViewer/UI/Markdown.tsx"}],"EmailViewer/EmailViewer.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -53697,6 +54028,8 @@ var _FocusBar = require("./FocusBar");
 
 var _RocketChat = require("./RocketChat/RocketChat");
 
+var _Tasklist = require("./Tasks/Tasklist");
+
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -53707,18 +54040,23 @@ var EmailViewer = function EmailViewer(_ref) {
     className: "EmailViewer"
   }, React.createElement(_Navigation.Navigation, {
     profile: profile
-  }), React.createElement(_FocusBar.FocusBar, null), React.createElement(_RocketChat.RocketChat, null), React.createElement(_ThreadList.ThreadList, {
+  }), React.createElement(_FocusBar.FocusBar, null), React.createElement(_Tasklist.Tasklist, null), React.createElement(_RocketChat.RocketChat, null), React.createElement(_ThreadList.ThreadList, {
     email: profile.getEmail() || ''
   }));
 };
 
 exports.EmailViewer = EmailViewer;
-},{"react":"../node_modules/react/index.js","./Navigation/Navigation":"EmailViewer/Navigation/Navigation.tsx","./ThreadList":"EmailViewer/ThreadList.tsx","./EmailViewer.scss":"EmailViewer/EmailViewer.scss","./FocusBar":"EmailViewer/FocusBar.tsx","./RocketChat/RocketChat":"EmailViewer/RocketChat/RocketChat.tsx"}],"../node_modules/normalize.css/normalize.css":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./Navigation/Navigation":"EmailViewer/Navigation/Navigation.tsx","./ThreadList":"EmailViewer/ThreadList.tsx","./EmailViewer.scss":"EmailViewer/EmailViewer.scss","./FocusBar":"EmailViewer/FocusBar.tsx","./RocketChat/RocketChat":"EmailViewer/RocketChat/RocketChat.tsx","./Tasks/Tasklist":"EmailViewer/Tasks/Tasklist.tsx"}],"../node_modules/normalize.css/normalize.css":[function(require,module,exports) {
 
         var reloadCSS = require('_css_loader');
         module.hot.dispose(reloadCSS);
         module.hot.accept(reloadCSS);
       
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"App.scss":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
 },{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"app.tsx":[function(require,module,exports) {
 "use strict";
 
@@ -53748,6 +54086,8 @@ var _Login = require("./Homepage/Login");
 var _EmailViewer = require("./EmailViewer/EmailViewer");
 
 require("normalize.css");
+
+require("./App.scss");
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
@@ -53823,7 +54163,7 @@ function (_React$Component) {
 }(React.Component);
 
 exports.App = App;
-},{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","./Homepage/Login":"Homepage/Login.tsx","./EmailViewer/EmailViewer":"EmailViewer/EmailViewer.tsx","normalize.css":"../node_modules/normalize.css/normalize.css"}],"styles.scss":[function(require,module,exports) {
+},{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","./Homepage/Login":"Homepage/Login.tsx","./EmailViewer/EmailViewer":"EmailViewer/EmailViewer.tsx","normalize.css":"../node_modules/normalize.css/normalize.css","./App.scss":"App.scss"}],"styles.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -53873,7 +54213,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49237" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55871" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

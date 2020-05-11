@@ -359,6 +359,10 @@
   background-color: #2a934d;
 }
 
+.Inactive {
+  background-color: #eeeeee;
+}
+
 .Content {
   max-width: 800px;
   display: flex;
@@ -411,8 +415,10 @@ p {
   z-index: 101;
   background: #eee;
   box-shadow: 0 0 3px #eee;
-  padding: 16px;
+  padding: 16px 0;
   margin: 0;
+  display: flex;
+  align-items: center;
 }
 
 .ReadButton {
@@ -444,6 +450,25 @@ p {
 .CustomEmoji {
   height: 1em;
 }
+
+.Highlight {
+  font-weight: bold;
+  color: #363f4d;
+}
+.Highlight--passive {
+  color: #2259b5;
+}
+.Highlight--active {
+  color: #b20142;
+}
+
+.PassiveMention {
+  border-color: #2259b5;
+}
+
+.ActiveMention {
+  border-color: #b20142;
+}
 .RocketAttachment {
   border-left: 2px solid;
   padding-left: 4px;
@@ -457,6 +482,36 @@ p {
 
 .Field {
   margin: 4px;
+}
+.Tasklist {
+  position: absolute;
+  width: calc(50vw - 400px);
+  right: 0;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.Task {
+  background: white;
+  border: 1px solid #dddddd;
+  margin-bottom: 4px;
+  padding: 4px;
+}
+
+.TaskActions {
+  position: absolute;
+  right: 0;
+  transform: translateY(-8px) translateX(-8px);
+}
+.TaskActions button {
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+.TaskDetails {
+  font-size: 14px;
+  padding-left: 8px;
 }
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 
@@ -808,6 +863,13 @@ template {
   display: none;
 }
 
+a {
+  color: #007fed;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
 @import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
 body {
   font-family: "Roboto", sans-serif;
