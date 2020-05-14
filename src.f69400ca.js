@@ -38176,7 +38176,7 @@ function (_React$Component) {
 
       var topEvent = this.state.nextEvent;
 
-      if (new Date(topEvent.start.dateTime) < new Date(Date.now() + 300000)) {
+      if (new Date(topEvent.start.dateTime) < new Date(Date.now() + 120000)) {
         return _react.default.createElement("div", {
           className: "FocusBar Active"
         }, _react.default.createElement("div", {
@@ -48052,6 +48052,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Markdown = Markdown;
 
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
 var _reactMarkdown = _interopRequireDefault(require("react-markdown"));
 
 var React = _interopRequireWildcard(require("react"));
@@ -48062,6 +48064,10 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
 function Markdown(_ref) {
   var source = _ref.source,
       _ref$renderers = _ref.renderers,
@@ -48071,14 +48077,27 @@ function Markdown(_ref) {
     return null;
   }
 
+  var linkRenderer = function linkRenderer(_ref2) {
+    var href = _ref2.href,
+        children = _ref2.children;
+    return React.createElement("a", {
+      href: href,
+      target: "_blank"
+    }, children.map(function (elem) {
+      return elem.type(elem.props);
+    }));
+  };
+
   return React.createElement(_reactMarkdown.default, {
     source: source.replace(/^ +/gm, "").replace(/^/gm, "\n").replace(/<(.+)\|(.+)>/gm, function (a, b, c) {
       return "[".concat(c, "](").concat(b, ")");
     }),
-    renderers: renderers
+    renderers: _objectSpread({}, renderers, {
+      link: linkRenderer
+    })
   });
 }
-},{"react-markdown":"../node_modules/react-markdown/lib/react-markdown.js","react":"../node_modules/react/index.js"}],"EmailViewer/RocketChat/RocketAttachment.tsx":[function(require,module,exports) {
+},{"@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","react-markdown":"../node_modules/react-markdown/lib/react-markdown.js","react":"../node_modules/react/index.js"}],"EmailViewer/RocketChat/RocketAttachment.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -48100,7 +48119,8 @@ function RocketAttachment(_ref) {
   var attachment = _ref.attachment;
   var color = {
     danger: "red",
-    good: "green"
+    good: "green",
+    warning: "#ffa32d"
   }[attachment.color] || attachment.color;
   var image = attachment.image_url && attachment.image_url.startsWith("/") ? document.rocketchatServer + attachment.image_url : attachment.image_url;
   return React.createElement("div", {
@@ -53465,23 +53485,57 @@ function (_React$Component) {
       });
     }
   }, {
-    key: "updateAll",
+    key: "sendMessage",
     value: function () {
-      var _updateAll = (0, _asyncToGenerator2.default)(
+      var _sendMessage = (0, _asyncToGenerator2.default)(
       /*#__PURE__*/
-      _regenerator.default.mark(function _callee() {
-        var _this4 = this;
-
-        var response, unreads;
+      _regenerator.default.mark(function _callee(roomId, text) {
         return _regenerator.default.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
+                return this.callApi("POST", "chat.postMessage", {
+                  roomId: roomId,
+                  text: text
+                });
+
+              case 2:
+                _context.next = 4;
+                return this.updateAll();
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function sendMessage(_x, _x2) {
+        return _sendMessage.apply(this, arguments);
+      }
+
+      return sendMessage;
+    }()
+  }, {
+    key: "updateAll",
+    value: function () {
+      var _updateAll = (0, _asyncToGenerator2.default)(
+      /*#__PURE__*/
+      _regenerator.default.mark(function _callee2() {
+        var _this4 = this;
+
+        var response, unreads;
+        return _regenerator.default.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
                 return this.callApi("GET", "subscriptions.get");
 
               case 2:
-                response = _context.sent;
+                response = _context2.sent;
                 unreads = response.update.filter(function (x) {
                   return new Date(x.ls) < new Date(x._updatedAt) - 1000 && !x.archived;
                 });
@@ -53525,10 +53579,10 @@ function (_React$Component) {
 
               case 6:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee, this);
+        }, _callee2, this);
       }));
 
       function updateAll() {
@@ -53542,28 +53596,50 @@ function (_React$Component) {
     value: function () {
       var _markRead = (0, _asyncToGenerator2.default)(
       /*#__PURE__*/
-      _regenerator.default.mark(function _callee2(rid) {
-        return _regenerator.default.wrap(function _callee2$(_context2) {
+      _regenerator.default.mark(function _callee3(rid) {
+        var unreadRoom, type, unreadMessages;
+        return _regenerator.default.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
-                _context2.next = 2;
+                unreadRoom = Object.values(this.state.unreads).find(function (unread) {
+                  return unread.room.rid === rid;
+                });
+                console.log(unreadRoom);
+                type = {
+                  p: "groups",
+                  c: "channels",
+                  d: "im"
+                }[unreadRoom.room.t];
+                _context3.next = 5;
+                return this.callApi("GET", "".concat(type, ".history?roomId=").concat(unreadRoom.room.rid, "&oldest=").concat(unreadRoom.messages[unreadRoom.messages.length - 1]._updatedAt, "&count=1000"));
+
+              case 5:
+                unreadMessages = _context3.sent;
+
+                if (unreadMessages.messages.length) {
+                  _context3.next = 9;
+                  break;
+                }
+
+                _context3.next = 9;
                 return this.callApi("POST", "subscriptions.read", {
                   rid: rid
                 });
 
-              case 2:
-                this.updateAll();
+              case 9:
+                _context3.next = 11;
+                return this.updateAll();
 
-              case 3:
+              case 11:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2, this);
+        }, _callee3, this);
       }));
 
-      function markRead(_x) {
+      function markRead(_x3) {
         return _markRead.apply(this, arguments);
       }
 
@@ -53573,6 +53649,7 @@ function (_React$Component) {
     key: "callApi",
     value: function callApi(method, endpoint, data) {
       var credentials = this.state.credentials;
+      console.log(method, endpoint, data);
       return new Promise(function (resolve) {
         return document.rocketchatCorsBypass({
           method: method,
@@ -53668,9 +53745,9 @@ function (_React$Component) {
         var activeMention = mentions.find(function (mention) {
           return mention.username == _this6.state.whoami.me.username;
         });
+        var diffs = message.msg.match(/D[0-9]+/g);
         content = _react.default.createElement("div", {
-          className: "ChatMessage ".concat(activeMention ? "ActiveMention" : passiveMention ? "PassiveMention" : ""),
-          key: message._id
+          className: "ChatMessage ".concat(activeMention ? "ActiveMention" : passiveMention ? "PassiveMention" : "")
         }, _react.default.createElement("div", {
           className: "ChatMessageContent"
         }, _react.default.createElement(_Markdown.Markdown, {
@@ -53688,14 +53765,27 @@ function (_React$Component) {
           });
         })), _react.default.createElement("div", {
           className: "MessageTimestamp"
-        }, _react.default.createElement(_reactTimeago.default, {
+        }, _react.default.createElement("span", {
+          className: "MessageActions"
+        }, false && _react.default.createElement("span", {
+          className: "Action",
+          onClick: function onClick() {
+            return _this6.snooze(message._id);
+          }
+        }, this.emoji(":zzz:")), diffs && _react.default.createElement("span", {
+          className: "Action",
+          onClick: function onClick() {
+            return _this6.sendMessage(message.rid, "hubot mq submit ".concat((0, _toConsumableArray2.default)(new Set(diffs)).join(" ")));
+          }
+        }, this.emoji(":phabdiffclosed:"))), _react.default.createElement(_reactTimeago.default, {
           date: message.ts
         })));
       }
 
       console.log(message.reactions);
       return _react.default.createElement("div", {
-        className: "MessageContainer"
+        className: "MessageContainer",
+        key: message._id
       }, !previous || message.u.username !== previous.u.username ? _react.default.createElement("div", {
         className: "MessageAuthor"
       }, message.u.name) : "", content, _react.default.createElement("div", {
@@ -53968,6 +54058,8 @@ function (_React$Component) {
       var _this3 = this;
 
       return _react.default.createElement("div", {
+        className: "TasklistContainer"
+      }, _react.default.createElement("div", {
         className: "Tasklist"
       }, this.state.tasks.map(function (task) {
         return _react.default.createElement("div", {
@@ -53984,7 +54076,8 @@ function (_React$Component) {
           return _react.default.createElement("div", {
             className: "TaskLink"
           }, _react.default.createElement("a", {
-            href: link.link
+            href: link.link,
+            target: "_blank"
           }, link.description));
         })) : "")), _react.default.createElement("div", {
           className: "TaskActions"
@@ -54001,7 +54094,7 @@ function (_React$Component) {
             return _this3.completeTask(task);
           }
         }, "\u2611\uFE0F")));
-      }));
+      })));
     }
   }]);
   return Tasklist;
@@ -54213,7 +54306,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55871" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64485" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
