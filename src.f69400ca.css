@@ -332,6 +332,7 @@
   background-color: white;
   padding: 8px 16px;
   margin: auto;
+  margin-top: 48px;
   box-shadow: 1px 1px 4px grey;
   border-radius: 3px;
   font-size: 18px;
@@ -487,6 +488,25 @@ p {
   border-color: #b20142;
   border-width: 2px;
 }
+
+.UnreadCount {
+  color: grey;
+  padding-left: 8px;
+  font-weight: normal;
+}
+
+.Participants {
+  margin-left: 6px;
+}
+
+.UserAvatar {
+  margin-left: 4px;
+}
+
+.Child {
+  border-right: 2px black solid;
+  margin-right: 40px;
+}
 .RocketAttachment {
   border-left: 2px solid;
   padding-left: 4px;
@@ -503,14 +523,14 @@ p {
 }
 .Tasklist {
   position: absolute;
-  width: calc(50vw - 400px);
+  width: calc(50vw - 416px);
   right: 0;
   padding: 16px;
   box-sizing: border-box;
+  background: white;
 }
 
 .Task {
-  background: white;
   border-bottom: 1px solid #dddddd;
   padding: 4px;
   margin-bottom: 2px;

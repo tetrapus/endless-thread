@@ -37196,7 +37196,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 var unfoldParts = function unfoldParts(part) {
   var supportedTypes = ["multipart/alternative", "multipart/related", "text/plain", "text/html"];
@@ -37421,7 +37421,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 var getAttatchmentIds = function getAttatchmentIds(part) {
   if (part.parts) {
@@ -37785,7 +37785,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 var ThreadList =
 /*#__PURE__*/
@@ -37798,7 +37798,6 @@ function (_React$Component) {
     (0, _classCallCheck2.default)(this, ThreadList);
     _this = (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(ThreadList).call(this, props));
     _this.state = {
-      threadsList: [],
       labels: []
     };
     return _this;
@@ -37933,16 +37932,28 @@ function (_React$Component) {
                 // Handle the results here (response.result has the parsed body).
                 batch = gapi.client.newBatch();
                 miniThreads = threadsResponse.result.threads || [];
+
+                if (miniThreads.length) {
+                  _context4.next = 9;
+                  break;
+                }
+
+                this.setState({
+                  threadsList: []
+                });
+                return _context4.abrupt("return");
+
+              case 9:
                 miniThreads.forEach(function (thread) {
                   batch.add(gapi.client.gmail.users.threads.get({
                     id: thread.id || "",
                     userId: email
                   }));
                 });
-                _context4.next = 9;
+                _context4.next = 12;
                 return batch;
 
-              case 9:
+              case 12:
                 threads = _context4.sent;
                 // Walk all the threads and grab each attachment ID
                 this.setState({
@@ -37954,7 +37965,7 @@ function (_React$Component) {
                   })
                 });
 
-              case 11:
+              case 14:
               case "end":
                 return _context4.stop();
             }
@@ -37975,7 +37986,7 @@ function (_React$Component) {
 
       return React.createElement("div", {
         className: "ThreadList"
-      }, this.state.threadsList && this.state.threadsList.length ? this.state.threadsList.map(function (thread) {
+      }, this.state.threadsList !== undefined ? this.state.threadsList.map(function (thread) {
         return React.createElement(_Thread.Thread, {
           key: thread.id,
           thread: thread,
@@ -38220,11 +38231,6 @@ function (_React$Component) {
 
 exports.FocusBar = FocusBar;
 },{"@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","./FocusBar.scss":"EmailViewer/FocusBar.scss","react-timeago":"../node_modules/react-timeago/lib/index.js","react":"../node_modules/react/index.js"}],"EmailViewer/RocketChat/RocketChat.scss":[function(require,module,exports) {
-var reloadCSS = require('_css_loader');
-
-module.hot.dispose(reloadCSS);
-module.hot.accept(reloadCSS);
-},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"EmailViewer/RocketChat/RocketAttachment.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -48066,7 +48072,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function Markdown(_ref) {
   var source = _ref.source,
@@ -48083,9 +48089,7 @@ function Markdown(_ref) {
     return React.createElement("a", {
       href: href,
       target: "_blank"
-    }, children.map(function (elem) {
-      return elem.type(elem.props);
-    }));
+    }, children);
   };
 
   return React.createElement(_reactMarkdown.default, {
@@ -48097,56 +48101,7 @@ function Markdown(_ref) {
     })
   });
 }
-},{"@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","react-markdown":"../node_modules/react-markdown/lib/react-markdown.js","react":"../node_modules/react/index.js"}],"EmailViewer/RocketChat/RocketAttachment.tsx":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.RocketAttachment = RocketAttachment;
-
-var React = _interopRequireWildcard(require("react"));
-
-require("./RocketAttachment.scss");
-
-var _Markdown = require("../UI/Markdown");
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function RocketAttachment(_ref) {
-  var attachment = _ref.attachment;
-  var color = {
-    danger: "red",
-    good: "green",
-    warning: "#ffa32d"
-  }[attachment.color] || attachment.color;
-  var image = attachment.image_url && attachment.image_url.startsWith("/") ? document.rocketchatServer + attachment.image_url : attachment.image_url;
-  return React.createElement("div", {
-    className: "RocketAttachment",
-    style: {
-      borderLeftColor: color
-    }
-  }, React.createElement("div", null, React.createElement("b", null, React.createElement("a", {
-    href: attachment.title_link
-  }, attachment.title))), image ? React.createElement("img", {
-    src: image,
-    height: "200px"
-  }) : "", React.createElement(_Markdown.Markdown, {
-    source: attachment.text || ""
-  }), attachment.fields ? React.createElement("div", {
-    className: "FieldContainer"
-  }, attachment.fields.map(function (field, idx) {
-    return React.createElement("div", {
-      className: "Field",
-      key: idx
-    }, React.createElement("b", null, field.title), React.createElement(_Markdown.Markdown, {
-      source: field.value
-    }));
-  })) : null);
-}
-},{"react":"../node_modules/react/index.js","./RocketAttachment.scss":"EmailViewer/RocketChat/RocketAttachment.scss","../UI/Markdown":"EmailViewer/UI/Markdown.tsx"}],"../node_modules/classnames/index.js":[function(require,module,exports) {
+},{"@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","react-markdown":"../node_modules/react-markdown/lib/react-markdown.js","react":"../node_modules/react/index.js"}],"../node_modules/classnames/index.js":[function(require,module,exports) {
 var define;
 /*!
   Copyright (c) 2017 Jed Watson.
@@ -53342,7 +53297,647 @@ EmojioneV4.propTypes = {
 EmojioneV4.defaultProps = {
   size: 64
 };
-},{"./renderer":"../node_modules/react-emoji-render/lib/renderer.js","react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js"}],"EmailViewer/RocketChat/RocketChat.tsx":[function(require,module,exports) {
+},{"./renderer":"../node_modules/react-emoji-render/lib/renderer.js","react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js"}],"EmailViewer/RocketChat/Renderers/Emoji.tsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Emoji = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactEmojiRender = require("react-emoji-render");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Emoji =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2.default)(Emoji, _React$Component);
+
+  function Emoji(p) {
+    var _this;
+
+    (0, _classCallCheck2.default)(this, Emoji);
+    _this = (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(Emoji).call(this, p));
+    _this.state = {};
+    return _this;
+  }
+
+  (0, _createClass2.default)(Emoji, [{
+    key: "render",
+    value: function render() {
+      var rawEmoji = this.props.text.substr(1, this.props.text.length - 2);
+
+      if (this.props.registry[rawEmoji]) {
+        return _react.default.createElement("img", {
+          className: "CustomEmoji",
+          src: "".concat(document.rocketchatServer, "/emoji-custom/").concat(rawEmoji, ".").concat(this.props.registry[rawEmoji])
+        });
+      } else {
+        return _react.default.createElement(_reactEmojiRender.Emojione, {
+          text: this.props.text
+        });
+      }
+    }
+  }]);
+  return Emoji;
+}(_react.default.Component);
+
+exports.Emoji = Emoji;
+},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","react-emoji-render":"../node_modules/react-emoji-render/lib/index.js"}],"EmailViewer/RocketChat/Renderers/Text.tsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Text = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var _Emoji = require("./Emoji");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Text =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2.default)(Text, _React$Component);
+
+  function Text(p) {
+    var _this;
+
+    (0, _classCallCheck2.default)(this, Text);
+    _this = (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(Text).call(this, p));
+    _this.state = {};
+    return _this;
+  }
+
+  (0, _createClass2.default)(Text, [{
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      var tokens = this.props.value.split(/(:[^ ]+:)|(@[^ ]+)/);
+      return tokens.filter(function (a) {
+        return a;
+      }).map(function (token) {
+        if (token.match(/^:[^ ]+:$/)) {
+          return _react.default.createElement(_Emoji.Emoji, {
+            registry: _this2.props.emoji,
+            text: token
+          });
+        } else if (token.match(/^@[^ ]+$/)) {
+          var classes = ["Highlight"];
+
+          if (["@here", "@channel"].includes(token)) {
+            classes.push("Highlight--passive");
+          } else if (token == "@" + _this2.props.whoami.me.username) {
+            classes.push("Highlight--active");
+          }
+
+          return _react.default.createElement("span", {
+            className: classes.join(" ")
+          }, token);
+        }
+
+        return token;
+      });
+    }
+  }]);
+  return Text;
+}(_react.default.Component);
+
+exports.Text = Text;
+},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","./Emoji":"EmailViewer/RocketChat/Renderers/Emoji.tsx"}],"EmailViewer/RocketChat/RocketAttachment.scss":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"EmailViewer/RocketChat/RocketAttachment.tsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.RocketAttachment = RocketAttachment;
+
+var React = _interopRequireWildcard(require("react"));
+
+require("./RocketAttachment.scss");
+
+var _Markdown = require("../UI/Markdown");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function RocketAttachment(_ref) {
+  var attachment = _ref.attachment;
+  var color = {
+    danger: "red",
+    good: "green",
+    warning: "#ffa32d"
+  }[attachment.color] || attachment.color;
+  var image = attachment.image_url && attachment.image_url.startsWith("/") ? document.rocketchatServer + attachment.image_url : attachment.image_url;
+  return React.createElement("div", {
+    className: "RocketAttachment",
+    style: {
+      borderLeftColor: color
+    }
+  }, React.createElement("div", null, React.createElement("b", null, React.createElement("a", {
+    href: attachment.title_link
+  }, attachment.title))), image ? React.createElement("img", {
+    src: image,
+    height: "200px"
+  }) : "", React.createElement(_Markdown.Markdown, {
+    source: attachment.text || ""
+  }), attachment.fields ? React.createElement("div", {
+    className: "FieldContainer"
+  }, attachment.fields.map(function (field, idx) {
+    return React.createElement("div", {
+      className: "Field",
+      key: idx
+    }, React.createElement("b", null, field.title), React.createElement(_Markdown.Markdown, {
+      source: field.value
+    }));
+  })) : null);
+}
+},{"react":"../node_modules/react/index.js","./RocketAttachment.scss":"EmailViewer/RocketChat/RocketAttachment.scss","../UI/Markdown":"EmailViewer/UI/Markdown.tsx"}],"EmailViewer/RocketChat/Message/Message.tsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Message = void 0;
+
+var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
+
+var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var _Markdown = require("../../UI/Markdown");
+
+var _Text = require("../Renderers/Text");
+
+var _RocketAttachment = require("../RocketAttachment");
+
+var _Emoji = require("../Renderers/Emoji");
+
+var _reactTimeago = _interopRequireDefault(require("react-timeago"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Message =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2.default)(Message, _React$Component);
+
+  function Message() {
+    (0, _classCallCheck2.default)(this, Message);
+    return (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(Message).apply(this, arguments));
+  }
+
+  (0, _createClass2.default)(Message, [{
+    key: "render",
+    value: function render() {
+      var _this = this;
+
+      var message = this.props.message;
+      var previous = this.props.previous;
+      var content;
+
+      if (message.t === "ul") {
+        content = _react.default.createElement("div", {
+          className: "ChatAction",
+          key: message._id
+        }, "left the chat");
+      } else if (message.t === "uj") {
+        content = _react.default.createElement("div", {
+          className: "ChatAction",
+          key: message._id
+        }, "joined");
+      } else if (message.t === "au") {
+        content = _react.default.createElement("div", {
+          className: "ChatAction",
+          key: message._id
+        }, "invited @", message.msg);
+      } else if (message.t === "ru") {
+        content = _react.default.createElement("div", {
+          className: "ChatAction",
+          key: message._id
+        }, "kicked @", message.msg);
+      } else if (message.t === "subscription-role-added") {
+        content = _react.default.createElement("div", {
+          className: "ChatAction",
+          key: message._id
+        }, "made @", message.msg, " ", message.role);
+      } else if (message.t === "subscription-role-removed") {
+        content = _react.default.createElement("div", {
+          className: "ChatAction",
+          key: message._id
+        }, "removed @", message.msg, " as ", message.role);
+      } else if (message.t === "room_changed_privacy") {
+        content = _react.default.createElement("div", {
+          className: "ChatAction",
+          key: message._id
+        }, "made the chat a ", message.msg);
+      } else {
+        var mentions = message.mentions || [];
+        var passiveMention = mentions.find(function (mention) {
+          return ["here", "channel"].includes(mention._id);
+        });
+        var activeMention = mentions.find(function (mention) {
+          return mention.username == _this.props.whoami.me.username;
+        });
+        var diffs = message.msg.match(/D[0-9]+/g);
+        content = _react.default.createElement("div", {
+          className: "ChatMessage ".concat(activeMention ? "ActiveMention" : passiveMention ? "PassiveMention" : "", " ").concat(message.tmid ? 'Child' : '')
+        }, _react.default.createElement("div", {
+          className: "ChatMessageContent"
+        }, _react.default.createElement(_Markdown.Markdown, {
+          source: message.msg,
+          renderers: {
+            text: function text(_ref) {
+              var value = _ref.value;
+              return _react.default.createElement(_Text.Text, {
+                emoji: _this.props.emoji,
+                whoami: _this.props.whoami,
+                value: value
+              });
+            }
+          }
+        }), (message.attachments || []).map(function (attachment, idx) {
+          return _react.default.createElement(_RocketAttachment.RocketAttachment, {
+            attachment: attachment,
+            key: idx
+          });
+        })), _react.default.createElement("div", {
+          className: "MessageTimestamp"
+        }, _react.default.createElement("span", {
+          className: "MessageActions"
+        }, false && _react.default.createElement("span", {
+          className: "Action",
+          onClick: function onClick() {
+            return _this.props.snooze(message._id);
+          }
+        }, _react.default.createElement(_Emoji.Emoji, {
+          registry: this.props.emoji,
+          text: ":zzz:"
+        })), diffs && _react.default.createElement("span", {
+          className: "Action",
+          onClick: function onClick() {
+            return _this.props.sendMessage(message.rid, "hubot mq submit ".concat((0, _toConsumableArray2.default)(new Set(diffs)).join(" ")));
+          }
+        }, _react.default.createElement(_Emoji.Emoji, {
+          registry: this.props.emoji,
+          text: ":phabdiffclosed:"
+        }))), _react.default.createElement(_reactTimeago.default, {
+          date: message.ts
+        })));
+      }
+
+      var username = message.u.username;
+      return _react.default.createElement("div", {
+        className: "MessageContainer",
+        key: message._id
+      }, !previous || username !== previous.u.username ? _react.default.createElement("div", {
+        className: "MessageAuthor"
+      }, _react.default.createElement("span", null, message.u.name)) : "", content, _react.default.createElement("div", {
+        className: "ReactionBox"
+      }, Object.entries(message.reactions || {}).map(function (_ref2) {
+        var _ref3 = (0, _slicedToArray2.default)(_ref2, 2),
+            reaction = _ref3[0],
+            reactors = _ref3[1];
+
+        return reactors.usernames.map(function () {
+          return _react.default.createElement(_Emoji.Emoji, {
+            registry: _this.props.emoji,
+            text: reaction
+          });
+        });
+      })));
+    }
+  }]);
+  return Message;
+}(_react.default.Component);
+
+exports.Message = Message;
+},{"@babel/runtime/helpers/slicedToArray":"../node_modules/@babel/runtime/helpers/slicedToArray.js","@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","../../UI/Markdown":"EmailViewer/UI/Markdown.tsx","../Renderers/Text":"EmailViewer/RocketChat/Renderers/Text.tsx","../RocketAttachment":"EmailViewer/RocketChat/RocketAttachment.tsx","../Renderers/Emoji":"EmailViewer/RocketChat/Renderers/Emoji.tsx","react-timeago":"../node_modules/react-timeago/lib/index.js"}],"EmailViewer/RocketChat/Room/Room.tsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Room = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var _Icon = require("../../UI/Icon");
+
+var _reactVisibilitySensor = _interopRequireDefault(require("react-visibility-sensor"));
+
+var _Spinner = require("../../UI/Spinner");
+
+var _Message = require("../Message/Message");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Channel = function Channel(room) {
+  var type,
+      id,
+      prefix = "";
+
+  if (room.t == "c") {
+    type = "channel";
+    id = room.name;
+    prefix = "#";
+  } else if (room.t == "p") {
+    type = "group";
+    id = room.name;
+    prefix = "🔒";
+  } else {
+    type = "direct";
+    id = room.rid;
+  }
+
+  return _react.default.createElement("a", {
+    className: "RoomName",
+    href: "".concat(document.rocketchatServer, "/").concat(type, "/").concat(id),
+    target: "_blank"
+  }, prefix, room.fname || "general");
+};
+
+var Room =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2.default)(Room, _React$Component);
+
+  function Room(props) {
+    var _this;
+
+    (0, _classCallCheck2.default)(this, Room);
+    _this = (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(Room).call(this, props));
+    _this.state = {
+      context: {}
+    };
+    return _this;
+  }
+
+  (0, _createClass2.default)(Room, [{
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      var _this$props = this.props,
+          room = _this$props.room,
+          messages = _this$props.messages;
+      var frequencies = {};
+      (messages || []).forEach(function (message) {
+        var username = message.u.username;
+        frequencies[username] = frequencies[username] !== undefined ? 0 : frequencies[username] + 1;
+      });
+      var participants = Object.keys(frequencies).sort(function (a, b) {
+        return frequencies[b] - frequencies[a];
+      });
+      return _react.default.createElement("div", {
+        className: "ChatRoom",
+        key: room.rid
+      }, _react.default.createElement("h3", {
+        className: "RoomTitle"
+      }, Channel(room), _react.default.createElement("span", {
+        className: "UnreadCount"
+      }, messages && messages.length), _react.default.createElement("span", {
+        className: "Participants"
+      }, participants.map(function (username) {
+        return _react.default.createElement("img", {
+          key: username,
+          title: "@".concat(username),
+          src: "".concat(document.rocketchatServer, "/avatar/").concat(username),
+          width: "16"
+        });
+      })), _react.default.createElement("span", {
+        className: "ReadButton",
+        onClick: function onClick() {
+          return _this2.props.markRead(room.fname);
+        }
+      }, _react.default.createElement(_Icon.Icon, {
+        type: "done"
+      }))), messages === undefined ? _react.default.createElement(_reactVisibilitySensor.default, {
+        onChange: function onChange(visible) {
+          return visible ? _this2.props.fetchMessages(room.fname) : null;
+        }
+      }, _react.default.createElement(_Spinner.Spinner, null)) : messages.map(function (message, idx) {
+        return _react.default.createElement(_Message.Message, {
+          message: message,
+          previous: messages[idx - 1],
+          emoji: _this2.props.emoji,
+          whoami: _this2.props.whoami,
+          snooze: function snooze() {
+            return null;
+          },
+          sendMessage: _this2.props.sendMessage
+        });
+      }));
+    }
+  }]);
+  return Room;
+}(_react.default.Component);
+
+exports.Room = Room;
+},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","../../UI/Icon":"EmailViewer/UI/Icon.tsx","react-visibility-sensor":"../node_modules/react-visibility-sensor/dist/visibility-sensor.js","../../UI/Spinner":"EmailViewer/UI/Spinner.tsx","../Message/Message":"EmailViewer/RocketChat/Message/Message.tsx"}],"EmailViewer/RocketChat/GreasyDocument.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.document = void 0;
+var document;
+exports.document = document;
+},{}],"EmailViewer/RocketChat/RocketChatService.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.RocketChatService = void 0;
+
+var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _GreasyDocument = require("./GreasyDocument");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+var RocketChatService =
+/*#__PURE__*/
+function () {
+  function RocketChatService() {
+    (0, _classCallCheck2.default)(this, RocketChatService);
+  }
+
+  (0, _createClass2.default)(RocketChatService, [{
+    key: "call",
+    value: function () {
+      var _call = (0, _asyncToGenerator2.default)(
+      /*#__PURE__*/
+      _regenerator.default.mark(function _callee(method, endpoint, data) {
+        var _this = this;
+
+        return _regenerator.default.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (this.credentials) {
+                  _context.next = 2;
+                  break;
+                }
+
+                return _context.abrupt("return");
+
+              case 2:
+                return _context.abrupt("return", new Promise(function (resolve) {
+                  if (_GreasyDocument.document.rocketchatCorsBypass === undefined) {
+                    return;
+                  }
+
+                  _GreasyDocument.document.rocketchatCorsBypass({
+                    method: method,
+                    url: "".concat(_GreasyDocument.document.rocketchatServer, "/api/v1/").concat(endpoint),
+                    headers: _objectSpread({
+                      "Content-Type": "application/json"
+                    }, _this.credentials ? {
+                      "X-Auth-Token": _this.credentials.authToken,
+                      "X-User-Id": _this.credentials.userId
+                    } : {}),
+                    data: data ? JSON.stringify(data) : undefined,
+                    onload: function onload(r) {
+                      resolve(JSON.parse(r.responseText));
+                    }
+                  });
+                }));
+
+              case 3:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function call(_x, _x2, _x3) {
+        return _call.apply(this, arguments);
+      }
+
+      return call;
+    }()
+  }, {
+    key: "login",
+    value: function () {
+      var _login = (0, _asyncToGenerator2.default)(
+      /*#__PURE__*/
+      _regenerator.default.mark(function _callee2() {
+        var authResponse, loginResponse;
+        return _regenerator.default.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                authResponse = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse(true);
+                _context2.next = 3;
+                return this.call("POST", "login", {
+                  serviceName: "google",
+                  accessToken: authResponse.access_token,
+                  idToken: authResponse.id_token,
+                  expiresIn: authResponse.expires_in
+                });
+
+              case 3:
+                loginResponse = _context2.sent;
+                this.credentials = {
+                  authToken: loginResponse.authToken,
+                  userId: loginResponse.userId
+                };
+                this.identity = loginResponse.data;
+                return _context2.abrupt("return", this.identity);
+
+              case 7:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function login() {
+        return _login.apply(this, arguments);
+      }
+
+      return login;
+    }()
+  }, {
+    key: "getIdentity",
+    value: function getIdentity() {
+      return this.identity;
+    }
+  }]);
+  return RocketChatService;
+}();
+
+exports.RocketChatService = RocketChatService;
+},{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","./GreasyDocument":"EmailViewer/RocketChat/GreasyDocument.ts"}],"EmailViewer/RocketChat/RocketChat.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -53350,15 +53945,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.RocketChat = void 0;
 
-var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
-
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
 
-var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
-
 var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 
 var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
 
@@ -53374,46 +53967,15 @@ require("./RocketChat.scss");
 
 var _react = _interopRequireDefault(require("react"));
 
-var _RocketAttachment = require("./RocketAttachment");
+var _Room = require("./Room/Room");
 
-var _Markdown = require("../UI/Markdown");
-
-var _reactTimeago = _interopRequireDefault(require("react-timeago"));
-
-var _reactEmojiRender = require("react-emoji-render");
-
-var _Icon = require("../UI/Icon");
+var _RocketChatService = require("./RocketChatService");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-var Channel = function Channel(room) {
-  var type,
-      id,
-      prefix = "";
-
-  if (room.t == "c") {
-    type = "channel";
-    id = room.name;
-    prefix = "#";
-  } else if (room.t == "p") {
-    type = "group";
-    id = room.name;
-    prefix = "#";
-  } else {
-    type = "direct";
-    id = room.rid;
-  }
-
-  return _react.default.createElement("a", {
-    className: "RoomName",
-    href: "".concat(document.rocketchatServer, "/").concat(type, "/").concat(id),
-    target: "_blank"
-  }, prefix, room.fname);
-};
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 var RocketChat =
 /*#__PURE__*/
@@ -53425,9 +53987,36 @@ function (_React$Component) {
 
     (0, _classCallCheck2.default)(this, RocketChat);
     _this = (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(RocketChat).call(this, props));
+
+    _this.callApi = function (method, endpoint, data) {
+      var credentials = _this.state.credentials;
+      return new Promise(function (resolve) {
+        if (document.rocketchatCorsBypass === undefined) {
+          return;
+        }
+
+        document.rocketchatCorsBypass({
+          method: method,
+          url: "".concat(document.rocketchatServer, "/api/v1/").concat(endpoint),
+          headers: _objectSpread({
+            "Content-Type": "application/json"
+          }, credentials ? {
+            "X-Auth-Token": credentials.authToken,
+            "X-User-Id": credentials.userId
+          } : {}),
+          data: data ? JSON.stringify(data) : undefined,
+          onload: function onload(r) {
+            resolve(JSON.parse(r.responseText));
+          }
+        });
+      });
+    };
+
     _this.state = {
       unreads: {},
-      emoji: {}
+      emoji: {},
+      messages: {},
+      rocketchat: new _RocketChatService.RocketChatService()
     };
     return _this;
   }
@@ -53501,10 +54090,6 @@ function (_React$Component) {
                 });
 
               case 2:
-                _context.next = 4;
-                return this.updateAll();
-
-              case 4:
               case "end":
                 return _context.stop();
             }
@@ -53526,7 +54111,7 @@ function (_React$Component) {
       _regenerator.default.mark(function _callee2() {
         var _this4 = this;
 
-        var response, unreads;
+        var response, unreads, updated;
         return _regenerator.default.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -53539,45 +54124,25 @@ function (_React$Component) {
                 unreads = response.update.filter(function (x) {
                   return new Date(x.ls) < new Date(x._updatedAt) - 1000 && !x.archived;
                 });
-                Object.keys(this.state.unreads).forEach(function (room) {
-                  if (!unreads.find(function (unread) {
-                    return unread.fname === room;
-                  })) {
-                    var newUnreads = Object.assign({}, _this4.state.unreads);
-                    delete newUnreads[room];
+                updated = unreads.map(function (unread) {
+                  var old = _this4.state.unreads[unread.fname];
 
-                    _this4.setState({
-                      unreads: newUnreads
-                    });
+                  if (old === undefined) {
+                    return unread;
+                  } else if (old._updatedAt === unread._updatedAt) {
+                    return old;
+                  } else {
+                    return unread;
                   }
                 });
-                unreads.forEach(function (unreadRoom) {
-                  var existingRoom = _this4.state.unreads[unreadRoom.fname];
-
-                  if (existingRoom && unreadRoom._updatedAt === existingRoom.room._updatedAt) {
-                    return;
-                  }
-
-                  console.log(unreadRoom);
-                  var type = {
-                    p: "groups",
-                    c: "channels",
-                    d: "im"
-                  }[unreadRoom.t];
-
-                  _this4.callApi("GET", "".concat(type, ".history?roomId=").concat(unreadRoom.rid, "&oldest=").concat(unreadRoom.ls, "&count=1000")).then(function (response) {
-                    console.log(response);
-
-                    _this4.setState({
-                      unreads: _objectSpread({}, _this4.state.unreads, (0, _defineProperty2.default)({}, unreadRoom.fname, {
-                        messages: response.messages.reverse(),
-                        room: unreadRoom
-                      }))
-                    });
-                  });
+                this.setState({
+                  unreads: Object.assign.apply(Object, [{}].concat((0, _toConsumableArray2.default)(updated.map(function (unreadRoom) {
+                    return (0, _defineProperty2.default)({}, unreadRoom.fname, unreadRoom);
+                  }))))
                 });
+                console.log(this.state);
 
-              case 6:
+              case 7:
               case "end":
                 return _context2.stop();
             }
@@ -53592,46 +54157,41 @@ function (_React$Component) {
       return updateAll;
     }()
   }, {
-    key: "markRead",
+    key: "fetchMessages",
     value: function () {
-      var _markRead = (0, _asyncToGenerator2.default)(
+      var _fetchMessages = (0, _asyncToGenerator2.default)(
       /*#__PURE__*/
-      _regenerator.default.mark(function _callee3(rid) {
-        var unreadRoom, type, unreadMessages;
+      _regenerator.default.mark(function _callee3(name) {
+        var unreadRoom, type, response;
         return _regenerator.default.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                unreadRoom = Object.values(this.state.unreads).find(function (unread) {
-                  return unread.room.rid === rid;
-                });
+                unreadRoom = this.state.unreads[name];
                 console.log(unreadRoom);
                 type = {
                   p: "groups",
                   c: "channels",
                   d: "im"
-                }[unreadRoom.room.t];
+                }[unreadRoom.t];
                 _context3.next = 5;
-                return this.callApi("GET", "".concat(type, ".history?roomId=").concat(unreadRoom.room.rid, "&oldest=").concat(unreadRoom.messages[unreadRoom.messages.length - 1]._updatedAt, "&count=1000"));
+                return this.callApi("GET", "".concat(type, ".history?roomId=").concat(unreadRoom.rid, "&oldest=").concat(unreadRoom.ls, "&count=1000"));
 
               case 5:
-                unreadMessages = _context3.sent;
+                response = _context3.sent;
+                this.setState({
+                  messages: _objectSpread({}, this.state.messages, (0, _defineProperty2.default)({}, name, response.messages ? response.messages.reverse() : []))
+                });
 
-                if (unreadMessages.messages.length) {
-                  _context3.next = 9;
+                if (!(response.messages && !response.messages.length)) {
+                  _context3.next = 10;
                   break;
                 }
 
-                _context3.next = 9;
-                return this.callApi("POST", "subscriptions.read", {
-                  rid: rid
-                });
+                _context3.next = 10;
+                return this.markRead(name);
 
-              case 9:
-                _context3.next = 11;
-                return this.updateAll();
-
-              case 11:
+              case 10:
               case "end":
                 return _context3.stop();
             }
@@ -53639,200 +54199,105 @@ function (_React$Component) {
         }, _callee3, this);
       }));
 
-      function markRead(_x3) {
+      function fetchMessages(_x3) {
+        return _fetchMessages.apply(this, arguments);
+      }
+
+      return fetchMessages;
+    }()
+  }, {
+    key: "markRead",
+    value: function () {
+      var _markRead = (0, _asyncToGenerator2.default)(
+      /*#__PURE__*/
+      _regenerator.default.mark(function _callee4(name) {
+        var unreadRoom, messages, type, unreadMessages;
+        return _regenerator.default.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                unreadRoom = this.state.unreads[name];
+                messages = this.state.messages[name];
+                console.log(unreadRoom);
+                type = {
+                  p: "groups",
+                  c: "channels",
+                  d: "im"
+                }[unreadRoom.t];
+
+                if (!(messages === null || messages === void 0 ? void 0 : messages.length)) {
+                  _context4.next = 9;
+                  break;
+                }
+
+                _context4.next = 7;
+                return this.callApi("GET", "".concat(type, ".history?roomId=").concat(unreadRoom.rid, "&oldest=").concat(messages[messages.length - 1]._updatedAt, "&count=1000"));
+
+              case 7:
+                unreadMessages = _context4.sent;
+                console.log(unreadMessages);
+
+              case 9:
+                if (!(unreadMessages === undefined || !unreadMessages.messages.length)) {
+                  _context4.next = 14;
+                  break;
+                }
+
+                _context4.next = 12;
+                return this.callApi("POST", "subscriptions.read", {
+                  rid: unreadRoom.rid
+                });
+
+              case 12:
+                _context4.next = 16;
+                break;
+
+              case 14:
+                _context4.next = 16;
+                return this.fetchMessages(name);
+
+              case 16:
+                _context4.next = 18;
+                return this.updateAll();
+
+              case 18:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this);
+      }));
+
+      function markRead(_x4) {
         return _markRead.apply(this, arguments);
       }
 
       return markRead;
     }()
   }, {
-    key: "callApi",
-    value: function callApi(method, endpoint, data) {
-      var credentials = this.state.credentials;
-      console.log(method, endpoint, data);
-      return new Promise(function (resolve) {
-        return document.rocketchatCorsBypass({
-          method: method,
-          url: "".concat(document.rocketchatServer, "/api/v1/").concat(endpoint),
-          headers: _objectSpread({
-            "Content-Type": "application/json"
-          }, credentials ? {
-            "X-Auth-Token": credentials.authToken,
-            "X-User-Id": credentials.userId
-          } : {}),
-          data: data ? JSON.stringify(data) : undefined,
-          onload: function onload(r) {
-            console.log(r.responseText);
-            resolve(JSON.parse(r.responseText));
-          }
-        });
-      });
-    }
-  }, {
-    key: "emoji",
-    value: function emoji(text) {
-      var rawEmoji = text.substr(1, text.length - 2);
-      console.log(rawEmoji, this.state.emoji);
-
-      if (this.state.emoji[rawEmoji]) {
-        return _react.default.createElement("img", {
-          className: "CustomEmoji",
-          key: text,
-          src: "".concat(document.rocketchatServer, "/emoji-custom/").concat(rawEmoji, ".").concat(this.state.emoji[rawEmoji])
-        });
-      } else {
-        return _react.default.createElement(_reactEmojiRender.Emojione, {
-          key: text,
-          text: text
-        });
-      }
-    }
-  }, {
-    key: "renderTextWithEmoji",
-    value: function renderTextWithEmoji(value) {
-      var _this5 = this;
-
-      var tokens = value.split(/(:[^ ]+:)|(@[^ ]+)/);
-      return tokens.filter(function (a) {
-        return a;
-      }).map(function (token) {
-        if (token.match(/^:[^ ]+:$/)) {
-          return _this5.emoji(token);
-        } else if (token.match(/^@[^ ]+$/)) {
-          var classes = ["Highlight"];
-
-          if (["@here", "@channel"].includes(token)) {
-            classes.push("Highlight--passive");
-          } else if (token == "@" + _this5.state.whoami.me.username) {
-            classes.push("Highlight--active");
-          }
-
-          return _react.default.createElement("span", {
-            className: classes.join(" ")
-          }, token);
-        }
-
-        return token;
-      });
-    }
-  }, {
-    key: "renderMessage",
-    value: function renderMessage(message, previous) {
-      var _this6 = this;
-
-      var content;
-
-      if (message.t === "ul") {
-        content = _react.default.createElement("div", {
-          className: "ChatAction",
-          key: message._id
-        }, "left the chat");
-      } else if (message.t === "uj") {
-        content = _react.default.createElement("div", {
-          className: "ChatAction",
-          key: message._id
-        }, "joined");
-      } else if (message.t === "au") {
-        content = _react.default.createElement("div", {
-          className: "ChatAction",
-          key: message._id
-        }, "invited @", message.msg);
-      } else {
-        var mentions = message.mentions || [];
-        var passiveMention = mentions.find(function (mention) {
-          return ["here", "channel"].includes(mention._id);
-        });
-        var activeMention = mentions.find(function (mention) {
-          return mention.username == _this6.state.whoami.me.username;
-        });
-        var diffs = message.msg.match(/D[0-9]+/g);
-        content = _react.default.createElement("div", {
-          className: "ChatMessage ".concat(activeMention ? "ActiveMention" : passiveMention ? "PassiveMention" : "")
-        }, _react.default.createElement("div", {
-          className: "ChatMessageContent"
-        }, _react.default.createElement(_Markdown.Markdown, {
-          source: message.msg,
-          renderers: {
-            text: function text(_ref3) {
-              var value = _ref3.value;
-              return _this6.renderTextWithEmoji(value);
-            }
-          }
-        }), (message.attachments || []).map(function (attachment, idx) {
-          return _react.default.createElement(_RocketAttachment.RocketAttachment, {
-            attachment: attachment,
-            key: idx
-          });
-        })), _react.default.createElement("div", {
-          className: "MessageTimestamp"
-        }, _react.default.createElement("span", {
-          className: "MessageActions"
-        }, false && _react.default.createElement("span", {
-          className: "Action",
-          onClick: function onClick() {
-            return _this6.snooze(message._id);
-          }
-        }, this.emoji(":zzz:")), diffs && _react.default.createElement("span", {
-          className: "Action",
-          onClick: function onClick() {
-            return _this6.sendMessage(message.rid, "hubot mq submit ".concat((0, _toConsumableArray2.default)(new Set(diffs)).join(" ")));
-          }
-        }, this.emoji(":phabdiffclosed:"))), _react.default.createElement(_reactTimeago.default, {
-          date: message.ts
-        })));
-      }
-
-      console.log(message.reactions);
-      return _react.default.createElement("div", {
-        className: "MessageContainer",
-        key: message._id
-      }, !previous || message.u.username !== previous.u.username ? _react.default.createElement("div", {
-        className: "MessageAuthor"
-      }, message.u.name) : "", content, _react.default.createElement("div", {
-        className: "ReactionBox"
-      }, Object.entries(message.reactions || {}).map(function (_ref4) {
-        var _ref5 = (0, _slicedToArray2.default)(_ref4, 2),
-            reaction = _ref5[0],
-            reactors = _ref5[1];
-
-        return reactors.usernames.map(function () {
-          return _this6.emoji(reaction);
-        });
-      })));
-    }
-  }, {
     key: "render",
     value: function render() {
-      var _this7 = this;
+      var _this5 = this;
 
       return _react.default.createElement("div", {
         className: "RocketContainer"
-      }, Object.entries(this.state.unreads).filter(function (_ref6) {
-        var _ref7 = (0, _slicedToArray2.default)(_ref6, 2),
-            room = _ref7[0],
-            details = _ref7[1];
-
-        return details.messages.length > 0;
-      }).map(function (_ref8) {
-        var _ref9 = (0, _slicedToArray2.default)(_ref8, 2),
-            room = _ref9[0],
-            details = _ref9[1];
-
-        return _react.default.createElement("div", {
-          className: "ChatRoom",
-          key: details.room.rid
-        }, _react.default.createElement("h3", {
-          className: "RoomTitle"
-        }, Channel(details.room), _react.default.createElement("span", {
-          className: "ReadButton",
-          onClick: function onClick() {
-            return _this7.markRead(details.room.rid);
+      }, Object.keys(this.state.unreads).map(function (name) {
+        return _react.default.createElement(_Room.Room, {
+          key: name,
+          room: _this5.state.unreads[name],
+          messages: _this5.state.messages[name],
+          emoji: _this5.state.emoji,
+          whoami: _this5.state.whoami,
+          sendMessage: function sendMessage(a, b) {
+            return _this5.sendMessage(a, b);
+          },
+          markRead: function markRead(name) {
+            return _this5.markRead(name);
+          },
+          fetchMessages: function fetchMessages(name) {
+            return _this5.fetchMessages(name);
           }
-        }, _react.default.createElement(_Icon.Icon, {
-          type: "done"
-        }))), details.messages.map(function (message, idx) {
-          return _this7.renderMessage(message, details.messages[idx - 1]);
-        }));
+        });
       }));
     }
   }]);
@@ -53840,7 +54305,7 @@ function (_React$Component) {
 }(_react.default.Component);
 
 exports.RocketChat = RocketChat;
-},{"@babel/runtime/helpers/slicedToArray":"../node_modules/@babel/runtime/helpers/slicedToArray.js","@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","./RocketChat.scss":"EmailViewer/RocketChat/RocketChat.scss","react":"../node_modules/react/index.js","./RocketAttachment":"EmailViewer/RocketChat/RocketAttachment.tsx","../UI/Markdown":"EmailViewer/UI/Markdown.tsx","react-timeago":"../node_modules/react-timeago/lib/index.js","react-emoji-render":"../node_modules/react-emoji-render/lib/index.js","../UI/Icon":"EmailViewer/UI/Icon.tsx"}],"EmailViewer/Tasks/Tasklist.scss":[function(require,module,exports) {
+},{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","./RocketChat.scss":"EmailViewer/RocketChat/RocketChat.scss","react":"../node_modules/react/index.js","./Room/Room":"EmailViewer/RocketChat/Room/Room.tsx","./RocketChatService":"EmailViewer/RocketChat/RocketChatService.ts"}],"EmailViewer/Tasks/Tasklist.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -53879,7 +54344,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 var Tasklist =
 /*#__PURE__*/
@@ -53903,7 +54368,11 @@ function (_React$Component) {
       var _this2 = this;
 
       gapi.client.load("https://content.googleapis.com/discovery/v1/apis/tasks/v1/rest").then(function () {
-        return _this2.updateTasks();
+        _this2.updateTasks();
+
+        setInterval(function () {
+          return _this2.updateTasks();
+        }, 30000);
       });
     }
   }, {
@@ -54306,7 +54775,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64485" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62227" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
