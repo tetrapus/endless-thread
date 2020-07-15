@@ -395,6 +395,7 @@
   position: relative;
   overflow: auto;
   display: flex;
+  min-height: 18px;
 }
 
 .ChatAction {
@@ -525,6 +526,9 @@ p {
 
 .Field {
   margin: 4px;
+}
+.MessageBox {
+  margin-top: 4px;
 }
 .Tasklist {
   right: 0;

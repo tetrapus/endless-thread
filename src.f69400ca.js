@@ -53695,7 +53695,137 @@ function (_React$Component) {
 }(_react.default.Component);
 
 exports.Message = Message;
-},{"@babel/runtime/helpers/slicedToArray":"../node_modules/@babel/runtime/helpers/slicedToArray.js","@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","../../UI/Markdown":"EmailViewer/UI/Markdown.tsx","../Renderers/Text":"EmailViewer/RocketChat/Renderers/Text.tsx","../RocketAttachment":"EmailViewer/RocketChat/RocketAttachment.tsx","../Renderers/Emoji":"EmailViewer/RocketChat/Renderers/Emoji.tsx","react-timeago":"../node_modules/react-timeago/lib/index.js"}],"EmailViewer/RocketChat/Room/Room.tsx":[function(require,module,exports) {
+},{"@babel/runtime/helpers/slicedToArray":"../node_modules/@babel/runtime/helpers/slicedToArray.js","@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","../../UI/Markdown":"EmailViewer/UI/Markdown.tsx","../Renderers/Text":"EmailViewer/RocketChat/Renderers/Text.tsx","../RocketAttachment":"EmailViewer/RocketChat/RocketAttachment.tsx","../Renderers/Emoji":"EmailViewer/RocketChat/Renderers/Emoji.tsx","react-timeago":"../node_modules/react-timeago/lib/index.js"}],"EmailViewer/RocketChat/Message/MessageBox.scss":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"EmailViewer/RocketChat/Message/MessageBox.tsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.MessageBox = void 0;
+
+var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
+
+var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _react = _interopRequireDefault(require("react"));
+
+require("./MessageBox.scss");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var MessageBox =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2.default)(MessageBox, _React$Component);
+
+  function MessageBox() {
+    (0, _classCallCheck2.default)(this, MessageBox);
+    return (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(MessageBox).apply(this, arguments));
+  }
+
+  (0, _createClass2.default)(MessageBox, [{
+    key: "onKeyPress",
+    value: function () {
+      var _onKeyPress = (0, _asyncToGenerator2.default)(
+      /*#__PURE__*/
+      _regenerator.default.mark(function _callee(event) {
+        var message;
+        return _regenerator.default.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (!(event.key === "Enter")) {
+                  _context.next = 6;
+                  break;
+                }
+
+                message = event.currentTarget.innerText;
+                event.currentTarget.innerText = "";
+                _context.next = 5;
+                return this.props.rocketchat.call("POST", "chat.postMessage", {
+                  roomId: this.props.roomId,
+                  text: message
+                });
+
+              case 5:
+                this.props.onUpdate();
+
+              case 6:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function onKeyPress(_x) {
+        return _onKeyPress.apply(this, arguments);
+      }
+
+      return onKeyPress;
+    }()
+  }, {
+    key: "render",
+    value: function render() {
+      var _this = this;
+
+      return _react.default.createElement("div", {
+        className: "ChatMessage MessageBox",
+        contentEditable: true,
+        onKeyPress: function () {
+          var _onKeyPress2 = (0, _asyncToGenerator2.default)(
+          /*#__PURE__*/
+          _regenerator.default.mark(function _callee2(event) {
+            return _regenerator.default.wrap(function _callee2$(_context2) {
+              while (1) {
+                switch (_context2.prev = _context2.next) {
+                  case 0:
+                    _context2.next = 2;
+                    return _this.onKeyPress(event);
+
+                  case 2:
+                    return _context2.abrupt("return", _context2.sent);
+
+                  case 3:
+                  case "end":
+                    return _context2.stop();
+                }
+              }
+            }, _callee2);
+          }));
+
+          function onKeyPress(_x2) {
+            return _onKeyPress2.apply(this, arguments);
+          }
+
+          return onKeyPress;
+        }(),
+        onClick: function onClick() {
+          return _this.props.onUpdate();
+        }
+      });
+    }
+  }]);
+  return MessageBox;
+}(_react.default.Component);
+
+exports.MessageBox = MessageBox;
+},{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","./MessageBox.scss":"EmailViewer/RocketChat/Message/MessageBox.scss"}],"EmailViewer/RocketChat/Room/Room.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -53726,6 +53856,8 @@ var _reactVisibilitySensor = _interopRequireDefault(require("react-visibility-se
 var _Spinner = require("../../UI/Spinner");
 
 var _Message = require("../Message/Message");
+
+var _MessageBox = require("../Message/MessageBox");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -54061,6 +54193,37 @@ function (_React$Component) {
           emoji: _this3.props.emoji,
           rocketchat: _this3.props.rocketchat
         });
+      }), _react.default.createElement(_MessageBox.MessageBox, {
+        rocketchat: this.props.rocketchat,
+        roomId: this.props.room.rid,
+        onUpdate: function () {
+          var _onUpdate = (0, _asyncToGenerator2.default)(
+          /*#__PURE__*/
+          _regenerator.default.mark(function _callee7() {
+            return _regenerator.default.wrap(function _callee7$(_context7) {
+              while (1) {
+                switch (_context7.prev = _context7.next) {
+                  case 0:
+                    _context7.next = 2;
+                    return _this3.fetchMessages();
+
+                  case 2:
+                    return _context7.abrupt("return", _context7.sent);
+
+                  case 3:
+                  case "end":
+                    return _context7.stop();
+                }
+              }
+            }, _callee7);
+          }));
+
+          function onUpdate() {
+            return _onUpdate.apply(this, arguments);
+          }
+
+          return onUpdate;
+        }()
       }));
     }
   }]);
@@ -54068,7 +54231,7 @@ function (_React$Component) {
 }(_react.default.Component);
 
 exports.Room = Room;
-},{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","../../UI/Icon":"EmailViewer/UI/Icon.tsx","react-visibility-sensor":"../node_modules/react-visibility-sensor/dist/visibility-sensor.js","../../UI/Spinner":"EmailViewer/UI/Spinner.tsx","../Message/Message":"EmailViewer/RocketChat/Message/Message.tsx"}],"EmailViewer/RocketChat/RocketChatService.ts":[function(require,module,exports) {
+},{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","../../UI/Icon":"EmailViewer/UI/Icon.tsx","react-visibility-sensor":"../node_modules/react-visibility-sensor/dist/visibility-sensor.js","../../UI/Spinner":"EmailViewer/UI/Spinner.tsx","../Message/Message":"EmailViewer/RocketChat/Message/Message.tsx","../Message/MessageBox":"EmailViewer/RocketChat/Message/MessageBox.tsx"}],"EmailViewer/RocketChat/RocketChatService.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -54838,7 +55001,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49880" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60488" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
