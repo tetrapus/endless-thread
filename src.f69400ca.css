@@ -513,6 +513,17 @@ p {
   border-right: 2px black solid;
   margin-right: 40px;
 }
+
+.ReplyLoader {
+  background: none;
+  font-size: 12px;
+  text-align: center;
+  padding: 2px;
+}
+
+.ContextMessage {
+  opacity: 0.6;
+}
 .RocketAttachment {
   border-left: 2px solid;
   padding-left: 4px;

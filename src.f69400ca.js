@@ -53624,7 +53624,7 @@ function (_React$Component) {
         });
         var diffs = message.msg.match(/D[0-9]+/g);
         content = _react.default.createElement("div", {
-          className: "ChatMessage ".concat(activeMention ? "ActiveMention" : passiveMention ? "PassiveMention" : "", " ").concat(message.tmid ? "Child" : "")
+          className: "ChatMessage ".concat(activeMention ? "ActiveMention" : passiveMention ? "PassiveMention" : "", " ").concat(message.tmid ? "Child" : "", " ").concat(message.isContext ? "ContextMessage" : "")
         }, _react.default.createElement("div", {
           className: "ChatMessageContent"
         }, _react.default.createElement(_Markdown.Markdown, {
@@ -53688,7 +53688,12 @@ function (_React$Component) {
             text: reaction
           });
         });
-      })));
+      })), this.props.unloadedChildren ? _react.default.createElement("div", {
+        className: "ReplyLoader",
+        onClick: function onClick() {
+          return _this.props.onExpand();
+        }
+      }, "Load", " ", this.props.unloadedChildren == 1 ? "1 more reply" : "".concat(this.props.unloadedChildren, " more replies")) : "");
     }
   }]);
   return Message;
@@ -53833,6 +53838,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Room = void 0;
 
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
+
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
@@ -53860,6 +53869,10 @@ var _Message = require("../Message/Message");
 var _MessageBox = require("../Message/MessageBox");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 var Channel = function Channel(room) {
   var type,
@@ -53897,7 +53910,8 @@ function (_React$Component) {
     (0, _classCallCheck2.default)(this, Room);
     _this = (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(Room).call(this, props));
     _this.state = {
-      context: {},
+      context: [],
+      threadContext: [],
       visible: false
     };
     return _this;
@@ -53934,15 +53948,67 @@ function (_React$Component) {
       })), 1200000);
     }
   }, {
+    key: "fetchContext",
+    value: function () {
+      var _fetchContext = (0, _asyncToGenerator2.default)(
+      /*#__PURE__*/
+      _regenerator.default.mark(function _callee2() {
+        var _this3 = this;
+
+        var threads;
+        return _regenerator.default.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                if (!(this.state.messages === undefined)) {
+                  _context2.next = 2;
+                  break;
+                }
+
+                return _context2.abrupt("return");
+
+              case 2:
+                threads = (0, _toConsumableArray2.default)(new Set(this.state.messages.map(function (message) {
+                  return message.tmid;
+                }).filter(function (tmid) {
+                  return tmid && ![].concat((0, _toConsumableArray2.default)(_this3.state.context), (0, _toConsumableArray2.default)(_this3.state.messages)).find(function (msg) {
+                    return msg._id === tmid;
+                  });
+                })));
+                threads.forEach(function (tmid) {
+                  _this3.props.rocketchat.call("GET", "chat.getMessage?msgId=".concat(tmid)).then(function (response) {
+                    console.log(response);
+
+                    _this3.setState({
+                      context: [].concat((0, _toConsumableArray2.default)(_this3.state.context), [response.message])
+                    });
+                  });
+                });
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function fetchContext() {
+        return _fetchContext.apply(this, arguments);
+      }
+
+      return fetchContext;
+    }()
+  }, {
     key: "fetchMessages",
     value: function () {
       var _fetchMessages = (0, _asyncToGenerator2.default)(
       /*#__PURE__*/
-      _regenerator.default.mark(function _callee2() {
+      _regenerator.default.mark(function _callee3() {
         var unreadRoom, type, response;
-        return _regenerator.default.wrap(function _callee2$(_context2) {
+        return _regenerator.default.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
                 unreadRoom = this.props.room;
                 console.log(unreadRoom);
@@ -53951,29 +54017,33 @@ function (_React$Component) {
                   c: "channels",
                   d: "im"
                 }[unreadRoom.t];
-                _context2.next = 5;
+                _context3.next = 5;
                 return this.props.rocketchat.call("GET", "".concat(type, ".history?roomId=").concat(unreadRoom.rid, "&oldest=").concat(unreadRoom.ls, "&count=1000"));
 
               case 5:
-                response = _context2.sent;
+                response = _context3.sent;
                 this.setState({
                   messages: response.messages ? response.messages.reverse() : []
                 });
 
                 if (!(response.messages && !response.messages.length)) {
-                  _context2.next = 10;
+                  _context3.next = 10;
                   break;
                 }
 
-                _context2.next = 10;
+                _context3.next = 10;
                 return this.markRead();
 
               case 10:
+                _context3.next = 12;
+                return this.fetchContext();
+
+              case 12:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2, this);
+        }, _callee3, this);
       }));
 
       function fetchMessages() {
@@ -53987,11 +54057,11 @@ function (_React$Component) {
     value: function () {
       var _markRead = (0, _asyncToGenerator2.default)(
       /*#__PURE__*/
-      _regenerator.default.mark(function _callee3() {
+      _regenerator.default.mark(function _callee4() {
         var unreadRoom, messages, type, unreadMessages;
-        return _regenerator.default.wrap(function _callee3$(_context3) {
+        return _regenerator.default.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
                 unreadRoom = this.props.room;
                 messages = this.state.messages;
@@ -54003,46 +54073,46 @@ function (_React$Component) {
                 }[unreadRoom.t];
 
                 if (!(messages === null || messages === void 0 ? void 0 : messages.length)) {
-                  _context3.next = 9;
+                  _context4.next = 9;
                   break;
                 }
 
-                _context3.next = 7;
+                _context4.next = 7;
                 return this.props.rocketchat.call("GET", "".concat(type, ".history?roomId=").concat(unreadRoom.rid, "&oldest=").concat(messages[messages.length - 1]._updatedAt, "&count=1000"));
 
               case 7:
-                unreadMessages = _context3.sent;
+                unreadMessages = _context4.sent;
                 console.log(unreadMessages);
 
               case 9:
                 if (!(unreadMessages === undefined || !unreadMessages.messages.length)) {
-                  _context3.next = 14;
+                  _context4.next = 14;
                   break;
                 }
 
-                _context3.next = 12;
+                _context4.next = 12;
                 return this.props.rocketchat.call("POST", "subscriptions.read", {
                   rid: unreadRoom.rid
                 });
 
               case 12:
-                _context3.next = 16;
+                _context4.next = 16;
                 break;
 
               case 14:
-                _context3.next = 16;
+                _context4.next = 16;
                 return this.fetchMessages();
 
               case 16:
-                _context3.next = 18;
+                _context4.next = 18;
                 return this.props.updateAll();
 
               case 18:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3, this);
+        }, _callee4, this);
       }));
 
       function markRead() {
@@ -54056,28 +54126,28 @@ function (_React$Component) {
     value: function () {
       var _leaveRoom = (0, _asyncToGenerator2.default)(
       /*#__PURE__*/
-      _regenerator.default.mark(function _callee4() {
+      _regenerator.default.mark(function _callee5() {
         var room;
-        return _regenerator.default.wrap(function _callee4$(_context4) {
+        return _regenerator.default.wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
                 room = this.props.room;
-                _context4.next = 3;
+                _context5.next = 3;
                 return this.props.rocketchat.call("POST", "rooms.leave", {
                   roomId: room.rid
                 });
 
               case 3:
-                _context4.next = 5;
+                _context5.next = 5;
                 return this.fetchMessages();
 
               case 5:
               case "end":
-                return _context4.stop();
+                return _context5.stop();
             }
           }
-        }, _callee4, this);
+        }, _callee5, this);
       }));
 
       function leaveRoom() {
@@ -54089,8 +54159,9 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
+      console.log(this.state);
       var room = this.props.room;
       var messages = this.state.messages;
       var frequencies = {};
@@ -54102,6 +54173,51 @@ function (_React$Component) {
       var participants = Object.keys(frequencies).sort(function (a, b) {
         return frequencies[b] - frequencies[a];
       });
+
+      var msgSortKey = function msgSortKey(message) {
+        if (message.tmid) {
+          var parent = _this4.state.context.find(function (msg) {
+            return msg._id == message.tmid;
+          });
+
+          if (!parent) {
+            return message.ts;
+          }
+
+          return "".concat(parent.ts, " ").concat(message.ts);
+        }
+
+        return message.ts;
+      };
+
+      if (messages) {
+        this.state.context.forEach(function (cmessage) {
+          if (!messages.find(function (msg) {
+            return cmessage._id == msg._id;
+          }) && messages.find(function (msg) {
+            return msg.tmid == cmessage._id;
+          })) {
+            messages.push(_objectSpread({}, cmessage, {
+              isContext: true
+            }));
+          }
+        });
+        this.state.threadContext.forEach(function (tmessage) {
+          if (!messages.find(function (msg) {
+            return tmessage._id == msg._id;
+          }) && messages.find(function (msg) {
+            return tmessage.tmid == msg._id;
+          })) {
+            messages.push(_objectSpread({}, tmessage, {
+              isContext: true
+            }));
+          }
+        });
+        messages.sort(function (a, b) {
+          return msgSortKey(a).localeCompare(msgSortKey(b));
+        });
+      }
+
       return _react.default.createElement("div", {
         className: "ChatRoom",
         key: room.rid
@@ -54124,23 +54240,23 @@ function (_React$Component) {
         onClick: function () {
           var _onClick = (0, _asyncToGenerator2.default)(
           /*#__PURE__*/
-          _regenerator.default.mark(function _callee5() {
-            return _regenerator.default.wrap(function _callee5$(_context5) {
+          _regenerator.default.mark(function _callee6() {
+            return _regenerator.default.wrap(function _callee6$(_context6) {
               while (1) {
-                switch (_context5.prev = _context5.next) {
+                switch (_context6.prev = _context6.next) {
                   case 0:
-                    _context5.next = 2;
-                    return _this3.leaveRoom();
+                    _context6.next = 2;
+                    return _this4.leaveRoom();
 
                   case 2:
-                    return _context5.abrupt("return", _context5.sent);
+                    return _context6.abrupt("return", _context6.sent);
 
                   case 3:
                   case "end":
-                    return _context5.stop();
+                    return _context6.stop();
                 }
               }
-            }, _callee5);
+            }, _callee6);
           }));
 
           function onClick() {
@@ -54155,57 +54271,13 @@ function (_React$Component) {
         onClick: function () {
           var _onClick2 = (0, _asyncToGenerator2.default)(
           /*#__PURE__*/
-          _regenerator.default.mark(function _callee6() {
-            return _regenerator.default.wrap(function _callee6$(_context6) {
-              while (1) {
-                switch (_context6.prev = _context6.next) {
-                  case 0:
-                    _context6.next = 2;
-                    return _this3.markRead();
-
-                  case 2:
-                    return _context6.abrupt("return", _context6.sent);
-
-                  case 3:
-                  case "end":
-                    return _context6.stop();
-                }
-              }
-            }, _callee6);
-          }));
-
-          function onClick() {
-            return _onClick2.apply(this, arguments);
-          }
-
-          return onClick;
-        }()
-      }, _react.default.createElement(_Icon.Icon, {
-        type: "done"
-      })))), messages === undefined ? _react.default.createElement(_reactVisibilitySensor.default, {
-        onChange: function onChange(visible) {
-          return visible ? _this3.fetchMessages() : null;
-        }
-      }, _react.default.createElement(_Spinner.Spinner, null)) : messages.map(function (message, idx) {
-        return _react.default.createElement(_Message.Message, {
-          message: message,
-          previous: messages[idx - 1],
-          emoji: _this3.props.emoji,
-          rocketchat: _this3.props.rocketchat
-        });
-      }), _react.default.createElement(_MessageBox.MessageBox, {
-        rocketchat: this.props.rocketchat,
-        roomId: this.props.room.rid,
-        onUpdate: function () {
-          var _onUpdate = (0, _asyncToGenerator2.default)(
-          /*#__PURE__*/
           _regenerator.default.mark(function _callee7() {
             return _regenerator.default.wrap(function _callee7$(_context7) {
               while (1) {
                 switch (_context7.prev = _context7.next) {
                   case 0:
                     _context7.next = 2;
-                    return _this3.fetchMessages();
+                    return _this4.markRead();
 
                   case 2:
                     return _context7.abrupt("return", _context7.sent);
@@ -54218,6 +54290,81 @@ function (_React$Component) {
             }, _callee7);
           }));
 
+          function onClick() {
+            return _onClick2.apply(this, arguments);
+          }
+
+          return onClick;
+        }()
+      }, _react.default.createElement(_Icon.Icon, {
+        type: "done"
+      })))), messages === undefined ? _react.default.createElement(_reactVisibilitySensor.default, {
+        onChange: function onChange(visible) {
+          return visible ? _this4.fetchMessages() : null;
+        }
+      }, _react.default.createElement(_Spinner.Spinner, null)) : messages.map(function (message, idx) {
+        return _react.default.createElement(_Message.Message, {
+          message: message,
+          previous: messages[idx - 1],
+          emoji: _this4.props.emoji,
+          rocketchat: _this4.props.rocketchat,
+          unloadedChildren: message.tcount ? message.tcount - messages.filter(function (msg) {
+            return msg.tmid == message._id;
+          }).length : 0,
+          onExpand: function () {
+            var _onExpand = (0, _asyncToGenerator2.default)(
+            /*#__PURE__*/
+            _regenerator.default.mark(function _callee8() {
+              return _regenerator.default.wrap(function _callee8$(_context8) {
+                while (1) {
+                  switch (_context8.prev = _context8.next) {
+                    case 0:
+                      _context8.next = 2;
+                      return _this4.onExpandMessage(message);
+
+                    case 2:
+                      return _context8.abrupt("return", _context8.sent);
+
+                    case 3:
+                    case "end":
+                      return _context8.stop();
+                  }
+                }
+              }, _callee8);
+            }));
+
+            function onExpand() {
+              return _onExpand.apply(this, arguments);
+            }
+
+            return onExpand;
+          }()
+        });
+      }), _react.default.createElement(_MessageBox.MessageBox, {
+        rocketchat: this.props.rocketchat,
+        roomId: this.props.room.rid,
+        onUpdate: function () {
+          var _onUpdate = (0, _asyncToGenerator2.default)(
+          /*#__PURE__*/
+          _regenerator.default.mark(function _callee9() {
+            return _regenerator.default.wrap(function _callee9$(_context9) {
+              while (1) {
+                switch (_context9.prev = _context9.next) {
+                  case 0:
+                    _context9.next = 2;
+                    return _this4.fetchMessages();
+
+                  case 2:
+                    return _context9.abrupt("return", _context9.sent);
+
+                  case 3:
+                  case "end":
+                    return _context9.stop();
+                }
+              }
+            }, _callee9);
+          }));
+
           function onUpdate() {
             return _onUpdate.apply(this, arguments);
           }
@@ -54226,12 +54373,52 @@ function (_React$Component) {
         }()
       }));
     }
+  }, {
+    key: "onExpandMessage",
+    value: function () {
+      var _onExpandMessage = (0, _asyncToGenerator2.default)(
+      /*#__PURE__*/
+      _regenerator.default.mark(function _callee10(message) {
+        var _this5 = this;
+
+        var response;
+        return _regenerator.default.wrap(function _callee10$(_context10) {
+          while (1) {
+            switch (_context10.prev = _context10.next) {
+              case 0:
+                _context10.next = 2;
+                return this.props.rocketchat.call("GET", "chat.getThreadMessages?tmid=".concat(message._id));
+
+              case 2:
+                response = _context10.sent;
+                this.setState({
+                  threadContext: [].concat((0, _toConsumableArray2.default)(this.state.threadContext), (0, _toConsumableArray2.default)(response.messages.filter(function (tMessage) {
+                    return !(_this5.state.messages || []).find(function (message) {
+                      return message._id === tMessage._id;
+                    });
+                  })))
+                });
+
+              case 4:
+              case "end":
+                return _context10.stop();
+            }
+          }
+        }, _callee10, this);
+      }));
+
+      function onExpandMessage(_x) {
+        return _onExpandMessage.apply(this, arguments);
+      }
+
+      return onExpandMessage;
+    }()
   }]);
   return Room;
 }(_react.default.Component);
 
 exports.Room = Room;
-},{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","../../UI/Icon":"EmailViewer/UI/Icon.tsx","react-visibility-sensor":"../node_modules/react-visibility-sensor/dist/visibility-sensor.js","../../UI/Spinner":"EmailViewer/UI/Spinner.tsx","../Message/Message":"EmailViewer/RocketChat/Message/Message.tsx","../Message/MessageBox":"EmailViewer/RocketChat/Message/MessageBox.tsx"}],"EmailViewer/RocketChat/RocketChatService.ts":[function(require,module,exports) {
+},{"@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","../../UI/Icon":"EmailViewer/UI/Icon.tsx","react-visibility-sensor":"../node_modules/react-visibility-sensor/dist/visibility-sensor.js","../../UI/Spinner":"EmailViewer/UI/Spinner.tsx","../Message/Message":"EmailViewer/RocketChat/Message/Message.tsx","../Message/MessageBox":"EmailViewer/RocketChat/Message/MessageBox.tsx"}],"EmailViewer/RocketChat/RocketChatService.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -55001,7 +55188,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60488" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56002" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
