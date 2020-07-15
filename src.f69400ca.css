@@ -257,7 +257,7 @@
   font-size: 13px;
   color: grey;
 }
-.gmail_quote:not(blockquote):not(:hover), .gmail_signature:not(:hover) {
+.NotFirst .gmail_quote:not(blockquote):not(:hover), .NotFirst .gmail_signature:not(:hover) {
   height: 2rem;
   filter: opacity(0.5);
   overflow: hidden;
@@ -361,7 +361,7 @@
 }
 
 .Inactive {
-  background-color: #eeeeee;
+  background-color: #ccc;
 }
 
 .Content {
@@ -382,13 +382,18 @@
   max-width: 800px;
   margin: auto;
 }
+@media only screen and (max-width: 1200px) {
+  .RocketContainer {
+    padding: 0px 8px;
+  }
+}
 
 .ChatMessage {
   background-color: white;
   border-bottom: 1px solid #e0e0e0;
   padding: 4px 8px;
   position: relative;
-  overflow: scroll;
+  overflow: auto;
   display: flex;
 }
 
@@ -522,24 +527,39 @@ p {
   margin: 4px;
 }
 .Tasklist {
-  position: absolute;
-  width: calc(50vw - 416px);
   right: 0;
-  padding: 16px;
+  padding-left: 1px;
   box-sizing: border-box;
+  border-left: 1px solid #ccc;
+}
+@media only screen and (min-width: 1200px) {
+  .Tasklist {
+    position: absolute;
+    width: calc(50vw - 416px);
+  }
+}
+
+.Task:nth-child(1),
+.Task:hover {
   background: white;
+  opacity: 1;
 }
 
 .Task {
-  border-bottom: 1px solid #dddddd;
-  padding: 4px;
-  margin-bottom: 2px;
+  padding: 8px 16px;
+  opacity: 0.5;
+  box-shadow: #eee -1px 1px 1px;
+}
+@media only screen and (max-width: 1200px) {
+  .Task:nth-child(n+4) {
+    display: none;
+  }
 }
 
 .TaskActions {
   position: absolute;
   right: 0;
-  transform: translateY(-8px) translateX(-8px);
+  transform: translateY(-16px) translateX(-16px);
 }
 .TaskActions button {
   border: none;
@@ -552,9 +572,11 @@ p {
   padding-left: 8px;
 }
 
-.TasklistContainer {
-  position: sticky;
-  top: 24px;
+@media only screen and (min-width: 1200px) {
+  .TasklistContainer {
+    position: sticky;
+    top: 24px;
+  }
 }
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 

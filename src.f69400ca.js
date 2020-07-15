@@ -37252,7 +37252,9 @@ function (_React$Component) {
       var fromHeader = (0, _tsOptchain.oc)(this).props.message.payload.headers([]).find(function (header) {
         return header.name == "From";
       });
-      return React.createElement("div", null, isUnread || React.createElement("div", null, this.getSenderComponent(fromHeader, true), React.createElement("div", {
+      return React.createElement("div", {
+        className: this.props.previous === undefined ? "First" : "NotFirst"
+      }, isUnread || React.createElement("div", null, this.getSenderComponent(fromHeader, true), React.createElement("div", {
         className: "Snippet"
       }, React.createElement("div", {
         className: "Timestamp SnippetFade"
@@ -53467,7 +53469,8 @@ function RocketAttachment(_ref) {
       borderLeftColor: color
     }
   }, React.createElement("div", null, React.createElement("b", null, React.createElement("a", {
-    href: attachment.title_link
+    href: attachment.title_link,
+    target: "_blank"
   }, attachment.title))), image ? React.createElement("img", {
     src: image,
     height: "200px"
@@ -53495,6 +53498,10 @@ exports.Message = void 0;
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
 
 var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
+
+var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
+
+var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
 
 var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
 
@@ -53531,6 +53538,39 @@ function (_React$Component) {
   }
 
   (0, _createClass2.default)(Message, [{
+    key: "sendMessage",
+    value: function () {
+      var _sendMessage = (0, _asyncToGenerator2.default)(
+      /*#__PURE__*/
+      _regenerator.default.mark(function _callee(roomId, text) {
+        return _regenerator.default.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return this.props.rocketchat.call("POST", "chat.postMessage", {
+                  roomId: roomId,
+                  text: text
+                });
+
+              case 2:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function sendMessage(_x, _x2) {
+        return _sendMessage.apply(this, arguments);
+      }
+
+      return sendMessage;
+    }()
+  }, {
+    key: "snooze",
+    value: function snooze(a) {}
+  }, {
     key: "render",
     value: function render() {
       var _this = this;
@@ -53580,11 +53620,11 @@ function (_React$Component) {
           return ["here", "channel"].includes(mention._id);
         });
         var activeMention = mentions.find(function (mention) {
-          return mention.username == _this.props.whoami.me.username;
+          return mention.username == _this.props.rocketchat.getIdentity().me.username;
         });
         var diffs = message.msg.match(/D[0-9]+/g);
         content = _react.default.createElement("div", {
-          className: "ChatMessage ".concat(activeMention ? "ActiveMention" : passiveMention ? "PassiveMention" : "", " ").concat(message.tmid ? 'Child' : '')
+          className: "ChatMessage ".concat(activeMention ? "ActiveMention" : passiveMention ? "PassiveMention" : "", " ").concat(message.tmid ? "Child" : "")
         }, _react.default.createElement("div", {
           className: "ChatMessageContent"
         }, _react.default.createElement(_Markdown.Markdown, {
@@ -53594,7 +53634,7 @@ function (_React$Component) {
               var value = _ref.value;
               return _react.default.createElement(_Text.Text, {
                 emoji: _this.props.emoji,
-                whoami: _this.props.whoami,
+                whoami: _this.props.rocketchat.getIdentity(),
                 value: value
               });
             }
@@ -53611,7 +53651,7 @@ function (_React$Component) {
         }, false && _react.default.createElement("span", {
           className: "Action",
           onClick: function onClick() {
-            return _this.props.snooze(message._id);
+            return _this.snooze(message._id);
           }
         }, _react.default.createElement(_Emoji.Emoji, {
           registry: this.props.emoji,
@@ -53619,7 +53659,7 @@ function (_React$Component) {
         })), diffs && _react.default.createElement("span", {
           className: "Action",
           onClick: function onClick() {
-            return _this.props.sendMessage(message.rid, "hubot mq submit ".concat((0, _toConsumableArray2.default)(new Set(diffs)).join(" ")));
+            return _this.sendMessage(message.rid, "hubot mq submit ".concat((0, _toConsumableArray2.default)(new Set(diffs)).join(" ")));
           }
         }, _react.default.createElement(_Emoji.Emoji, {
           registry: this.props.emoji,
@@ -53655,13 +53695,17 @@ function (_React$Component) {
 }(_react.default.Component);
 
 exports.Message = Message;
-},{"@babel/runtime/helpers/slicedToArray":"../node_modules/@babel/runtime/helpers/slicedToArray.js","@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","../../UI/Markdown":"EmailViewer/UI/Markdown.tsx","../Renderers/Text":"EmailViewer/RocketChat/Renderers/Text.tsx","../RocketAttachment":"EmailViewer/RocketChat/RocketAttachment.tsx","../Renderers/Emoji":"EmailViewer/RocketChat/Renderers/Emoji.tsx","react-timeago":"../node_modules/react-timeago/lib/index.js"}],"EmailViewer/RocketChat/Room/Room.tsx":[function(require,module,exports) {
+},{"@babel/runtime/helpers/slicedToArray":"../node_modules/@babel/runtime/helpers/slicedToArray.js","@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","../../UI/Markdown":"EmailViewer/UI/Markdown.tsx","../Renderers/Text":"EmailViewer/RocketChat/Renderers/Text.tsx","../RocketAttachment":"EmailViewer/RocketChat/RocketAttachment.tsx","../Renderers/Emoji":"EmailViewer/RocketChat/Renderers/Emoji.tsx","react-timeago":"../node_modules/react-timeago/lib/index.js"}],"EmailViewer/RocketChat/Room/Room.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.Room = void 0;
+
+var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
+
+var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
 
 var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
 
@@ -53721,20 +53765,204 @@ function (_React$Component) {
     (0, _classCallCheck2.default)(this, Room);
     _this = (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(Room).call(this, props));
     _this.state = {
-      context: {}
+      context: {},
+      visible: false
     };
     return _this;
   }
 
   (0, _createClass2.default)(Room, [{
-    key: "render",
-    value: function render() {
+    key: "componentDidMount",
+    value: function componentDidMount() {
       var _this2 = this;
 
-      var _this$props = this.props,
-          room = _this$props.room,
-          messages = _this$props.messages;
+      setInterval(
+      /*#__PURE__*/
+      (0, _asyncToGenerator2.default)(
+      /*#__PURE__*/
+      _regenerator.default.mark(function _callee() {
+        return _regenerator.default.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (!(_this2.state.messages !== undefined)) {
+                  _context.next = 3;
+                  break;
+                }
+
+                _context.next = 3;
+                return _this2.fetchMessages();
+
+              case 3:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      })), 1200000);
+    }
+  }, {
+    key: "fetchMessages",
+    value: function () {
+      var _fetchMessages = (0, _asyncToGenerator2.default)(
+      /*#__PURE__*/
+      _regenerator.default.mark(function _callee2() {
+        var unreadRoom, type, response;
+        return _regenerator.default.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                unreadRoom = this.props.room;
+                console.log(unreadRoom);
+                type = {
+                  p: "groups",
+                  c: "channels",
+                  d: "im"
+                }[unreadRoom.t];
+                _context2.next = 5;
+                return this.props.rocketchat.call("GET", "".concat(type, ".history?roomId=").concat(unreadRoom.rid, "&oldest=").concat(unreadRoom.ls, "&count=1000"));
+
+              case 5:
+                response = _context2.sent;
+                this.setState({
+                  messages: response.messages ? response.messages.reverse() : []
+                });
+
+                if (!(response.messages && !response.messages.length)) {
+                  _context2.next = 10;
+                  break;
+                }
+
+                _context2.next = 10;
+                return this.markRead();
+
+              case 10:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function fetchMessages() {
+        return _fetchMessages.apply(this, arguments);
+      }
+
+      return fetchMessages;
+    }()
+  }, {
+    key: "markRead",
+    value: function () {
+      var _markRead = (0, _asyncToGenerator2.default)(
+      /*#__PURE__*/
+      _regenerator.default.mark(function _callee3() {
+        var unreadRoom, messages, type, unreadMessages;
+        return _regenerator.default.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                unreadRoom = this.props.room;
+                messages = this.state.messages;
+                console.log(unreadRoom);
+                type = {
+                  p: "groups",
+                  c: "channels",
+                  d: "im"
+                }[unreadRoom.t];
+
+                if (!(messages === null || messages === void 0 ? void 0 : messages.length)) {
+                  _context3.next = 9;
+                  break;
+                }
+
+                _context3.next = 7;
+                return this.props.rocketchat.call("GET", "".concat(type, ".history?roomId=").concat(unreadRoom.rid, "&oldest=").concat(messages[messages.length - 1]._updatedAt, "&count=1000"));
+
+              case 7:
+                unreadMessages = _context3.sent;
+                console.log(unreadMessages);
+
+              case 9:
+                if (!(unreadMessages === undefined || !unreadMessages.messages.length)) {
+                  _context3.next = 14;
+                  break;
+                }
+
+                _context3.next = 12;
+                return this.props.rocketchat.call("POST", "subscriptions.read", {
+                  rid: unreadRoom.rid
+                });
+
+              case 12:
+                _context3.next = 16;
+                break;
+
+              case 14:
+                _context3.next = 16;
+                return this.fetchMessages();
+
+              case 16:
+                _context3.next = 18;
+                return this.props.updateAll();
+
+              case 18:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function markRead() {
+        return _markRead.apply(this, arguments);
+      }
+
+      return markRead;
+    }()
+  }, {
+    key: "leaveRoom",
+    value: function () {
+      var _leaveRoom = (0, _asyncToGenerator2.default)(
+      /*#__PURE__*/
+      _regenerator.default.mark(function _callee4() {
+        var room;
+        return _regenerator.default.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                room = this.props.room;
+                _context4.next = 3;
+                return this.props.rocketchat.call("POST", "rooms.leave", {
+                  roomId: room.rid
+                });
+
+              case 3:
+                _context4.next = 5;
+                return this.fetchMessages();
+
+              case 5:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this);
+      }));
+
+      function leaveRoom() {
+        return _leaveRoom.apply(this, arguments);
+      }
+
+      return leaveRoom;
+    }()
+  }, {
+    key: "render",
+    value: function render() {
+      var _this3 = this;
+
+      var room = this.props.room;
+      var messages = this.state.messages;
       var frequencies = {};
+      console.log(messages);
       (messages || []).forEach(function (message) {
         var username = message.u.username;
         frequencies[username] = frequencies[username] !== undefined ? 0 : frequencies[username] + 1;
@@ -53759,26 +53987,79 @@ function (_React$Component) {
           width: "16"
         });
       })), _react.default.createElement("span", {
-        className: "ReadButton",
-        onClick: function onClick() {
-          return _this2.props.markRead(room.fname);
-        }
+        className: "ReadButton"
+      }, _react.default.createElement("span", {
+        onClick: function () {
+          var _onClick = (0, _asyncToGenerator2.default)(
+          /*#__PURE__*/
+          _regenerator.default.mark(function _callee5() {
+            return _regenerator.default.wrap(function _callee5$(_context5) {
+              while (1) {
+                switch (_context5.prev = _context5.next) {
+                  case 0:
+                    _context5.next = 2;
+                    return _this3.leaveRoom();
+
+                  case 2:
+                    return _context5.abrupt("return", _context5.sent);
+
+                  case 3:
+                  case "end":
+                    return _context5.stop();
+                }
+              }
+            }, _callee5);
+          }));
+
+          function onClick() {
+            return _onClick.apply(this, arguments);
+          }
+
+          return onClick;
+        }()
+      }, _react.default.createElement(_Icon.Icon, {
+        type: "close"
+      })), _react.default.createElement("span", {
+        onClick: function () {
+          var _onClick2 = (0, _asyncToGenerator2.default)(
+          /*#__PURE__*/
+          _regenerator.default.mark(function _callee6() {
+            return _regenerator.default.wrap(function _callee6$(_context6) {
+              while (1) {
+                switch (_context6.prev = _context6.next) {
+                  case 0:
+                    _context6.next = 2;
+                    return _this3.markRead();
+
+                  case 2:
+                    return _context6.abrupt("return", _context6.sent);
+
+                  case 3:
+                  case "end":
+                    return _context6.stop();
+                }
+              }
+            }, _callee6);
+          }));
+
+          function onClick() {
+            return _onClick2.apply(this, arguments);
+          }
+
+          return onClick;
+        }()
       }, _react.default.createElement(_Icon.Icon, {
         type: "done"
-      }))), messages === undefined ? _react.default.createElement(_reactVisibilitySensor.default, {
+      })))), messages === undefined ? _react.default.createElement(_reactVisibilitySensor.default, {
         onChange: function onChange(visible) {
-          return visible ? _this2.props.fetchMessages(room.fname) : null;
+          return visible ? _this3.fetchMessages() : null;
         }
       }, _react.default.createElement(_Spinner.Spinner, null)) : messages.map(function (message, idx) {
         return _react.default.createElement(_Message.Message, {
           message: message,
           previous: messages[idx - 1],
-          emoji: _this2.props.emoji,
-          whoami: _this2.props.whoami,
-          snooze: function snooze() {
-            return null;
-          },
-          sendMessage: _this2.props.sendMessage
+          emoji: _this3.props.emoji,
+          rocketchat: _this3.props.rocketchat
         });
       }));
     }
@@ -53787,16 +54068,7 @@ function (_React$Component) {
 }(_react.default.Component);
 
 exports.Room = Room;
-},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","../../UI/Icon":"EmailViewer/UI/Icon.tsx","react-visibility-sensor":"../node_modules/react-visibility-sensor/dist/visibility-sensor.js","../../UI/Spinner":"EmailViewer/UI/Spinner.tsx","../Message/Message":"EmailViewer/RocketChat/Message/Message.tsx"}],"EmailViewer/RocketChat/GreasyDocument.ts":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.document = void 0;
-var document;
-exports.document = document;
-},{}],"EmailViewer/RocketChat/RocketChatService.ts":[function(require,module,exports) {
+},{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","../../UI/Icon":"EmailViewer/UI/Icon.tsx","react-visibility-sensor":"../node_modules/react-visibility-sensor/dist/visibility-sensor.js","../../UI/Spinner":"EmailViewer/UI/Spinner.tsx","../Message/Message":"EmailViewer/RocketChat/Message/Message.tsx"}],"EmailViewer/RocketChat/RocketChatService.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -53806,15 +54078,13 @@ exports.RocketChatService = void 0;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
-var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
-
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 
 var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
 
 var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
-
-var _GreasyDocument = require("./GreasyDocument");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -53826,77 +54096,56 @@ var RocketChatService =
 /*#__PURE__*/
 function () {
   function RocketChatService() {
+    var _this = this;
+
     (0, _classCallCheck2.default)(this, RocketChatService);
+
+    document.rocket = function (a, b, c) {
+      return _this.call(a, b, c);
+    };
   }
 
   (0, _createClass2.default)(RocketChatService, [{
     key: "call",
-    value: function () {
-      var _call = (0, _asyncToGenerator2.default)(
-      /*#__PURE__*/
-      _regenerator.default.mark(function _callee(method, endpoint, data) {
-        var _this = this;
+    value: function call(method, endpoint, data) {
+      var _this2 = this;
 
-        return _regenerator.default.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                if (this.credentials) {
-                  _context.next = 2;
-                  break;
-                }
+      return new Promise(function (resolve) {
+        if (document.rocketchatCorsBypass === undefined) {
+          return;
+        }
 
-                return _context.abrupt("return");
-
-              case 2:
-                return _context.abrupt("return", new Promise(function (resolve) {
-                  if (_GreasyDocument.document.rocketchatCorsBypass === undefined) {
-                    return;
-                  }
-
-                  _GreasyDocument.document.rocketchatCorsBypass({
-                    method: method,
-                    url: "".concat(_GreasyDocument.document.rocketchatServer, "/api/v1/").concat(endpoint),
-                    headers: _objectSpread({
-                      "Content-Type": "application/json"
-                    }, _this.credentials ? {
-                      "X-Auth-Token": _this.credentials.authToken,
-                      "X-User-Id": _this.credentials.userId
-                    } : {}),
-                    data: data ? JSON.stringify(data) : undefined,
-                    onload: function onload(r) {
-                      resolve(JSON.parse(r.responseText));
-                    }
-                  });
-                }));
-
-              case 3:
-              case "end":
-                return _context.stop();
-            }
+        console.log(_this2.credentials);
+        document.rocketchatCorsBypass({
+          method: method,
+          url: "".concat(document.rocketchatServer, "/api/v1/").concat(endpoint),
+          headers: _objectSpread({
+            "Content-Type": "application/json"
+          }, _this2.credentials ? {
+            "X-Auth-Token": _this2.credentials.authToken,
+            "X-User-Id": _this2.credentials.userId
+          } : {}),
+          data: data ? JSON.stringify(data) : undefined,
+          onload: function onload(r) {
+            console.log(r);
+            resolve(JSON.parse(r.responseText));
           }
-        }, _callee, this);
-      }));
-
-      function call(_x, _x2, _x3) {
-        return _call.apply(this, arguments);
-      }
-
-      return call;
-    }()
+        });
+      });
+    }
   }, {
     key: "login",
     value: function () {
       var _login = (0, _asyncToGenerator2.default)(
       /*#__PURE__*/
-      _regenerator.default.mark(function _callee2() {
+      _regenerator.default.mark(function _callee() {
         var authResponse, loginResponse;
-        return _regenerator.default.wrap(function _callee2$(_context2) {
+        return _regenerator.default.wrap(function _callee$(_context) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context.prev = _context.next) {
               case 0:
                 authResponse = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse(true);
-                _context2.next = 3;
+                _context.next = 3;
                 return this.call("POST", "login", {
                   serviceName: "google",
                   accessToken: authResponse.access_token,
@@ -53905,20 +54154,20 @@ function () {
                 });
 
               case 3:
-                loginResponse = _context2.sent;
+                loginResponse = _context.sent;
                 this.credentials = {
-                  authToken: loginResponse.authToken,
-                  userId: loginResponse.userId
+                  authToken: loginResponse.data.authToken,
+                  userId: loginResponse.data.userId
                 };
                 this.identity = loginResponse.data;
-                return _context2.abrupt("return", this.identity);
+                return _context.abrupt("return", this.identity);
 
               case 7:
               case "end":
-                return _context2.stop();
+                return _context.stop();
             }
           }
-        }, _callee2, this);
+        }, _callee, this);
       }));
 
       function login() {
@@ -53937,7 +54186,7 @@ function () {
 }();
 
 exports.RocketChatService = RocketChatService;
-},{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","./GreasyDocument":"EmailViewer/RocketChat/GreasyDocument.ts"}],"EmailViewer/RocketChat/RocketChat.tsx":[function(require,module,exports) {
+},{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js"}],"EmailViewer/RocketChat/RocketChat.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -53947,11 +54196,11 @@ exports.RocketChat = void 0;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
-var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 
 var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
 
-var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
 
 var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
 
@@ -53973,10 +54222,6 @@ var _RocketChatService = require("./RocketChatService");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
 var RocketChat =
 /*#__PURE__*/
 function (_React$Component) {
@@ -53987,35 +54232,9 @@ function (_React$Component) {
 
     (0, _classCallCheck2.default)(this, RocketChat);
     _this = (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(RocketChat).call(this, props));
-
-    _this.callApi = function (method, endpoint, data) {
-      var credentials = _this.state.credentials;
-      return new Promise(function (resolve) {
-        if (document.rocketchatCorsBypass === undefined) {
-          return;
-        }
-
-        document.rocketchatCorsBypass({
-          method: method,
-          url: "".concat(document.rocketchatServer, "/api/v1/").concat(endpoint),
-          headers: _objectSpread({
-            "Content-Type": "application/json"
-          }, credentials ? {
-            "X-Auth-Token": credentials.authToken,
-            "X-User-Id": credentials.userId
-          } : {}),
-          data: data ? JSON.stringify(data) : undefined,
-          onload: function onload(r) {
-            resolve(JSON.parse(r.responseText));
-          }
-        });
-      });
-    };
-
     _this.state = {
       unreads: {},
       emoji: {},
-      messages: {},
       rocketchat: new _RocketChatService.RocketChatService()
     };
     return _this;
@@ -54023,73 +54242,42 @@ function (_React$Component) {
 
   (0, _createClass2.default)(RocketChat, [{
     key: "componentDidMount",
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      if (document.rocketchatCorsBypass) {
-        document.rocket = function (a, b, c) {
-          return _this2.callApi(a, b, c);
-        };
-
-        this.login();
-      }
-    }
-  }, {
-    key: "login",
-    value: function login() {
-      var _this3 = this;
-
-      var authResponse = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse(true);
-      this.callApi("POST", "login", {
-        serviceName: "google",
-        accessToken: authResponse.access_token,
-        idToken: authResponse.id_token,
-        expiresIn: authResponse.expires_in
-      }).then(function (r) {
-        _this3.setState({
-          credentials: function (_ref) {
-            var userId = _ref.userId,
-                authToken = _ref.authToken;
-            return {
-              userId: userId,
-              authToken: authToken
-            };
-          }(r.data),
-          whoami: r.data
-        });
-
-        _this3.updateAll();
-
-        setInterval(function () {
-          return _this3.updateAll();
-        }, 30000);
-
-        _this3.callApi("GET", "emoji-custom.list").then(function (response) {
-          _this3.setState({
-            emoji: Object.assign.apply(Object, [{}].concat((0, _toConsumableArray2.default)(response.emojis.update.map(function (emoji) {
-              return (0, _defineProperty2.default)({}, emoji.name, emoji.extension);
-            }))))
-          });
-        });
-      });
-    }
-  }, {
-    key: "sendMessage",
     value: function () {
-      var _sendMessage = (0, _asyncToGenerator2.default)(
+      var _componentDidMount = (0, _asyncToGenerator2.default)(
       /*#__PURE__*/
-      _regenerator.default.mark(function _callee(roomId, text) {
+      _regenerator.default.mark(function _callee() {
+        var _this2 = this;
+
+        var response;
         return _regenerator.default.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
-                return this.callApi("POST", "chat.postMessage", {
-                  roomId: roomId,
-                  text: text
+                if (!document.rocketchatCorsBypass) {
+                  _context.next = 9;
+                  break;
+                }
+
+                _context.next = 3;
+                return this.state.rocketchat.login();
+
+              case 3:
+                this.updateAll();
+                setInterval(function () {
+                  return _this2.updateAll();
+                }, 30000);
+                _context.next = 7;
+                return this.state.rocketchat.call("GET", "emoji-custom.list");
+
+              case 7:
+                response = _context.sent;
+                this.setState({
+                  emoji: Object.assign.apply(Object, [{}].concat((0, _toConsumableArray2.default)(response.emojis.update.map(function (emoji) {
+                    return (0, _defineProperty2.default)({}, emoji.name, emoji.extension);
+                  }))))
                 });
 
-              case 2:
+              case 9:
               case "end":
                 return _context.stop();
             }
@@ -54097,11 +54285,11 @@ function (_React$Component) {
         }, _callee, this);
       }));
 
-      function sendMessage(_x, _x2) {
-        return _sendMessage.apply(this, arguments);
+      function componentDidMount() {
+        return _componentDidMount.apply(this, arguments);
       }
 
-      return sendMessage;
+      return componentDidMount;
     }()
   }, {
     key: "updateAll",
@@ -54109,7 +54297,7 @@ function (_React$Component) {
       var _updateAll = (0, _asyncToGenerator2.default)(
       /*#__PURE__*/
       _regenerator.default.mark(function _callee2() {
-        var _this4 = this;
+        var _this3 = this;
 
         var response, unreads, updated;
         return _regenerator.default.wrap(function _callee2$(_context2) {
@@ -54117,7 +54305,7 @@ function (_React$Component) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return this.callApi("GET", "subscriptions.get");
+                return this.state.rocketchat.call("GET", "subscriptions.get");
 
               case 2:
                 response = _context2.sent;
@@ -54125,7 +54313,7 @@ function (_React$Component) {
                   return new Date(x.ls) < new Date(x._updatedAt) - 1000 && !x.archived;
                 });
                 updated = unreads.map(function (unread) {
-                  var old = _this4.state.unreads[unread.fname];
+                  var old = _this3.state.unreads[unread.fname];
 
                   if (old === undefined) {
                     return unread;
@@ -54157,146 +54345,21 @@ function (_React$Component) {
       return updateAll;
     }()
   }, {
-    key: "fetchMessages",
-    value: function () {
-      var _fetchMessages = (0, _asyncToGenerator2.default)(
-      /*#__PURE__*/
-      _regenerator.default.mark(function _callee3(name) {
-        var unreadRoom, type, response;
-        return _regenerator.default.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                unreadRoom = this.state.unreads[name];
-                console.log(unreadRoom);
-                type = {
-                  p: "groups",
-                  c: "channels",
-                  d: "im"
-                }[unreadRoom.t];
-                _context3.next = 5;
-                return this.callApi("GET", "".concat(type, ".history?roomId=").concat(unreadRoom.rid, "&oldest=").concat(unreadRoom.ls, "&count=1000"));
-
-              case 5:
-                response = _context3.sent;
-                this.setState({
-                  messages: _objectSpread({}, this.state.messages, (0, _defineProperty2.default)({}, name, response.messages ? response.messages.reverse() : []))
-                });
-
-                if (!(response.messages && !response.messages.length)) {
-                  _context3.next = 10;
-                  break;
-                }
-
-                _context3.next = 10;
-                return this.markRead(name);
-
-              case 10:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3, this);
-      }));
-
-      function fetchMessages(_x3) {
-        return _fetchMessages.apply(this, arguments);
-      }
-
-      return fetchMessages;
-    }()
-  }, {
-    key: "markRead",
-    value: function () {
-      var _markRead = (0, _asyncToGenerator2.default)(
-      /*#__PURE__*/
-      _regenerator.default.mark(function _callee4(name) {
-        var unreadRoom, messages, type, unreadMessages;
-        return _regenerator.default.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                unreadRoom = this.state.unreads[name];
-                messages = this.state.messages[name];
-                console.log(unreadRoom);
-                type = {
-                  p: "groups",
-                  c: "channels",
-                  d: "im"
-                }[unreadRoom.t];
-
-                if (!(messages === null || messages === void 0 ? void 0 : messages.length)) {
-                  _context4.next = 9;
-                  break;
-                }
-
-                _context4.next = 7;
-                return this.callApi("GET", "".concat(type, ".history?roomId=").concat(unreadRoom.rid, "&oldest=").concat(messages[messages.length - 1]._updatedAt, "&count=1000"));
-
-              case 7:
-                unreadMessages = _context4.sent;
-                console.log(unreadMessages);
-
-              case 9:
-                if (!(unreadMessages === undefined || !unreadMessages.messages.length)) {
-                  _context4.next = 14;
-                  break;
-                }
-
-                _context4.next = 12;
-                return this.callApi("POST", "subscriptions.read", {
-                  rid: unreadRoom.rid
-                });
-
-              case 12:
-                _context4.next = 16;
-                break;
-
-              case 14:
-                _context4.next = 16;
-                return this.fetchMessages(name);
-
-              case 16:
-                _context4.next = 18;
-                return this.updateAll();
-
-              case 18:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4, this);
-      }));
-
-      function markRead(_x4) {
-        return _markRead.apply(this, arguments);
-      }
-
-      return markRead;
-    }()
-  }, {
     key: "render",
     value: function render() {
-      var _this5 = this;
+      var _this4 = this;
 
       return _react.default.createElement("div", {
         className: "RocketContainer"
       }, Object.keys(this.state.unreads).map(function (name) {
         return _react.default.createElement(_Room.Room, {
           key: name,
-          room: _this5.state.unreads[name],
-          messages: _this5.state.messages[name],
-          emoji: _this5.state.emoji,
-          whoami: _this5.state.whoami,
-          sendMessage: function sendMessage(a, b) {
-            return _this5.sendMessage(a, b);
+          room: _this4.state.unreads[name],
+          rocketchat: _this4.state.rocketchat,
+          updateAll: function updateAll() {
+            return _this4.updateAll();
           },
-          markRead: function markRead(name) {
-            return _this5.markRead(name);
-          },
-          fetchMessages: function fetchMessages(name) {
-            return _this5.fetchMessages(name);
-          }
+          emoji: _this4.state.emoji
         });
       }));
     }
@@ -54305,7 +54368,7 @@ function (_React$Component) {
 }(_react.default.Component);
 
 exports.RocketChat = RocketChat;
-},{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","./RocketChat.scss":"EmailViewer/RocketChat/RocketChat.scss","react":"../node_modules/react/index.js","./Room/Room":"EmailViewer/RocketChat/Room/Room.tsx","./RocketChatService":"EmailViewer/RocketChat/RocketChatService.ts"}],"EmailViewer/Tasks/Tasklist.scss":[function(require,module,exports) {
+},{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","./RocketChat.scss":"EmailViewer/RocketChat/RocketChat.scss","react":"../node_modules/react/index.js","./Room/Room":"EmailViewer/RocketChat/Room/Room.tsx","./RocketChatService":"EmailViewer/RocketChat/RocketChatService.ts"}],"EmailViewer/Tasks/Tasklist.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -54775,7 +54838,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62227" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49880" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
