@@ -511,7 +511,7 @@ p {
 
 .Child {
   border-right: 2px black solid;
-  margin-right: 40px;
+  margin-right: 20%;
 }
 
 .ReplyLoader {
@@ -540,6 +540,7 @@ p {
 }
 .MessageBox {
   margin-top: 4px;
+  margin-bottom: 4px;
 }
 .Tasklist {
   right: 0;
@@ -555,7 +556,8 @@ p {
 }
 
 .Task:nth-child(1),
-.Task:hover {
+.Task:hover,
+.Task:focus-within {
   background: white;
   opacity: 1;
 }

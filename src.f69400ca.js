@@ -33182,6 +33182,22 @@ var Icon = function Icon(_ref) {
         fill: fill,
         d: "M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"
       }));
+
+    case "reply":
+      return React.createElement("svg", {
+        "aria-hidden": "true",
+        focusable: "false",
+        "data-prefix": "fas",
+        "data-icon": "reply",
+        role: "img",
+        xmlns: "http://www.w3.org/2000/svg",
+        viewBox: "0 0 512 512",
+        width: size,
+        height: size
+      }, React.createElement("path", {
+        fill: fill,
+        d: "M8.309 189.836L184.313 37.851C199.719 24.546 224 35.347 224 56.015v80.053c160.629 1.839 288 34.032 288 186.258 0 61.441-39.581 122.309-83.333 154.132-13.653 9.931-33.111-2.533-28.077-18.631 45.344-145.012-21.507-183.51-176.59-185.742V360c0 20.7-24.3 31.453-39.687 18.164l-176.004-152c-11.071-9.562-11.086-26.753 0-36.328z"
+      }));
   }
 };
 
@@ -53487,7 +53503,147 @@ function RocketAttachment(_ref) {
     }));
   })) : null);
 }
-},{"react":"../node_modules/react/index.js","./RocketAttachment.scss":"EmailViewer/RocketChat/RocketAttachment.scss","../UI/Markdown":"EmailViewer/UI/Markdown.tsx"}],"EmailViewer/RocketChat/Message/Message.tsx":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./RocketAttachment.scss":"EmailViewer/RocketChat/RocketAttachment.scss","../UI/Markdown":"EmailViewer/UI/Markdown.tsx"}],"EmailViewer/RocketChat/Message/MessageBox.scss":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"EmailViewer/RocketChat/Message/MessageBox.tsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.MessageBox = void 0;
+
+var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _react = _interopRequireDefault(require("react"));
+
+require("./MessageBox.scss");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+var MessageBox =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2.default)(MessageBox, _React$Component);
+
+  function MessageBox() {
+    (0, _classCallCheck2.default)(this, MessageBox);
+    return (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(MessageBox).apply(this, arguments));
+  }
+
+  (0, _createClass2.default)(MessageBox, [{
+    key: "onKeyPress",
+    value: function () {
+      var _onKeyPress = (0, _asyncToGenerator2.default)(
+      /*#__PURE__*/
+      _regenerator.default.mark(function _callee(event) {
+        var message;
+        return _regenerator.default.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (!(event.key === "Enter" && !event.shiftKey)) {
+                  _context.next = 6;
+                  break;
+                }
+
+                message = event.currentTarget.innerText;
+                event.currentTarget.innerText = "";
+                _context.next = 5;
+                return this.props.rocketchat.call("POST", "chat.sendMessage", {
+                  message: _objectSpread({
+                    rid: this.props.roomId,
+                    msg: message
+                  }, this.props.parent ? {
+                    tmid: this.props.parent
+                  } : {})
+                });
+
+              case 5:
+                this.props.onUpdate();
+
+              case 6:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function onKeyPress(_x) {
+        return _onKeyPress.apply(this, arguments);
+      }
+
+      return onKeyPress;
+    }()
+  }, {
+    key: "render",
+    value: function render() {
+      var _this = this;
+
+      return _react.default.createElement("div", {
+        className: "ChatMessage MessageBox ".concat(this.props.parent ? "Child" : ""),
+        contentEditable: true,
+        onKeyPress: function () {
+          var _onKeyPress2 = (0, _asyncToGenerator2.default)(
+          /*#__PURE__*/
+          _regenerator.default.mark(function _callee2(event) {
+            return _regenerator.default.wrap(function _callee2$(_context2) {
+              while (1) {
+                switch (_context2.prev = _context2.next) {
+                  case 0:
+                    _context2.next = 2;
+                    return _this.onKeyPress(event);
+
+                  case 2:
+                    return _context2.abrupt("return", _context2.sent);
+
+                  case 3:
+                  case "end":
+                    return _context2.stop();
+                }
+              }
+            }, _callee2);
+          }));
+
+          function onKeyPress(_x2) {
+            return _onKeyPress2.apply(this, arguments);
+          }
+
+          return onKeyPress;
+        }(),
+        onClick: function onClick() {
+          return _this.props.onUpdate();
+        }
+      });
+    }
+  }]);
+  return MessageBox;
+}(_react.default.Component);
+
+exports.MessageBox = MessageBox;
+},{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","./MessageBox.scss":"EmailViewer/RocketChat/Message/MessageBox.scss"}],"EmailViewer/RocketChat/Message/Message.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -53525,6 +53681,8 @@ var _Emoji = require("../Renderers/Emoji");
 
 var _reactTimeago = _interopRequireDefault(require("react-timeago"));
 
+var _MessageBox = require("./MessageBox");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Message =
@@ -53532,9 +53690,15 @@ var Message =
 function (_React$Component) {
   (0, _inherits2.default)(Message, _React$Component);
 
-  function Message() {
+  function Message(props) {
+    var _this;
+
     (0, _classCallCheck2.default)(this, Message);
-    return (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(Message).apply(this, arguments));
+    _this = (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(Message).call(this, props));
+    _this.state = {
+      isActive: false
+    };
+    return _this;
   }
 
   (0, _createClass2.default)(Message, [{
@@ -53573,7 +53737,7 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this = this;
+      var _this2 = this;
 
       var message = this.props.message;
       var previous = this.props.previous;
@@ -53620,11 +53784,11 @@ function (_React$Component) {
           return ["here", "channel"].includes(mention._id);
         });
         var activeMention = mentions.find(function (mention) {
-          return mention.username == _this.props.rocketchat.getIdentity().me.username;
+          return mention.username == _this2.props.rocketchat.getIdentity().me.username;
         });
         var diffs = message.msg.match(/D[0-9]+/g);
         content = _react.default.createElement("div", {
-          className: "ChatMessage ".concat(activeMention ? "ActiveMention" : passiveMention ? "PassiveMention" : "", " ").concat(message.tmid ? "Child" : "", " ").concat(message.isContext ? "ContextMessage" : "")
+          className: "ChatMessage ".concat(activeMention ? "ActiveMention" : passiveMention ? "PassiveMention" : "", " ").concat(message.isContext ? "ContextMessage" : "")
         }, _react.default.createElement("div", {
           className: "ChatMessageContent"
         }, _react.default.createElement(_Markdown.Markdown, {
@@ -53633,8 +53797,8 @@ function (_React$Component) {
             text: function text(_ref) {
               var value = _ref.value;
               return _react.default.createElement(_Text.Text, {
-                emoji: _this.props.emoji,
-                whoami: _this.props.rocketchat.getIdentity(),
+                emoji: _this2.props.emoji,
+                whoami: _this2.props.rocketchat.getIdentity(),
                 value: value
               });
             }
@@ -53651,7 +53815,7 @@ function (_React$Component) {
         }, false && _react.default.createElement("span", {
           className: "Action",
           onClick: function onClick() {
-            return _this.snooze(message._id);
+            return _this2.snooze(message._id);
           }
         }, _react.default.createElement(_Emoji.Emoji, {
           registry: this.props.emoji,
@@ -53659,7 +53823,7 @@ function (_React$Component) {
         })), diffs && _react.default.createElement("span", {
           className: "Action",
           onClick: function onClick() {
-            return _this.sendMessage(message.rid, "hubot mq submit ".concat((0, _toConsumableArray2.default)(new Set(diffs)).join(" ")));
+            return _this2.sendMessage(message.rid, "hubot mq submit ".concat((0, _toConsumableArray2.default)(new Set(diffs)).join(" ")));
           }
         }, _react.default.createElement(_Emoji.Emoji, {
           registry: this.props.emoji,
@@ -53670,9 +53834,13 @@ function (_React$Component) {
       }
 
       var username = message.u.username;
-      return _react.default.createElement("div", {
-        className: "MessageContainer",
-        key: message._id
+      return _react.default.createElement("div", null, _react.default.createElement("div", {
+        className: "MessageContainer ".concat(message.tmid ? "Child" : "", " "),
+        onDoubleClick: function onDoubleClick() {
+          return _this2.setState({
+            isActive: !_this2.state.isActive
+          });
+        }
       }, !previous || username !== previous.u.username ? _react.default.createElement("div", {
         className: "MessageAuthor"
       }, _react.default.createElement("span", null, message.u.name)) : "", content, _react.default.createElement("div", {
@@ -53684,153 +53852,28 @@ function (_React$Component) {
 
         return reactors.usernames.map(function () {
           return _react.default.createElement(_Emoji.Emoji, {
-            registry: _this.props.emoji,
+            registry: _this2.props.emoji,
             text: reaction
           });
         });
       })), this.props.unloadedChildren ? _react.default.createElement("div", {
         className: "ReplyLoader",
         onClick: function onClick() {
-          return _this.props.onExpand();
+          return _this2.props.onExpand();
         }
-      }, "Load", " ", this.props.unloadedChildren == 1 ? "1 more reply" : "".concat(this.props.unloadedChildren, " more replies")) : "");
+      }, "Load", " ", this.props.unloadedChildren == 1 ? "1 more reply" : "".concat(this.props.unloadedChildren, " more replies")) : ""), this.state.isActive ? _react.default.createElement(_MessageBox.MessageBox, {
+        rocketchat: this.props.rocketchat,
+        roomId: this.props.message.rid,
+        onUpdate: this.props.onUpdate,
+        parent: this.props.message._id
+      }) : null);
     }
   }]);
   return Message;
 }(_react.default.Component);
 
 exports.Message = Message;
-},{"@babel/runtime/helpers/slicedToArray":"../node_modules/@babel/runtime/helpers/slicedToArray.js","@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","../../UI/Markdown":"EmailViewer/UI/Markdown.tsx","../Renderers/Text":"EmailViewer/RocketChat/Renderers/Text.tsx","../RocketAttachment":"EmailViewer/RocketChat/RocketAttachment.tsx","../Renderers/Emoji":"EmailViewer/RocketChat/Renderers/Emoji.tsx","react-timeago":"../node_modules/react-timeago/lib/index.js"}],"EmailViewer/RocketChat/Message/MessageBox.scss":[function(require,module,exports) {
-var reloadCSS = require('_css_loader');
-
-module.hot.dispose(reloadCSS);
-module.hot.accept(reloadCSS);
-},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"EmailViewer/RocketChat/Message/MessageBox.tsx":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.MessageBox = void 0;
-
-var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
-
-var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
-
-var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
-
-var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
-
-var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
-
-var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
-
-var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
-
-var _react = _interopRequireDefault(require("react"));
-
-require("./MessageBox.scss");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var MessageBox =
-/*#__PURE__*/
-function (_React$Component) {
-  (0, _inherits2.default)(MessageBox, _React$Component);
-
-  function MessageBox() {
-    (0, _classCallCheck2.default)(this, MessageBox);
-    return (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(MessageBox).apply(this, arguments));
-  }
-
-  (0, _createClass2.default)(MessageBox, [{
-    key: "onKeyPress",
-    value: function () {
-      var _onKeyPress = (0, _asyncToGenerator2.default)(
-      /*#__PURE__*/
-      _regenerator.default.mark(function _callee(event) {
-        var message;
-        return _regenerator.default.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                if (!(event.key === "Enter")) {
-                  _context.next = 6;
-                  break;
-                }
-
-                message = event.currentTarget.innerText;
-                event.currentTarget.innerText = "";
-                _context.next = 5;
-                return this.props.rocketchat.call("POST", "chat.postMessage", {
-                  roomId: this.props.roomId,
-                  text: message
-                });
-
-              case 5:
-                this.props.onUpdate();
-
-              case 6:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-
-      function onKeyPress(_x) {
-        return _onKeyPress.apply(this, arguments);
-      }
-
-      return onKeyPress;
-    }()
-  }, {
-    key: "render",
-    value: function render() {
-      var _this = this;
-
-      return _react.default.createElement("div", {
-        className: "ChatMessage MessageBox",
-        contentEditable: true,
-        onKeyPress: function () {
-          var _onKeyPress2 = (0, _asyncToGenerator2.default)(
-          /*#__PURE__*/
-          _regenerator.default.mark(function _callee2(event) {
-            return _regenerator.default.wrap(function _callee2$(_context2) {
-              while (1) {
-                switch (_context2.prev = _context2.next) {
-                  case 0:
-                    _context2.next = 2;
-                    return _this.onKeyPress(event);
-
-                  case 2:
-                    return _context2.abrupt("return", _context2.sent);
-
-                  case 3:
-                  case "end":
-                    return _context2.stop();
-                }
-              }
-            }, _callee2);
-          }));
-
-          function onKeyPress(_x2) {
-            return _onKeyPress2.apply(this, arguments);
-          }
-
-          return onKeyPress;
-        }(),
-        onClick: function onClick() {
-          return _this.props.onUpdate();
-        }
-      });
-    }
-  }]);
-  return MessageBox;
-}(_react.default.Component);
-
-exports.MessageBox = MessageBox;
-},{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","./MessageBox.scss":"EmailViewer/RocketChat/Message/MessageBox.scss"}],"EmailViewer/RocketChat/Room/Room.tsx":[function(require,module,exports) {
+},{"@babel/runtime/helpers/slicedToArray":"../node_modules/@babel/runtime/helpers/slicedToArray.js","@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","../../UI/Markdown":"EmailViewer/UI/Markdown.tsx","../Renderers/Text":"EmailViewer/RocketChat/Renderers/Text.tsx","../RocketAttachment":"EmailViewer/RocketChat/RocketAttachment.tsx","../Renderers/Emoji":"EmailViewer/RocketChat/Renderers/Emoji.tsx","react-timeago":"../node_modules/react-timeago/lib/index.js","./MessageBox":"EmailViewer/RocketChat/Message/MessageBox.tsx"}],"EmailViewer/RocketChat/Room/Room.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -54058,7 +54101,7 @@ function (_React$Component) {
       var _markRead = (0, _asyncToGenerator2.default)(
       /*#__PURE__*/
       _regenerator.default.mark(function _callee4() {
-        var unreadRoom, messages, type, unreadMessages;
+        var unreadRoom, messages, type, unreadMessages, timestamps;
         return _regenerator.default.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
@@ -54073,41 +54116,47 @@ function (_React$Component) {
                 }[unreadRoom.t];
 
                 if (!(messages === null || messages === void 0 ? void 0 : messages.length)) {
-                  _context4.next = 9;
+                  _context4.next = 11;
                   break;
                 }
 
-                _context4.next = 7;
-                return this.props.rocketchat.call("GET", "".concat(type, ".history?roomId=").concat(unreadRoom.rid, "&oldest=").concat(messages[messages.length - 1]._updatedAt, "&count=1000"));
+                timestamps = messages.map(function (msg) {
+                  return msg._updatedAt;
+                });
+                timestamps.sort(function (a, b) {
+                  return a.localeCompare(b);
+                });
+                _context4.next = 9;
+                return this.props.rocketchat.call("GET", "".concat(type, ".history?roomId=").concat(unreadRoom.rid, "&oldest=").concat(timestamps[timestamps.length - 1], "&count=1000"));
 
-              case 7:
+              case 9:
                 unreadMessages = _context4.sent;
                 console.log(unreadMessages);
 
-              case 9:
+              case 11:
                 if (!(unreadMessages === undefined || !unreadMessages.messages.length)) {
-                  _context4.next = 14;
+                  _context4.next = 16;
                   break;
                 }
 
-                _context4.next = 12;
+                _context4.next = 14;
                 return this.props.rocketchat.call("POST", "subscriptions.read", {
                   rid: unreadRoom.rid
                 });
 
-              case 12:
-                _context4.next = 16;
-                break;
-
               case 14:
-                _context4.next = 16;
-                return this.fetchMessages();
+                _context4.next = 18;
+                break;
 
               case 16:
                 _context4.next = 18;
-                return this.props.updateAll();
+                return this.fetchMessages();
 
               case 18:
+                _context4.next = 20;
+                return this.props.updateAll();
+
+              case 20:
               case "end":
                 return _context4.stop();
             }
@@ -54176,7 +54225,7 @@ function (_React$Component) {
 
       var msgSortKey = function msgSortKey(message) {
         if (message.tmid) {
-          var parent = _this4.state.context.find(function (msg) {
+          var parent = [].concat((0, _toConsumableArray2.default)(_this4.state.context), (0, _toConsumableArray2.default)(_this4.state.messages)).find(function (msg) {
             return msg._id == message.tmid;
           });
 
@@ -54304,6 +54353,7 @@ function (_React$Component) {
         }
       }, _react.default.createElement(_Spinner.Spinner, null)) : messages.map(function (message, idx) {
         return _react.default.createElement(_Message.Message, {
+          key: message._id,
           message: message,
           previous: messages[idx - 1],
           emoji: _this4.props.emoji,
@@ -54338,35 +54388,63 @@ function (_React$Component) {
             }
 
             return onExpand;
+          }(),
+          onUpdate: function () {
+            var _onUpdate = (0, _asyncToGenerator2.default)(
+            /*#__PURE__*/
+            _regenerator.default.mark(function _callee9() {
+              return _regenerator.default.wrap(function _callee9$(_context9) {
+                while (1) {
+                  switch (_context9.prev = _context9.next) {
+                    case 0:
+                      _context9.next = 2;
+                      return _this4.fetchMessages();
+
+                    case 2:
+                      return _context9.abrupt("return", _context9.sent);
+
+                    case 3:
+                    case "end":
+                      return _context9.stop();
+                  }
+                }
+              }, _callee9);
+            }));
+
+            function onUpdate() {
+              return _onUpdate.apply(this, arguments);
+            }
+
+            return onUpdate;
           }()
         });
       }), _react.default.createElement(_MessageBox.MessageBox, {
         rocketchat: this.props.rocketchat,
         roomId: this.props.room.rid,
         onUpdate: function () {
-          var _onUpdate = (0, _asyncToGenerator2.default)(
+          var _onUpdate2 = (0, _asyncToGenerator2.default)(
           /*#__PURE__*/
-          _regenerator.default.mark(function _callee9() {
-            return _regenerator.default.wrap(function _callee9$(_context9) {
+          _regenerator.default.mark(function _callee10() {
+            return _regenerator.default.wrap(function _callee10$(_context10) {
               while (1) {
-                switch (_context9.prev = _context9.next) {
+                switch (_context10.prev = _context10.next) {
                   case 0:
-                    _context9.next = 2;
+                    _context10.next = 2;
                     return _this4.fetchMessages();
 
                   case 2:
-                    return _context9.abrupt("return", _context9.sent);
+                    return _context10.abrupt("return", _context10.sent);
 
                   case 3:
                   case "end":
-                    return _context9.stop();
+                    return _context10.stop();
                 }
               }
-            }, _callee9);
+            }, _callee10);
           }));
 
           function onUpdate() {
-            return _onUpdate.apply(this, arguments);
+            return _onUpdate2.apply(this, arguments);
           }
 
           return onUpdate;
@@ -54378,19 +54456,19 @@ function (_React$Component) {
     value: function () {
       var _onExpandMessage = (0, _asyncToGenerator2.default)(
       /*#__PURE__*/
-      _regenerator.default.mark(function _callee10(message) {
+      _regenerator.default.mark(function _callee11(message) {
         var _this5 = this;
 
         var response;
-        return _regenerator.default.wrap(function _callee10$(_context10) {
+        return _regenerator.default.wrap(function _callee11$(_context11) {
           while (1) {
-            switch (_context10.prev = _context10.next) {
+            switch (_context11.prev = _context11.next) {
               case 0:
-                _context10.next = 2;
+                _context11.next = 2;
                 return this.props.rocketchat.call("GET", "chat.getThreadMessages?tmid=".concat(message._id));
 
               case 2:
-                response = _context10.sent;
+                response = _context11.sent;
                 this.setState({
                   threadContext: [].concat((0, _toConsumableArray2.default)(this.state.threadContext), (0, _toConsumableArray2.default)(response.messages.filter(function (tMessage) {
                     return !(_this5.state.messages || []).find(function (message) {
@@ -54401,10 +54479,10 @@ function (_React$Component) {
 
               case 4:
               case "end":
-                return _context10.stop();
+                return _context11.stop();
             }
           }
-        }, _callee10, this);
+        }, _callee11, this);
       }));
 
       function onExpandMessage(_x) {
@@ -54465,7 +54543,7 @@ function () {
           return;
         }
 
-        console.log(_this2.credentials);
+        console.log(_this2.credentials, data);
         document.rocketchatCorsBypass({
           method: method,
           url: "".concat(document.rocketchatServer, "/api/v1/").concat(endpoint),
@@ -54731,6 +54809,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Tasklist = void 0;
 
+var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
+
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
@@ -54802,7 +54882,8 @@ function (_React$Component) {
                 _context.next = 2;
                 return gapi.client.tasks.tasks.list({
                   tasklist: "@default",
-                  showCompleted: false
+                  showCompleted: false,
+                  maxResults: 100
                 });
 
               case 2:
@@ -54838,17 +54919,24 @@ function (_React$Component) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.next = 2;
+                this.setState({
+                  tasks: this.state.tasks.map(function (task) {
+                    return task.id == taskId ? _objectSpread({}, task, {
+                      position: "0"
+                    }) : task;
+                  })
+                });
+                _context2.next = 3;
                 return gapi.client.tasks.tasks.move({
                   task: taskId,
                   tasklist: "@default"
                 });
 
-              case 2:
-                _context2.next = 4;
+              case 3:
+                _context2.next = 5;
                 return this.updateTasks();
 
-              case 4:
+              case 5:
               case "end":
                 return _context2.stop();
             }
@@ -54872,18 +54960,25 @@ function (_React$Component) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                _context3.next = 2;
+                this.setState({
+                  tasks: this.state.tasks.map(function (task) {
+                    return task.id == taskId ? _objectSpread({}, task, {
+                      position: "99999999999999999999"
+                    }) : task;
+                  })
+                });
+                _context3.next = 3;
                 return gapi.client.tasks.tasks.move({
                   task: taskId,
                   tasklist: "@default",
                   previous: this.state.tasks[this.state.tasks.length - 1].id
                 });
 
-              case 2:
-                _context3.next = 4;
+              case 3:
+                _context3.next = 5;
                 return this.updateTasks();
 
-              case 4:
+              case 5:
               case "end":
                 return _context3.stop();
             }
@@ -54907,7 +55002,12 @@ function (_React$Component) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                _context4.next = 2;
+                this.setState({
+                  tasks: this.state.tasks.filter(function (task) {
+                    return task.id;
+                  })
+                });
+                _context4.next = 3;
                 return gapi.client.tasks.tasks.update({
                   tasklist: "@default",
                   task: task.id,
@@ -54916,11 +55016,11 @@ function (_React$Component) {
                   })
                 });
 
-              case 2:
-                _context4.next = 4;
+              case 3:
+                _context4.next = 5;
                 return this.updateTasks();
 
-              case 4:
+              case 5:
               case "end":
                 return _context4.stop();
             }
@@ -54939,15 +55039,76 @@ function (_React$Component) {
     value: function render() {
       var _this3 = this;
 
+      var tasks = (0, _toConsumableArray2.default)(this.state.tasks);
+      tasks.sort(function (a, b) {
+        return a.position.localeCompare(b.position);
+      });
       return _react.default.createElement("div", {
         className: "TasklistContainer"
       }, _react.default.createElement("div", {
         className: "Tasklist"
-      }, this.state.tasks.map(function (task) {
+      }, tasks.map(function (task) {
         return _react.default.createElement("div", {
           className: "Task"
         }, _react.default.createElement("div", null, _react.default.createElement("div", {
-          className: "TaskTitle"
+          className: "TaskTitle",
+          contentEditable: true,
+          onBlur: function () {
+            var _onBlur = (0, _asyncToGenerator2.default)(
+            /*#__PURE__*/
+            _regenerator.default.mark(function _callee5(event) {
+              return _regenerator.default.wrap(function _callee5$(_context5) {
+                while (1) {
+                  switch (_context5.prev = _context5.next) {
+                    case 0:
+                      _context5.next = 2;
+                      return _this3.onTaskEdit(event, task);
+
+                    case 2:
+                      return _context5.abrupt("return", _context5.sent);
+
+                    case 3:
+                    case "end":
+                      return _context5.stop();
+                  }
+                }
+              }, _callee5);
+            }));
+
+            function onBlur(_x4) {
+              return _onBlur.apply(this, arguments);
+            }
+
+            return onBlur;
+          }(),
+          onKeyPress: function () {
+            var _onKeyPress = (0, _asyncToGenerator2.default)(
+            /*#__PURE__*/
+            _regenerator.default.mark(function _callee6(event) {
+              return _regenerator.default.wrap(function _callee6$(_context6) {
+                while (1) {
+                  switch (_context6.prev = _context6.next) {
+                    case 0:
+                      _context6.next = 2;
+                      return _this3.onEnter(event);
+
+                    case 2:
+                      return _context6.abrupt("return", _context6.sent);
+
+                    case 3:
+                    case "end":
+                      return _context6.stop();
+                  }
+                }
+              }, _callee6);
+            }));
+
+            function onKeyPress(_x5) {
+              return _onKeyPress.apply(this, arguments);
+            }
+
+            return onKeyPress;
+          }()
         }, task.title), _react.default.createElement("div", {
           className: "TaskDetails"
         }, _react.default.createElement(_Markdown.Markdown, {
@@ -54978,12 +55139,56 @@ function (_React$Component) {
         }, "\u2611\uFE0F")));
       })));
     }
+  }, {
+    key: "onEnter",
+    value: function onEnter(event) {
+      if (event.key === "Enter") {
+        event.currentTarget.blur();
+      }
+    }
+  }, {
+    key: "onTaskEdit",
+    value: function () {
+      var _onTaskEdit = (0, _asyncToGenerator2.default)(
+      /*#__PURE__*/
+      _regenerator.default.mark(function _callee7(event, task) {
+        return _regenerator.default.wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                _context7.next = 2;
+                return gapi.client.tasks.tasks.update({
+                  tasklist: "@default",
+                  task: task.id,
+                  resource: _objectSpread({}, task, {
+                    title: event.currentTarget.innerText
+                  })
+                });
+
+              case 2:
+                _context7.next = 4;
+                return this.updateTasks();
+
+              case 4:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7, this);
+      }));
+
+      function onTaskEdit(_x6, _x7) {
+        return _onTaskEdit.apply(this, arguments);
+      }
+
+      return onTaskEdit;
+    }()
   }]);
   return Tasklist;
 }(_react.default.Component);
 
 exports.Tasklist = Tasklist;
-},{"@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","./Tasklist.scss":"EmailViewer/Tasks/Tasklist.scss","../UI/Markdown":"EmailViewer/UI/Markdown.tsx"}],"EmailViewer/EmailViewer.tsx":[function(require,module,exports) {
+},{"@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","./Tasklist.scss":"EmailViewer/Tasks/Tasklist.scss","../UI/Markdown":"EmailViewer/UI/Markdown.tsx"}],"EmailViewer/EmailViewer.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -55188,7 +55393,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56002" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54567" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
