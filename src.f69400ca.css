@@ -172,6 +172,7 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  grid-area: header;
 }
 
 .Image {
@@ -341,27 +342,41 @@
 .EmailViewer {
   min-height: 100vh;
   background-color: #eeeeee;
+  display: grid;
+  grid: "whitespace header tasks" auto ". events tasks" auto ". content tasks" 1fr/1fr 800px 1fr;
+}
+
+.PrimaryContent {
+  grid-area: content;
+}
+
+.whitespace {
+  background: white;
 }
 .FocusBar {
-  height: 20px;
-  background-color: #2259b5;
+  border-bottom: 2px solid #2259b5;
   position: sticky;
   top: 0;
   z-index: 1000;
-  color: white;
   padding: 4px 8px;
+  overflow: hidden;
+  grid-area: events;
+  background: #eee;
 }
 .FocusBar a {
-  color: white;
+  color: black;
   text-decoration: none;
+}
+.FocusBar:not(:hover) {
+  height: 18px;
 }
 
 .Active {
-  background-color: #2a934d;
+  border-bottom: 2px solid #2a934d;
 }
 
 .Inactive {
-  background-color: #ccc;
+  border-bottom: 2px solid #ccc;
 }
 
 .Content {
@@ -375,17 +390,16 @@
 }
 
 .ActionBar {
-  position: absolute;
-  left: calc(50vw + 400px + 8px);
+  padding-left: 4px;
+}
+
+.EventTimestamp {
+  white-space: nowrap;
 }
 .RocketContainer {
   max-width: 800px;
   margin: auto;
-}
-@media only screen and (max-width: 1200px) {
-  .RocketContainer {
-    padding: 0px 8px;
-  }
+  padding: 0px 8px;
 }
 
 .ChatMessage {
@@ -511,7 +525,7 @@ p {
 
 .Child {
   border-right: 2px black solid;
-  margin-right: 20%;
+  margin-left: 20%;
 }
 
 .ReplyLoader {
@@ -546,16 +560,21 @@ p {
   right: 0;
   padding-left: 1px;
   box-sizing: border-box;
-  border-left: 1px solid #ccc;
 }
 @media only screen and (min-width: 1200px) {
   .Tasklist {
-    position: absolute;
-    width: calc(50vw - 416px);
+    position: sticky;
+    top: 0;
   }
 }
 
-.Task:nth-child(1),
+.Tasklist-heading {
+  background: white;
+  font-size: 20px;
+  padding: 8px 16px;
+  height: 34px;
+}
+
 .Task:hover,
 .Task:focus-within {
   background: white;
@@ -565,7 +584,6 @@ p {
 .Task {
   padding: 8px 16px;
   opacity: 0.5;
-  box-shadow: #eee -1px 1px 1px;
 }
 @media only screen and (max-width: 1200px) {
   .Task:nth-child(n+4) {
@@ -589,6 +607,9 @@ p {
   padding-left: 8px;
 }
 
+.TasklistContainer {
+  grid-area: tasks;
+}
 @media only screen and (min-width: 1200px) {
   .TasklistContainer {
     position: sticky;

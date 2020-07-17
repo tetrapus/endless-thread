@@ -37589,7 +37589,9 @@ function (_React$Component) {
         className: "Chevron " + (unread ? "collapsed" : "expanded"),
         onClick: function onClick() {
           return _this2.handleChevronClick(unread);
-        }
+        },
+        "data-shortcut": "r",
+        "data-trigger": "click"
       }, React.createElement(_Icon.Icon, {
         type: "collapse",
         size: 32
@@ -38200,7 +38202,7 @@ function (_React$Component) {
           className: "Content"
         }, _react.default.createElement("div", {
           className: "Event"
-        })));
+        }, "No events today!")));
       }
 
       var topEvent = this.state.nextEvent;
@@ -38215,9 +38217,11 @@ function (_React$Component) {
         }, _react.default.createElement("a", {
           href: topEvent.hangoutLink,
           target: "_blank"
-        }, "\uD83D\uDDD3\uFE0F ", topEvent.summary)), _react.default.createElement("span", null, "Ends\xA0"), _react.default.createElement(_reactTimeago.default, {
+        }, "\uD83D\uDDD3\uFE0F ", topEvent.summary)), _react.default.createElement("div", {
+          className: "EventTimestamp"
+        }, _react.default.createElement("span", null, "Ends\xA0"), _react.default.createElement(_reactTimeago.default, {
           date: topEvent.end.dateTime
-        }), _react.default.createElement("span", {
+        })), _react.default.createElement("span", {
           className: "ActionBar",
           onClick: function onClick() {
             return _this4.skipEvent();
@@ -38234,9 +38238,11 @@ function (_React$Component) {
       }, _react.default.createElement("a", {
         href: topEvent.hangoutLink,
         target: "_blank"
-      }, "\uD83D\uDDD3\uFE0F ", topEvent.summary)), "Starts\xA0", _react.default.createElement(_reactTimeago.default, {
+      }, "\uD83D\uDDD3\uFE0F ", topEvent.summary)), _react.default.createElement("div", {
+        className: "EventTimestamp"
+      }, "Starts\xA0", _react.default.createElement(_reactTimeago.default, {
         date: topEvent.start.dateTime
-      }), _react.default.createElement("span", {
+      })), _react.default.createElement("span", {
         className: "ActionBar",
         onClick: function onClick() {
           return _this4.skipEvent();
@@ -53635,7 +53641,9 @@ function (_React$Component) {
         }(),
         onClick: function onClick() {
           return _this.props.onUpdate();
-        }
+        },
+        "data-shortcut": "m",
+        "data-trigger": "focus"
       });
     }
   }]);
@@ -54269,7 +54277,9 @@ function (_React$Component) {
 
       return _react.default.createElement("div", {
         className: "ChatRoom",
-        key: room.rid
+        key: room.rid,
+        "data-shortcut": "n",
+        "data-trigger": "scrollIntoView"
       }, _react.default.createElement("h3", {
         className: "RoomTitle"
       }, Channel(room), _react.default.createElement("span", {
@@ -54313,7 +54323,9 @@ function (_React$Component) {
           }
 
           return onClick;
-        }()
+        }(),
+        "data-shortcut": "x",
+        "data-trigger": "click"
       }, _react.default.createElement(_Icon.Icon, {
         type: "close"
       })), _react.default.createElement("span", {
@@ -54344,7 +54356,9 @@ function (_React$Component) {
           }
 
           return onClick;
-        }()
+        }(),
+        "data-shortcut": "r",
+        "data-trigger": "click"
       }, _react.default.createElement(_Icon.Icon, {
         type: "done"
       })))), messages === undefined ? _react.default.createElement(_reactVisibilitySensor.default, {
@@ -55047,6 +55061,39 @@ function (_React$Component) {
         className: "TasklistContainer"
       }, _react.default.createElement("div", {
         className: "Tasklist"
+      }, _react.default.createElement("div", {
+        className: "Tasklist-heading",
+        contentEditable: true,
+        onKeyPress: function () {
+          var _onKeyPress = (0, _asyncToGenerator2.default)(
+          /*#__PURE__*/
+          _regenerator.default.mark(function _callee5(event) {
+            return _regenerator.default.wrap(function _callee5$(_context5) {
+              while (1) {
+                switch (_context5.prev = _context5.next) {
+                  case 0:
+                    _context5.next = 2;
+                    return _this3.onKeyPress(event);
+
+                  case 2:
+                    return _context5.abrupt("return", _context5.sent);
+
+                  case 3:
+                  case "end":
+                    return _context5.stop();
+                }
+              }
+            }, _callee5);
+          }));
+
+          function onKeyPress(_x4) {
+            return _onKeyPress.apply(this, arguments);
+          }
+
+          return onKeyPress;
+        }()
+      }), _react.default.createElement("div", {
+        className: "Tasks"
       }, tasks.map(function (task) {
         return _react.default.createElement("div", {
           className: "Task"
@@ -55056,41 +55103,13 @@ function (_React$Component) {
           onBlur: function () {
             var _onBlur = (0, _asyncToGenerator2.default)(
             /*#__PURE__*/
-            _regenerator.default.mark(function _callee5(event) {
-              return _regenerator.default.wrap(function _callee5$(_context5) {
-                while (1) {
-                  switch (_context5.prev = _context5.next) {
-                    case 0:
-                      _context5.next = 2;
-                      return _this3.onTaskEdit(event, task);
-
-                    case 2:
-                      return _context5.abrupt("return", _context5.sent);
-
-                    case 3:
-                    case "end":
-                      return _context5.stop();
-                  }
-                }
-              }, _callee5);
-            }));
-
-            function onBlur(_x4) {
-              return _onBlur.apply(this, arguments);
-            }
-
-            return onBlur;
-          }(),
-          onKeyPress: function () {
-            var _onKeyPress = (0, _asyncToGenerator2.default)(
-            /*#__PURE__*/
             _regenerator.default.mark(function _callee6(event) {
               return _regenerator.default.wrap(function _callee6$(_context6) {
                 while (1) {
                   switch (_context6.prev = _context6.next) {
                     case 0:
                       _context6.next = 2;
-                      return _this3.onEnter(event);
+                      return _this3.onTaskEdit(event, task);
 
                     case 2:
                       return _context6.abrupt("return", _context6.sent);
@@ -55103,8 +55122,36 @@ function (_React$Component) {
               }, _callee6);
             }));
 
-            function onKeyPress(_x5) {
-              return _onKeyPress.apply(this, arguments);
+            function onBlur(_x5) {
+              return _onBlur.apply(this, arguments);
+            }
+
+            return onBlur;
+          }(),
+          onKeyPress: function () {
+            var _onKeyPress2 = (0, _asyncToGenerator2.default)(
+            /*#__PURE__*/
+            _regenerator.default.mark(function _callee7(event) {
+              return _regenerator.default.wrap(function _callee7$(_context7) {
+                while (1) {
+                  switch (_context7.prev = _context7.next) {
+                    case 0:
+                      _context7.next = 2;
+                      return _this3.onEnter(event);
+
+                    case 2:
+                      return _context7.abrupt("return", _context7.sent);
+
+                    case 3:
+                    case "end":
+                      return _context7.stop();
+                  }
+                }
+              }, _callee7);
+            }));
+
+            function onKeyPress(_x6) {
+              return _onKeyPress2.apply(this, arguments);
             }
 
             return onKeyPress;
@@ -55137,8 +55184,54 @@ function (_React$Component) {
             return _this3.completeTask(task);
           }
         }, "\u2611\uFE0F")));
-      })));
+      }))));
     }
+  }, {
+    key: "onKeyPress",
+    value: function () {
+      var _onKeyPress3 = (0, _asyncToGenerator2.default)(
+      /*#__PURE__*/
+      _regenerator.default.mark(function _callee8(event) {
+        var value, newTask;
+        return _regenerator.default.wrap(function _callee8$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
+              case 0:
+                if (!(event.key === "Enter" && !event.shiftKey)) {
+                  _context8.next = 9;
+                  break;
+                }
+
+                value = event.currentTarget.innerText;
+                event.currentTarget.innerText = "";
+                event.currentTarget.blur();
+                _context8.next = 6;
+                return gapi.client.tasks.tasks.insert({
+                  tasklist: "@default",
+                  resource: {
+                    title: value
+                  }
+                });
+
+              case 6:
+                newTask = _context8.sent;
+                _context8.next = 9;
+                return this.updateTasks();
+
+              case 9:
+              case "end":
+                return _context8.stop();
+            }
+          }
+        }, _callee8, this);
+      }));
+
+      function onKeyPress(_x7) {
+        return _onKeyPress3.apply(this, arguments);
+      }
+
+      return onKeyPress;
+    }()
   }, {
     key: "onEnter",
     value: function onEnter(event) {
@@ -55151,12 +55244,12 @@ function (_React$Component) {
     value: function () {
       var _onTaskEdit = (0, _asyncToGenerator2.default)(
       /*#__PURE__*/
-      _regenerator.default.mark(function _callee7(event, task) {
-        return _regenerator.default.wrap(function _callee7$(_context7) {
+      _regenerator.default.mark(function _callee9(event, task) {
+        return _regenerator.default.wrap(function _callee9$(_context9) {
           while (1) {
-            switch (_context7.prev = _context7.next) {
+            switch (_context9.prev = _context9.next) {
               case 0:
-                _context7.next = 2;
+                _context9.next = 2;
                 return gapi.client.tasks.tasks.update({
                   tasklist: "@default",
                   task: task.id,
@@ -55166,18 +55259,18 @@ function (_React$Component) {
                 });
 
               case 2:
-                _context7.next = 4;
+                _context9.next = 4;
                 return this.updateTasks();
 
               case 4:
               case "end":
-                return _context7.stop();
+                return _context9.stop();
             }
           }
-        }, _callee7, this);
+        }, _callee9, this);
       }));
 
-      function onTaskEdit(_x6, _x7) {
+      function onTaskEdit(_x8, _x9) {
         return _onTaskEdit.apply(this, arguments);
       }
 
@@ -55188,13 +55281,75 @@ function (_React$Component) {
 }(_react.default.Component);
 
 exports.Tasklist = Tasklist;
-},{"@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","./Tasklist.scss":"EmailViewer/Tasks/Tasklist.scss","../UI/Markdown":"EmailViewer/UI/Markdown.tsx"}],"EmailViewer/EmailViewer.tsx":[function(require,module,exports) {
+},{"@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","./Tasklist.scss":"EmailViewer/Tasks/Tasklist.scss","../UI/Markdown":"EmailViewer/UI/Markdown.tsx"}],"EmailViewer/ShortcutService.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.ShortcutService = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ShortcutService =
+/*#__PURE__*/
+function () {
+  (0, _createClass2.default)(ShortcutService, [{
+    key: "onGlobalKeypress",
+    value: function onGlobalKeypress(event) {
+      var _this = this;
+
+      if (event.target == document.body) {
+        var targets = Array.from(document.querySelectorAll("[data-shortcut=".concat(event.key, "][data-trigger]"))).filter(function (elem) {
+          return _this.inViewport(elem);
+        });
+
+        if (targets.length) {
+          var target = targets[0];
+          setTimeout(function () {
+            return target[target.getAttribute("data-trigger")]();
+          }, 10);
+        }
+      }
+    }
+  }]);
+
+  function ShortcutService() {
+    (0, _classCallCheck2.default)(this, ShortcutService);
+  }
+
+  (0, _createClass2.default)(ShortcutService, [{
+    key: "inViewport",
+    value: function inViewport(elem) {
+      var bounding = elem.getBoundingClientRect();
+      return bounding.top >= 0 && bounding.left >= 0 && bounding.bottom <= (window.innerHeight || document.documentElement.clientHeight) && bounding.right <= (window.innerWidth || document.documentElement.clientWidth);
+    }
+  }]);
+  return ShortcutService;
+}();
+
+exports.ShortcutService = ShortcutService;
+},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js"}],"EmailViewer/EmailViewer.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.EmailViewer = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
 
 var React = _interopRequireWildcard(require("react"));
 
@@ -55210,23 +55365,58 @@ var _RocketChat = require("./RocketChat/RocketChat");
 
 var _Tasklist = require("./Tasks/Tasklist");
 
+var _ShortcutService = require("./ShortcutService");
+
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-var EmailViewer = function EmailViewer(_ref) {
-  var profile = _ref.profile;
-  return React.createElement("div", {
-    className: "EmailViewer"
-  }, React.createElement(_Navigation.Navigation, {
-    profile: profile
-  }), React.createElement(_FocusBar.FocusBar, null), React.createElement(_Tasklist.Tasklist, null), React.createElement(_RocketChat.RocketChat, null), React.createElement(_ThreadList.ThreadList, {
-    email: profile.getEmail() || ''
-  }));
-};
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var EmailViewer =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2.default)(EmailViewer, _React$Component);
+
+  function EmailViewer(props) {
+    var _this;
+
+    (0, _classCallCheck2.default)(this, EmailViewer);
+    _this = (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(EmailViewer).call(this, props));
+    _this.shortcutService = new _ShortcutService.ShortcutService();
+    return _this;
+  }
+
+  (0, _createClass2.default)(EmailViewer, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      document.addEventListener("keypress", function (event) {
+        return _this2.shortcutService.onGlobalKeypress(event);
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return React.createElement("div", {
+        className: "EmailViewer"
+      }, React.createElement("div", {
+        className: "whitespace"
+      }), React.createElement(_Navigation.Navigation, {
+        profile: this.props.profile
+      }), React.createElement(_FocusBar.FocusBar, null), React.createElement(_Tasklist.Tasklist, null), React.createElement("div", {
+        className: "PrimaryContent"
+      }, React.createElement(_RocketChat.RocketChat, null), React.createElement(_ThreadList.ThreadList, {
+        email: this.props.profile.getEmail() || ""
+      })));
+    }
+  }]);
+  return EmailViewer;
+}(React.Component);
 
 exports.EmailViewer = EmailViewer;
-},{"react":"../node_modules/react/index.js","./Navigation/Navigation":"EmailViewer/Navigation/Navigation.tsx","./ThreadList":"EmailViewer/ThreadList.tsx","./EmailViewer.scss":"EmailViewer/EmailViewer.scss","./FocusBar":"EmailViewer/FocusBar.tsx","./RocketChat/RocketChat":"EmailViewer/RocketChat/RocketChat.tsx","./Tasks/Tasklist":"EmailViewer/Tasks/Tasklist.tsx"}],"../node_modules/normalize.css/normalize.css":[function(require,module,exports) {
+},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","./Navigation/Navigation":"EmailViewer/Navigation/Navigation.tsx","./ThreadList":"EmailViewer/ThreadList.tsx","./EmailViewer.scss":"EmailViewer/EmailViewer.scss","./FocusBar":"EmailViewer/FocusBar.tsx","./RocketChat/RocketChat":"EmailViewer/RocketChat/RocketChat.tsx","./Tasks/Tasklist":"EmailViewer/Tasks/Tasklist.tsx","./ShortcutService":"EmailViewer/ShortcutService.ts"}],"../node_modules/normalize.css/normalize.css":[function(require,module,exports) {
 
         var reloadCSS = require('_css_loader');
         module.hot.dispose(reloadCSS);
@@ -55393,7 +55583,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54567" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54227" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
