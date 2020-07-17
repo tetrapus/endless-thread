@@ -33198,6 +33198,54 @@ var Icon = function Icon(_ref) {
         fill: fill,
         d: "M8.309 189.836L184.313 37.851C199.719 24.546 224 35.347 224 56.015v80.053c160.629 1.839 288 34.032 288 186.258 0 61.441-39.581 122.309-83.333 154.132-13.653 9.931-33.111-2.533-28.077-18.631 45.344-145.012-21.507-183.51-176.59-185.742V360c0 20.7-24.3 31.453-39.687 18.164l-176.004-152c-11.071-9.562-11.086-26.753 0-36.328z"
       }));
+
+    case "top":
+      return React.createElement("svg", {
+        "aria-hidden": "true",
+        focusable: "false",
+        "data-prefix": "fas",
+        "data-icon": "chevron-double-up",
+        role: "img",
+        xmlns: "http://www.w3.org/2000/svg",
+        viewBox: "0 0 448 512",
+        width: size,
+        height: size
+      }, React.createElement("path", {
+        fill: fill,
+        d: "M241 34.5l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9l-22.7 22.7c-9.4 9.4-24.5 9.4-33.9 0L224 131.5l-154.7 154c-9.4 9.3-24.5 9.3-33.9 0l-22.7-22.7c-9.4-9.4-9.4-24.6 0-33.9L207 34.5c9.4-9.3 24.6-9.3 34 0zm-34 192L12.7 420.9c-9.4 9.4-9.4 24.6 0 33.9l22.7 22.7c9.4 9.4 24.5 9.4 33.9 0l154.7-154 154.7 154c9.4 9.3 24.5 9.3 33.9 0l22.7-22.7c9.4-9.4 9.4-24.6 0-33.9L241 226.5c-9.4-9.3-24.6-9.3-34 0z"
+      }));
+
+    case "bottom":
+      return React.createElement("svg", {
+        "aria-hidden": "true",
+        focusable: "false",
+        "data-prefix": "fas",
+        "data-icon": "chevron-double-down",
+        role: "img",
+        xmlns: "http://www.w3.org/2000/svg",
+        viewBox: "0 0 448 512",
+        width: size,
+        height: size
+      }, React.createElement("path", {
+        fill: fill,
+        d: "M207 477.5L12.7 283.1c-9.4-9.4-9.4-24.6 0-33.9l22.7-22.7c9.4-9.4 24.5-9.4 33.9 0l154.7 154 154.7-154c9.4-9.3 24.5-9.3 33.9 0l22.7 22.7c9.4 9.4 9.4 24.6 0 33.9L241 477.5c-9.4 9.3-24.6 9.3-34 0zm34-192L435.3 91.1c9.4-9.4 9.4-24.6 0-33.9l-22.7-22.7c-9.4-9.4-24.5-9.4-33.9 0L224 188.5 69.3 34.5c-9.4-9.3-24.5-9.3-33.9 0L12.7 57.2c-9.4 9.4-9.4 24.6 0 33.9L207 285.5c9.4 9.3 24.6 9.3 34 0z"
+      }));
+
+    case "check":
+      return React.createElement("svg", {
+        "aria-hidden": "true",
+        focusable: "false",
+        "data-prefix": "fas",
+        "data-icon": "check",
+        role: "img",
+        xmlns: "http://www.w3.org/2000/svg",
+        viewBox: "0 0 512 512",
+        width: size,
+        height: size
+      }, React.createElement("path", {
+        fill: fill,
+        d: "M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"
+      }));
   }
 };
 
@@ -38022,7 +38070,9 @@ function (_React$Component) {
             top: 0,
             behavior: "smooth"
           });
-        }
+        },
+        "data-shortcut": "t",
+        "data-trigger": "click"
       }, "Reload"));
     }
   }]);
@@ -38202,7 +38252,7 @@ function (_React$Component) {
           className: "Content"
         }, _react.default.createElement("div", {
           className: "Event"
-        }, "No events today!")));
+        }, "\u2600\uFE0F No events today!")));
       }
 
       var topEvent = this.state.nextEvent;
@@ -38216,7 +38266,9 @@ function (_React$Component) {
           className: "Event"
         }, _react.default.createElement("a", {
           href: topEvent.hangoutLink,
-          target: "_blank"
+          target: "_blank",
+          "data-shortcut": "j",
+          "data-trigger": "click"
         }, "\uD83D\uDDD3\uFE0F ", topEvent.summary)), _react.default.createElement("div", {
           className: "EventTimestamp"
         }, _react.default.createElement("span", null, "Ends\xA0"), _react.default.createElement(_reactTimeago.default, {
@@ -38237,7 +38289,9 @@ function (_React$Component) {
         className: "Event"
       }, _react.default.createElement("a", {
         href: topEvent.hangoutLink,
-        target: "_blank"
+        target: "_blank",
+        "data-shortcut": "j",
+        "data-trigger": "click"
       }, "\uD83D\uDDD3\uFE0F ", topEvent.summary)), _react.default.createElement("div", {
         className: "EventTimestamp"
       }, "Starts\xA0", _react.default.createElement(_reactTimeago.default, {
@@ -53371,6 +53425,7 @@ function (_React$Component) {
         });
       } else {
         return _react.default.createElement(_reactEmojiRender.Emojione, {
+          className: "CustomEmoji",
           text: this.props.text
         });
       }
@@ -53570,13 +53625,30 @@ function (_React$Component) {
             switch (_context.prev = _context.next) {
               case 0:
                 if (!(event.key === "Enter" && !event.shiftKey)) {
-                  _context.next = 6;
+                  _context.next = 12;
                   break;
                 }
 
-                message = event.currentTarget.innerText;
-                event.currentTarget.innerText = "";
-                _context.next = 5;
+                message = event.currentTarget.innerText.trim();
+                event.currentTarget.innerHTML = "";
+
+                if (!(this.props.parent && message.match(/^\+:[^ ]+:$/))) {
+                  _context.next = 8;
+                  break;
+                }
+
+                _context.next = 6;
+                return this.props.rocketchat.call("POST", "chat.react", {
+                  messageId: this.props.parent,
+                  emoji: message.substr(1)
+                });
+
+              case 6:
+                _context.next = 10;
+                break;
+
+              case 8:
+                _context.next = 10;
                 return this.props.rocketchat.call("POST", "chat.sendMessage", {
                   message: _objectSpread({
                     rid: this.props.roomId,
@@ -53586,10 +53658,14 @@ function (_React$Component) {
                   } : {})
                 });
 
-              case 5:
+              case 10:
+                if (this.props.onSubmit) {
+                  this.props.onSubmit();
+                }
+
                 this.props.onUpdate();
 
-              case 6:
+              case 12:
               case "end":
                 return _context.stop();
             }
@@ -53853,6 +53929,8 @@ function (_React$Component) {
         className: "MessageAuthor"
       }, _react.default.createElement("span", null, message.u.name)) : "", content, _react.default.createElement("div", {
         className: "ReactionBox"
+      }, _react.default.createElement("div", {
+        className: "Reactions"
       }, Object.entries(message.reactions || {}).map(function (_ref2) {
         var _ref3 = (0, _slicedToArray2.default)(_ref2, 2),
             reaction = _ref3[0],
@@ -53864,7 +53942,7 @@ function (_React$Component) {
             text: reaction
           });
         });
-      })), this.props.unloadedChildren ? _react.default.createElement("div", {
+      }))), this.props.unloadedChildren ? _react.default.createElement("div", {
         className: "ReplyLoader",
         onClick: function onClick() {
           return _this2.props.onExpand();
@@ -53873,6 +53951,11 @@ function (_React$Component) {
         rocketchat: this.props.rocketchat,
         roomId: this.props.message.rid,
         onUpdate: this.props.onUpdate,
+        onSubmit: function onSubmit() {
+          return _this2.setState({
+            isActive: false
+          });
+        },
         parent: this.props.message._id
       }) : null);
     }
@@ -53946,7 +54029,9 @@ var Channel = function Channel(room) {
   return _react.default.createElement("a", {
     className: "RoomName",
     href: "".concat(document.rocketchatServer, "/").concat(type, "/").concat(id),
-    target: "_blank"
+    target: "_blank",
+    "data-shortcut": "n",
+    "data-trigger": "scrollIntoView"
   }, prefix, room.fname || "general");
 };
 
@@ -54277,9 +54362,7 @@ function (_React$Component) {
 
       return _react.default.createElement("div", {
         className: "ChatRoom",
-        key: room.rid,
-        "data-shortcut": "n",
-        "data-trigger": "scrollIntoView"
+        key: room.rid
       }, _react.default.createElement("h3", {
         className: "RoomTitle"
       }, Channel(room), _react.default.createElement("span", {
@@ -54847,6 +54930,8 @@ require("./Tasklist.scss");
 
 var _Markdown = require("../UI/Markdown");
 
+var _Icon = require("../UI/Icon");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
@@ -55172,18 +55257,36 @@ function (_React$Component) {
         })) : "")), _react.default.createElement("div", {
           className: "TaskActions"
         }, _react.default.createElement("button", {
+          className: "TaskButton",
           onClick: function onClick() {
             return _this3.bumpTask(task.id);
-          }
-        }, "\u2B06\uFE0F"), _react.default.createElement("button", {
+          },
+          "data-shortcut": "a",
+          "data-trigger": "click"
+        }, _react.default.createElement(_Icon.Icon, {
+          type: "top",
+          size: 16
+        })), _react.default.createElement("button", {
+          className: "TaskButton",
           onClick: function onClick() {
             return _this3.deferTask(task.id);
-          }
-        }, "\u2B07\uFE0F"), _react.default.createElement("button", {
+          },
+          "data-shortcut": "z",
+          "data-trigger": "click"
+        }, _react.default.createElement(_Icon.Icon, {
+          type: "bottom",
+          size: 16
+        })), _react.default.createElement("button", {
+          className: "TaskButton",
           onClick: function onClick() {
             return _this3.completeTask(task);
-          }
-        }, "\u2611\uFE0F")));
+          },
+          "data-shortcut": "d",
+          "data-trigger": "click"
+        }, _react.default.createElement(_Icon.Icon, {
+          type: "check",
+          size: 16
+        }))));
       }))));
     }
   }, {
@@ -55281,31 +55384,74 @@ function (_React$Component) {
 }(_react.default.Component);
 
 exports.Tasklist = Tasklist;
-},{"@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","./Tasklist.scss":"EmailViewer/Tasks/Tasklist.scss","../UI/Markdown":"EmailViewer/UI/Markdown.tsx"}],"EmailViewer/ShortcutService.ts":[function(require,module,exports) {
+},{"@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","./Tasklist.scss":"EmailViewer/Tasks/Tasklist.scss","../UI/Markdown":"EmailViewer/UI/Markdown.tsx","../UI/Icon":"EmailViewer/UI/Icon.tsx"}],"EmailViewer/Shortcuts.scss":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"EmailViewer/Shortcuts.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.ShortcutService = void 0;
+exports.Shortcuts = void 0;
 
 var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
 
 var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
 
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _react = _interopRequireDefault(require("react"));
+
+require("./Shortcuts.scss");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var ShortcutService =
+var Shortcuts =
 /*#__PURE__*/
-function () {
-  (0, _createClass2.default)(ShortcutService, [{
+function (_React$Component) {
+  (0, _inherits2.default)(Shortcuts, _React$Component);
+
+  function Shortcuts(props) {
+    var _this;
+
+    (0, _classCallCheck2.default)(this, Shortcuts);
+    _this = (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(Shortcuts).call(this, props));
+    _this.state = {
+      overlay: false
+    };
+    return _this;
+  }
+
+  (0, _createClass2.default)(Shortcuts, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      document.addEventListener("keypress", function (event) {
+        return _this2.onGlobalKeypress(event);
+      });
+      document.addEventListener("keydown", function (event) {
+        return _this2.onKeyDown(event);
+      });
+      document.addEventListener("keyup", function (event) {
+        return _this2.onKeyUp(event);
+      });
+    }
+  }, {
     key: "onGlobalKeypress",
     value: function onGlobalKeypress(event) {
-      var _this = this;
+      var _this3 = this;
 
       if (event.target == document.body) {
-        var targets = Array.from(document.querySelectorAll("[data-shortcut=".concat(event.key, "][data-trigger]"))).filter(function (elem) {
-          return _this.inViewport(elem);
+        var targets = Array.from(document.querySelectorAll("[data-shortcut=\"".concat(event.key, "\"][data-trigger]"))).filter(function (elem) {
+          return _this3.inViewport(elem);
         });
 
         if (targets.length) {
@@ -55316,24 +55462,90 @@ function () {
         }
       }
     }
-  }]);
-
-  function ShortcutService() {
-    (0, _classCallCheck2.default)(this, ShortcutService);
-  }
-
-  (0, _createClass2.default)(ShortcutService, [{
+  }, {
+    key: "onKeyDown",
+    value: function onKeyDown(event) {
+      if (event.target == document.body) {
+        if (event.key == "?") {
+          this.setState({
+            overlay: true
+          });
+        }
+      }
+    }
+  }, {
+    key: "onKeyUp",
+    value: function onKeyUp(event) {
+      if (event.target == document.body) {
+        if (event.key == "?") {
+          this.setState({
+            overlay: false
+          });
+        }
+      }
+    }
+  }, {
     key: "inViewport",
     value: function inViewport(elem) {
       var bounding = elem.getBoundingClientRect();
       return bounding.top >= 0 && bounding.left >= 0 && bounding.bottom <= (window.innerHeight || document.documentElement.clientHeight) && bounding.right <= (window.innerWidth || document.documentElement.clientWidth);
     }
-  }]);
-  return ShortcutService;
-}();
+  }, {
+    key: "offset",
+    value: function offset(elem) {
+      var rect = elem.getBoundingClientRect(),
+          scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
+          scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      return {
+        top: rect.top + scrollTop,
+        left: rect.left + scrollLeft
+      };
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this4 = this;
 
-exports.ShortcutService = ShortcutService;
-},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js"}],"EmailViewer/EmailViewer.tsx":[function(require,module,exports) {
+      if (!this.state.overlay) {
+        return null;
+      }
+
+      var targets = Array.from(document.querySelectorAll("[data-shortcut]")).filter(function (elem) {
+        return _this4.inViewport(elem);
+      });
+      var firstTargets = targets.filter(function (target) {
+        return target === targets.find(function (t) {
+          return t.getAttribute("data-shortcut") == target.getAttribute("data-shortcut");
+        });
+      });
+      return _react.default.createElement("div", null, _react.default.createElement("div", {
+        className: "ShortcutOverlay"
+      }), firstTargets.map(function (target) {
+        var position = _this4.offset(target);
+
+        return _react.default.createElement("div", null, _react.default.createElement("div", {
+          className: "ShortcutHint",
+          style: {
+            top: position.top - 30,
+            left: position.left - 30
+          }
+        }, target.getAttribute("data-shortcut")), _react.default.createElement("div", {
+          className: "ShortcutOverlay",
+          style: {
+            top: position.top,
+            left: position.left,
+            width: target.clientWidth,
+            height: target.clientHeight
+          }
+        }));
+      }));
+    }
+  }]);
+  return Shortcuts;
+}(_react.default.Component);
+
+exports.Shortcuts = Shortcuts;
+},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","./Shortcuts.scss":"EmailViewer/Shortcuts.scss"}],"EmailViewer/EmailViewer.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -55365,7 +55577,7 @@ var _RocketChat = require("./RocketChat/RocketChat");
 
 var _Tasklist = require("./Tasks/Tasklist");
 
-var _ShortcutService = require("./ShortcutService");
+var _Shortcuts = require("./Shortcuts");
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
@@ -55378,25 +55590,12 @@ var EmailViewer =
 function (_React$Component) {
   (0, _inherits2.default)(EmailViewer, _React$Component);
 
-  function EmailViewer(props) {
-    var _this;
-
+  function EmailViewer() {
     (0, _classCallCheck2.default)(this, EmailViewer);
-    _this = (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(EmailViewer).call(this, props));
-    _this.shortcutService = new _ShortcutService.ShortcutService();
-    return _this;
+    return (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(EmailViewer).apply(this, arguments));
   }
 
   (0, _createClass2.default)(EmailViewer, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      document.addEventListener("keypress", function (event) {
-        return _this2.shortcutService.onGlobalKeypress(event);
-      });
-    }
-  }, {
     key: "render",
     value: function render() {
       return React.createElement("div", {
@@ -55409,14 +55608,14 @@ function (_React$Component) {
         className: "PrimaryContent"
       }, React.createElement(_RocketChat.RocketChat, null), React.createElement(_ThreadList.ThreadList, {
         email: this.props.profile.getEmail() || ""
-      })));
+      })), React.createElement(_Shortcuts.Shortcuts, null));
     }
   }]);
   return EmailViewer;
 }(React.Component);
 
 exports.EmailViewer = EmailViewer;
-},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","./Navigation/Navigation":"EmailViewer/Navigation/Navigation.tsx","./ThreadList":"EmailViewer/ThreadList.tsx","./EmailViewer.scss":"EmailViewer/EmailViewer.scss","./FocusBar":"EmailViewer/FocusBar.tsx","./RocketChat/RocketChat":"EmailViewer/RocketChat/RocketChat.tsx","./Tasks/Tasklist":"EmailViewer/Tasks/Tasklist.tsx","./ShortcutService":"EmailViewer/ShortcutService.ts"}],"../node_modules/normalize.css/normalize.css":[function(require,module,exports) {
+},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","./Navigation/Navigation":"EmailViewer/Navigation/Navigation.tsx","./ThreadList":"EmailViewer/ThreadList.tsx","./EmailViewer.scss":"EmailViewer/EmailViewer.scss","./FocusBar":"EmailViewer/FocusBar.tsx","./RocketChat/RocketChat":"EmailViewer/RocketChat/RocketChat.tsx","./Tasks/Tasklist":"EmailViewer/Tasks/Tasklist.tsx","./Shortcuts":"EmailViewer/Shortcuts.tsx"}],"../node_modules/normalize.css/normalize.css":[function(require,module,exports) {
 
         var reloadCSS = require('_css_loader');
         module.hot.dispose(reloadCSS);
@@ -55583,7 +55782,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54227" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63770" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
