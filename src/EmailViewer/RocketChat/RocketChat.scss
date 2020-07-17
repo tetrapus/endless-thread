@@ -1,16 +1,20 @@
 .RocketContainer {
   max-width: 800px;
   margin: auto;
+  padding: 0px 8px;
+  @media only screen and (min-width: 1024px) {
+    padding: 0px 16px;
+  }
 }
 
 .ChatMessage {
   background-color: white;
-  border: 1px solid #ddd;
+  border-bottom: 1px solid #e0e0e0;
   padding: 4px 8px;
-  margin-bottom: 4px;
   position: relative;
-  overflow: scroll;
+  overflow: auto;
   display: flex;
+  min-height: 18px;
 }
 
 .ChatAction {
@@ -19,10 +23,13 @@
 }
 
 .MessageAuthor {
-  @media only screen and (min-width: 1200px) {
+  margin-top: 8px;
+
+  @media only screen and (min-width: 1280px) {
     position: absolute;
     transform: translate(-100%);
     padding: 4px;
+    margin-top: 0;
   }
 }
 
@@ -36,13 +43,16 @@ p {
   z-index: 101;
   background: #eee;
   box-shadow: 0 0 3px #eee;
-  padding: 16px;
+  padding: 16px 0;
   margin: 0;
+  display: flex;
+  align-items: center;
 }
 
 .ReadButton {
   position: absolute;
   right: 0;
+  display: flex;
 }
 
 .ChatMessageContent {
@@ -52,6 +62,20 @@ p {
 .MessageTimestamp {
   font-size: 12px;
   white-space: nowrap;
+  display: flex;
+}
+
+.Action {
+  margin-right: 4px;
+  filter: grayscale(1);
+
+  &:hover {
+    filter: none;
+  }
+}
+
+.ChatMessage:not(:hover) .MessageActions {
+  display: none;
 }
 
 .RoomName {
@@ -68,4 +92,57 @@ p {
 
 .CustomEmoji {
   height: 1em;
+}
+
+.Highlight {
+  font-weight: bold;
+  color: #363f4d;
+
+  &--passive {
+    color: #2259b5;
+  }
+
+  &--active {
+    color: #b20142;
+  }
+}
+
+.PassiveMention {
+  border-color: #2259b5;
+  border-width: 2px;
+}
+
+.ActiveMention {
+  border-color: #b20142;
+  border-width: 2px;
+}
+
+.UnreadCount {
+  color: grey;
+  padding-left: 8px;
+  font-weight: normal;
+}
+
+.Participants {
+  margin-left: 6px;
+}
+
+.UserAvatar {
+  margin-left: 4px;
+}
+
+.Child {
+  border-right: 2px black solid;
+  margin-left: 20%;
+}
+
+.ReplyLoader {
+  background: none;
+  font-size: 12px;
+  text-align: center;
+  padding: 2px;
+}
+
+.ContextMessage {
+  opacity: 0.6;
 }

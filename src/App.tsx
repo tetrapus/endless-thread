@@ -3,6 +3,7 @@ import { Login } from "./Homepage/Login";
 import { EmailViewer } from "./EmailViewer/EmailViewer";
 
 import "normalize.css";
+import "./App.scss";
 
 interface State {
   profile?: gapi.auth2.BasicProfile;

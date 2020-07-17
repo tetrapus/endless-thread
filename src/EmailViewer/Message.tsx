@@ -85,7 +85,7 @@ class Message extends React.Component<Props, State> {
       .find((header: { name: string }) => header.name == "From");
 
     return (
-      <div>
+      <div className={this.props.previous === undefined? "First" : "NotFirst"}>
         {isUnread || (
           <div>
             {this.getSenderComponent(fromHeader, true)}

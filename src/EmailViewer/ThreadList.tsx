@@ -9,7 +9,7 @@ interface Props {
 }
 
 interface State {
-  threadsList: ReadonlyArray<gapi.client.gmail.Thread>;
+  threadsList?: ReadonlyArray<gapi.client.gmail.Thread>;
   labels: ReadonlyArray<gapi.client.gmail.Label>;
   unreadCount?: number;
 }
@@ -17,7 +17,7 @@ interface State {
 class ThreadList extends React.Component<Props, State> {
   constructor(props: Readonly<Props>) {
     super(props);
-    this.state = { threadsList: [], labels: [] };
+    this.state = { labels: [] };
   }
 
   componentDidMount() {
@@ -67,6 +67,13 @@ class ThreadList extends React.Component<Props, State> {
     // Handle the results here (response.result has the parsed body).
     const batch = gapi.client.newBatch();
     const miniThreads = threadsResponse.result.threads || [];
+    if (!miniThreads.length) {
+      this.setState({
+        threadsList: []
+      });
+      return;
+    }
+
     miniThreads.forEach((thread) => {
       batch.add(
         gapi.client.gmail.users.threads.get({
@@ -95,7 +102,7 @@ class ThreadList extends React.Component<Props, State> {
   render() {
     return (
       <div className="ThreadList">
-        {this.state.threadsList && this.state.threadsList.length ? (
+        {this.state.threadsList !== undefined ? (
           this.state.threadsList.map((thread) => (
             <Thread
               key={thread.id}
@@ -113,6 +120,8 @@ class ThreadList extends React.Component<Props, State> {
             this.populateThreadList();
             window.scrollTo({ top: 0, behavior: "smooth" });
           }}
+          data-shortcut="t"
+          data-trigger="click"
         >
           Reload
         </button>

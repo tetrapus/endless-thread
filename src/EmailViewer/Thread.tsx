@@ -33,9 +33,9 @@ const downloadAttachments = async (
   thread: gapi.client.gmail.Thread
 ): Promise<gapi.client.gmail.MessagePartBody[]> => {
   const ids = ([] as [string, string][]).concat(
-    ...definitely(thread.messages).map(message =>
+    ...definitely(thread.messages).map((message) =>
       getAttatchmentIds(definitely(message.payload)).map(
-        id => [id, definitely(message.id)] as [string, string]
+        (id) => [id, definitely(message.id)] as [string, string]
       )
     )
   );
@@ -50,7 +50,7 @@ const downloadAttachments = async (
       gapi.client.gmail.users.messages.attachments.get({
         id: id,
         userId: email,
-        messageId: messageId
+        messageId: messageId,
       })
     );
   });
@@ -59,7 +59,7 @@ const downloadAttachments = async (
     (response, idx) =>
       ({
         ...response.result,
-        attachmentId: ids[idx][0]
+        attachmentId: ids[idx][0],
       } as gapi.client.gmail.MessagePartBody)
   );
 };
@@ -76,7 +76,7 @@ class Thread extends React.Component<ThreadProps, ThreadState> {
 
     this.state = {
       thread: thread,
-      loading: true
+      loading: true,
     };
 
     this.elementRef = React.createRef();
@@ -91,7 +91,7 @@ class Thread extends React.Component<ThreadProps, ThreadState> {
     const firstMessage = thread.messages[0];
     const subjectHeader = oc(firstMessage)
       .payload.headers([])
-      .find(header => header.name == "Subject");
+      .find((header) => header.name == "Subject");
     const subject = subjectHeader
       ? subjectHeader.value || "Unknown"
       : "Unknown";
@@ -99,32 +99,41 @@ class Thread extends React.Component<ThreadProps, ThreadState> {
     const labelNames = Array.from(
       new Set(
         ([] as string[]).concat(
-          ...thread.messages.map(message => message.labelIds || [])
+          ...thread.messages.map((message) => message.labelIds || [])
         )
       )
     );
 
     const labels = labelNames
-      .map(name => this.props.labels.find(label => label.id == name))
+      .map((name) => this.props.labels.find((label) => label.id == name))
       .filter(isDefined)
-      .filter(label => label.type === "user");
+      .filter((label) => label.type === "user");
 
-    const unread = !!labelNames.find(name => name == "UNREAD");
+    const unread = !!labelNames.find((name) => name == "UNREAD");
 
     return (
       <div className="ThreadContainer" ref={this.elementRef}>
         <div className="ThreadContent">
           <div className="ThreadInfo">
-            <h1 className="Subject">{subject}</h1>
+            <h1 className="Subject">
+              <a
+                href={`https://mail.google.com/mail/u/0/#inbox/${thread.id}`}
+                target="_blank"
+              >
+                {subject}
+              </a>
+            </h1>
             <div
               className={"Chevron " + (unread ? "collapsed" : "expanded")}
               onClick={() => this.handleChevronClick(unread)}
+              data-shortcut="r"
+              data-trigger="click"
             >
               <Icon type="collapse" size={32}></Icon>
             </div>
           </div>
           <div className="LabelList">
-            {labels.map(label => (
+            {labels.map((label) => (
               <span
                 className="Label"
                 key={label.id}
@@ -135,7 +144,7 @@ class Thread extends React.Component<ThreadProps, ThreadState> {
             ))}
           </div>
           {this.state.loading ? (
-            <VisibilitySensor onChange={visible => this.loadThread(visible)}>
+            <VisibilitySensor onChange={(visible) => this.loadThread(visible)}>
               <Spinner></Spinner>
             </VisibilitySensor>
           ) : (
@@ -161,7 +170,7 @@ class Thread extends React.Component<ThreadProps, ThreadState> {
         key={message.id}
         email={this.props.email}
         attachments={definitely(this.state.attachments)}
-        previous={all[idx-1]}
+        previous={all[idx - 1]}
       ></Message>
     );
   }
@@ -187,10 +196,10 @@ class Thread extends React.Component<ThreadProps, ThreadState> {
         ...part,
         body:
           attachments.find(
-            attachment =>
+            (attachment) =>
               attachment.attachmentId === definitely(part.body).attachmentId
           ) || part.body,
-        parts: part.parts ? part.parts.map(walkParts) : undefined
+        parts: part.parts ? part.parts.map(walkParts) : undefined,
       };
     };
 
@@ -198,13 +207,13 @@ class Thread extends React.Component<ThreadProps, ThreadState> {
       thread: {
         ...thread,
         messages: [
-          ...definitely(thread.messages).map(message => ({
+          ...definitely(thread.messages).map((message) => ({
             ...message,
-            payload: walkParts(definitely(message.payload))
-          }))
-        ]
+            payload: walkParts(definitely(message.payload)),
+          })),
+        ],
       },
-      attachments
+      attachments,
     };
   }
 
@@ -219,9 +228,9 @@ class Thread extends React.Component<ThreadProps, ThreadState> {
       .modify({
         userId: this.props.email,
         id: this.props.thread.id,
-        resource: resource
+        resource: resource,
       })
-      .then(response => {
+      .then((response) => {
         if (!this.state.thread.messages) {
           return;
         }
@@ -229,11 +238,11 @@ class Thread extends React.Component<ThreadProps, ThreadState> {
         this.setState({
           thread: {
             ...this.state.thread,
-            messages: this.state.thread.messages.map(message => ({
+            messages: this.state.thread.messages.map((message) => ({
               ...message,
-              ...(updates.find(update => update.id == message.id) || {})
-            }))
-          }
+              ...(updates.find((update) => update.id == message.id) || {}),
+            })),
+          },
         });
         if (!this.elementRef.current) {
           return;
@@ -243,18 +252,18 @@ class Thread extends React.Component<ThreadProps, ThreadState> {
             this.elementRef.current.offsetTop +
             this.elementRef.current.offsetHeight -
             64,
-          behavior: "smooth"
+          behavior: "smooth",
         });
       });
   }
   getLabelStyle(label: gapi.client.gmail.Label): React.CSSProperties {
     const color = (label as any).color || {
       backgroundColor: "white",
-      textColor: "black"
+      textColor: "black",
     };
     return {
       backgroundColor: color.backgroundColor,
-      color: color.textColor
+      color: color.textColor,
     };
   }
 }

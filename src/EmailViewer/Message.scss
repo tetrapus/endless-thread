@@ -1,11 +1,10 @@
 .Snippet {
   background-color: white;
   overflow: hidden;
-  border: 1px solid #ddd;
+  border-bottom: 1px solid #e0e0e0;
   padding: 4px 8px;
   background-color: white;
   height: 1rem;
-  margin-bottom: 4px;
   position: relative;
 }
 
@@ -14,6 +13,7 @@
   padding: 16px 8px;
   margin-top: 8px;
   position: relative;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .Timestamp {
@@ -34,18 +34,18 @@
   text-align: right;
   padding: 4px 8px;
   box-sizing: border-box;
-  @media only screen and (min-width: 1200px) {
+  @media only screen and (min-width: 1280px) {
     position: absolute;
     transform: translateX(-100%);
     max-width: calc((100vw - 800px) / 2);
   }
 }
 
-@media only screen and (min-width: 1200px) {
-    .SenderContainer {
-        position: sticky;
-        top: 28px;
-    }
+@media only screen and (min-width: 1280px) {
+  .SenderContainer {
+    position: sticky;
+    top: 28px;
+  }
 }
 
 .EmailAddress {

@@ -21,6 +21,7 @@
     "@types/gapi.client": "^1.0.1",
     "@types/gapi.client.calendar": "^3.0.2",
     "@types/gapi.client.gmail": "^1.0.1",
+    "@types/gapi.client.tasks": "^1.0.2",
     "@types/html-entities": "^1.2.16",
     "@types/js-base64": "^2.3.1",
     "@types/node": "12.12.6",
@@ -42,8 +43,9 @@
     "urlsafe-base64": "^1.0.0"
   },
   "devDependencies": {
-    "@babel/core": "7.7.2",
+    "@babel/core": "^7.0.0-0",
     "@babel/plugin-proposal-class-properties": "7.7.0",
+    "@babel/plugin-proposal-optional-chaining": "^7.10.1",
     "@babel/plugin-transform-runtime": "^7.6.2",
     "@babel/preset-env": "7.7.1",
     "@babel/preset-react": "7.7.0",

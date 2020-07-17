@@ -1,32 +1,44 @@
 .FocusBar {
-    height: 20px;
-    background-color: #2259b5;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    color: white;
-    padding: 4px 8px;
-    a {
-        color: white;
-        text-decoration: none;
-    }
+  border-bottom: 2px solid #2259b5;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  overflow: hidden;
+  a {
+    color: black;
+    text-decoration: none;
+  }
+  grid-area: events;
+
+  &:not(:hover) {
+    height: 26px;
+  }
+  background: #eee;
 }
 
 .Active {
-    background-color: #2a934d;
+  border-bottom: 2px solid #2a934d;
+}
+
+.Inactive {
+  border-bottom: 2px solid #ccc;
 }
 
 .Content {
-    max-width: 800px;
-    display: flex;
-    margin: auto;
+  max-width: 800px;
+  display: flex;
+  margin-left: auto;
+  padding: 4px 8px;
 }
 
 .Event {
-    flex-grow: 1;
+  flex-grow: 1;
 }
 
 .ActionBar {
-    position: absolute;
-    left: calc(50vw +  400px + 8px);
+  padding-left: 4px;
+}
+
+.EventTimestamp {
+  white-space: nowrap;
 }

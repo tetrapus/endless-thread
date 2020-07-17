@@ -29,11 +29,15 @@ export class FocusBar extends React.Component<Props, State> {
 
   skipEvent() {
     if (this.state.nextEvent) {
-        const skipped = [...this.state.skipped, this.state.nextEvent.id];
-        const events = this.state.events.filter(event => !skipped.includes(event.id));
-        const nextEvent = events[0];
-        this.setState({
-        skipped, events, nextEvent
+      const skipped = [...this.state.skipped, this.state.nextEvent.id];
+      const events = this.state.events.filter(
+        (event) => !skipped.includes(event.id)
+      );
+      const nextEvent = events[0];
+      this.setState({
+        skipped,
+        events,
+        nextEvent,
       });
       console.log(this.state);
     }
@@ -48,14 +52,22 @@ export class FocusBar extends React.Component<Props, State> {
         timeMin: this.dateToLocalISO(new Date(Date.now())),
       })
       .then((response) => {
+        const events = response.result.items.filter(
+          (event) =>
+            new Date(event.end.dateTime) > new Date(Date.now() + 60000) &&
+            new Date(event.start.dateTime) <
+              new Date(Date.now() + 12 * 60 * 60 * 1000)
+        );
         this.setState({
-          events: response.result.items,
-          nextEvent: response.result.items[0],
+          events: events,
+          nextEvent: events[0],
         });
         setInterval(() => {
           const events = this.state.events.filter(
             (event) =>
-              new Date(event.end.dateTime) > new Date(Date.now() + 60000)
+              new Date(event.end.dateTime) > new Date(Date.now() + 60000) &&
+              new Date(event.start.dateTime) <
+                new Date(Date.now() + 12 * 60 * 60 * 1000)
           );
           this.setState({ events, nextEvent: events[0] });
         }, 30000);
@@ -77,26 +89,33 @@ export class FocusBar extends React.Component<Props, State> {
   render() {
     if (!this.state.nextEvent) {
       return (
-        <div className="FocusBar">
+        <div className="FocusBar Inactive">
           <div className="Content">
-            <div className="Event"></div>
+            <div className="Event">☀️ No events today!</div>
           </div>
         </div>
       );
     }
 
     const topEvent = this.state.nextEvent;
-    if (new Date(topEvent.start.dateTime) < new Date(Date.now() + 300000)) {
+    if (new Date(topEvent.start.dateTime) < new Date(Date.now() + 120000)) {
       return (
         <div className="FocusBar Active">
           <div className="Content">
             <div className="Event">
-              <a href={topEvent.hangoutLink} target="_blank">
+              <a
+                href={topEvent.hangoutLink}
+                target="_blank"
+                data-shortcut="j"
+                data-trigger="click"
+              >
                 🗓️ {topEvent.summary}
               </a>
             </div>
-            <span>Ends&nbsp;</span>
-            <ReactTimeAgo date={topEvent.end.dateTime}></ReactTimeAgo>
+            <div className="EventTimestamp">
+              <span>Ends&nbsp;</span>
+              <ReactTimeAgo date={topEvent.end.dateTime}></ReactTimeAgo>
+            </div>
             <span className="ActionBar" onClick={() => this.skipEvent()}>
               ✓
             </span>
@@ -109,12 +128,19 @@ export class FocusBar extends React.Component<Props, State> {
       <div className="FocusBar">
         <div className="Content">
           <div className="Event">
-            <a href={topEvent.hangoutLink} target="_blank">
+            <a
+              href={topEvent.hangoutLink}
+              target="_blank"
+              data-shortcut="j"
+              data-trigger="click"
+            >
               🗓️ {topEvent.summary}
             </a>
           </div>
-          Starts&nbsp;
-          <ReactTimeAgo date={topEvent.start.dateTime}></ReactTimeAgo>
+          <div className="EventTimestamp">
+            Starts&nbsp;
+            <ReactTimeAgo date={topEvent.start.dateTime}></ReactTimeAgo>
+          </div>
           <span className="ActionBar" onClick={() => this.skipEvent()}>
             ✓
           </span>
