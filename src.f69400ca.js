@@ -38082,7 +38082,62 @@ var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"Inbox/FocusBar/FocusBar.tsx":[function(require,module,exports) {
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../node_modules/classnames/index.js":[function(require,module,exports) {
+var define;
+/*!
+  Copyright (c) 2017 Jed Watson.
+  Licensed under the MIT License (MIT), see
+  http://jedwatson.github.io/classnames
+*/
+/* global define */
+
+(function () {
+	'use strict';
+
+	var hasOwn = {}.hasOwnProperty;
+
+	function classNames () {
+		var classes = [];
+
+		for (var i = 0; i < arguments.length; i++) {
+			var arg = arguments[i];
+			if (!arg) continue;
+
+			var argType = typeof arg;
+
+			if (argType === 'string' || argType === 'number') {
+				classes.push(arg);
+			} else if (Array.isArray(arg) && arg.length) {
+				var inner = classNames.apply(null, arg);
+				if (inner) {
+					classes.push(inner);
+				}
+			} else if (argType === 'object') {
+				for (var key in arg) {
+					if (hasOwn.call(arg, key) && arg[key]) {
+						classes.push(key);
+					}
+				}
+			}
+		}
+
+		return classes.join(' ');
+	}
+
+	if (typeof module !== 'undefined' && module.exports) {
+		classNames.default = classNames;
+		module.exports = classNames;
+	} else if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
+		// register as 'classnames', consistent with npm package name
+		define('classnames', [], function () {
+			return classNames;
+		});
+	} else {
+		window.classNames = classNames;
+	}
+}());
+
+},{}],"Inbox/FocusBar/FocusBar.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38110,9 +38165,27 @@ require("./FocusBar.scss");
 
 var _reactTimeago = _interopRequireDefault(require("react-timeago"));
 
+var _classnames = _interopRequireDefault(require("classnames"));
+
 var _react = _interopRequireDefault(require("react"));
 
+var _Icon = require("../UI/Icon");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Attendee = function Attendee(_ref) {
+  var attendee = _ref.attendee;
+  var statuses = {
+    declined: "close",
+    accepted: "check"
+  };
+  console.log(attendee);
+  var icon = statuses[attendee.responseStatus] ? _react.default.createElement(_Icon.Icon, {
+    size: 12,
+    type: statuses[attendee.responseStatus]
+  }) : null;
+  return _react.default.createElement("div", null, attendee.displayName || attendee.email, " ", icon);
+};
 
 var FocusBar =
 /*#__PURE__*/
@@ -38189,8 +38262,11 @@ function (_React$Component) {
                   singleEvents: true,
                   timeMin: this.dateToLocalISO(new Date(Date.now()))
                 }).then(function (response) {
+                  console.log(response);
                   var events = response.result.items.filter(function (event) {
-                    return new Date(event.end.dateTime) > new Date(Date.now() + 60000) && new Date(event.start.dateTime) < new Date(Date.now() + 12 * 60 * 60 * 1000);
+                    return new Date(event.end.dateTime) > new Date(Date.now() + 60000) && new Date(event.start.dateTime) < new Date(Date.now() + 120 * 60 * 60 * 1000) && (!event.attendees || !event.attendees.some(function (attendee) {
+                      return attendee.self && attendee.responseStatus == "declined";
+                    }));
                   });
 
                   _this3.setState({
@@ -38236,70 +38312,60 @@ function (_React$Component) {
     value: function render() {
       var _this4 = this;
 
-      if (!this.state.nextEvent) {
-        return _react.default.createElement("div", {
-          className: "FocusBar Inactive"
-        }, _react.default.createElement("div", {
-          className: "Content"
-        }, _react.default.createElement("div", {
-          className: "Event"
-        }, "\u2600\uFE0F No events today!")));
-      }
-
       var topEvent = this.state.nextEvent;
-
-      if (new Date(topEvent.start.dateTime) < new Date(Date.now() + 120000)) {
-        return _react.default.createElement("div", {
-          className: "FocusBar Active"
-        }, _react.default.createElement("div", {
-          className: "Content"
-        }, _react.default.createElement("div", {
-          className: "Event"
-        }, _react.default.createElement("a", {
-          href: topEvent.hangoutLink,
-          target: "_blank",
-          "data-shortcut": "j",
-          "data-trigger": "click"
-        }, "\uD83D\uDDD3\uFE0F ", topEvent.summary)), _react.default.createElement("div", {
-          className: "EventTimestamp"
-        }, _react.default.createElement("span", null, "Ends\xA0"), _react.default.createElement(_reactTimeago.default, {
-          date: topEvent.end.dateTime
-        })), _react.default.createElement("span", {
-          className: "ActionBar",
-          onClick: function onClick() {
-            return _this4.skipEvent();
-          }
-        }, "\u2713")));
-      }
-
+      var isActive = topEvent && new Date(topEvent.start.dateTime) < new Date(Date.now() + 120000);
       return _react.default.createElement("div", {
-        className: "FocusBar"
+        className: (0, _classnames.default)({
+          FocusBar: true,
+          Active: isActive,
+          Inactive: !topEvent
+        })
       }, _react.default.createElement("div", {
         className: "Content"
       }, _react.default.createElement("div", {
         className: "Event"
-      }, _react.default.createElement("a", {
+      }, topEvent ? _react.default.createElement("a", {
         href: topEvent.hangoutLink,
         target: "_blank",
         "data-shortcut": "j",
         "data-trigger": "click"
-      }, "\uD83D\uDDD3\uFE0F ", topEvent.summary)), _react.default.createElement("div", {
+      }, "\uD83D\uDDD3\uFE0F ", topEvent.summary) : "☀️ No events today!"), topEvent ? _react.default.createElement("div", {
         className: "EventTimestamp"
-      }, "Starts\xA0", _react.default.createElement(_reactTimeago.default, {
+      }, isActive ? _react.default.createElement("span", null, "Ends\xA0", _react.default.createElement(_reactTimeago.default, {
+        date: topEvent.end.dateTime
+      })) : _react.default.createElement("span", null, "Starts\xA0", _react.default.createElement(_reactTimeago.default, {
         date: topEvent.start.dateTime
-      })), _react.default.createElement("span", {
+      }))) : null, topEvent ? _react.default.createElement("span", {
         className: "ActionBar",
         onClick: function onClick() {
           return _this4.skipEvent();
         }
-      }, "\u2713")));
+      }, _react.default.createElement(_Icon.Icon, {
+        type: "check",
+        size: 16
+      })) : null), topEvent ? _react.default.createElement("div", {
+        className: "EventDetails"
+      }, _react.default.createElement("div", {
+        className: "EventDescription",
+        dangerouslySetInnerHTML: {
+          __html: topEvent.description
+        }
+      }), _react.default.createElement("div", {
+        className: "EventAttendees"
+      }, topEvent.attendees.filter(function (attendee) {
+        return !attendee.self;
+      }).map(function (attendee) {
+        return _react.default.createElement(Attendee, {
+          attendee: attendee
+        });
+      }))) : null);
     }
   }]);
   return FocusBar;
 }(_react.default.Component);
 
 exports.FocusBar = FocusBar;
-},{"@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","./FocusBar.scss":"Inbox/FocusBar/FocusBar.scss","react-timeago":"../node_modules/react-timeago/lib/index.js","react":"../node_modules/react/index.js"}],"Inbox/RocketChat/RocketChat.scss":[function(require,module,exports) {
+},{"@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","./FocusBar.scss":"Inbox/FocusBar/FocusBar.scss","react-timeago":"../node_modules/react-timeago/lib/index.js","classnames":"../node_modules/classnames/index.js","react":"../node_modules/react/index.js","../UI/Icon":"Inbox/UI/Icon.tsx"}],"Inbox/RocketChat/RocketChat.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -48170,62 +48236,7 @@ function Markdown(_ref) {
     })
   });
 }
-},{"@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","react-markdown":"../node_modules/react-markdown/lib/react-markdown.js","react":"../node_modules/react/index.js"}],"../node_modules/classnames/index.js":[function(require,module,exports) {
-var define;
-/*!
-  Copyright (c) 2017 Jed Watson.
-  Licensed under the MIT License (MIT), see
-  http://jedwatson.github.io/classnames
-*/
-/* global define */
-
-(function () {
-	'use strict';
-
-	var hasOwn = {}.hasOwnProperty;
-
-	function classNames () {
-		var classes = [];
-
-		for (var i = 0; i < arguments.length; i++) {
-			var arg = arguments[i];
-			if (!arg) continue;
-
-			var argType = typeof arg;
-
-			if (argType === 'string' || argType === 'number') {
-				classes.push(arg);
-			} else if (Array.isArray(arg) && arg.length) {
-				var inner = classNames.apply(null, arg);
-				if (inner) {
-					classes.push(inner);
-				}
-			} else if (argType === 'object') {
-				for (var key in arg) {
-					if (hasOwn.call(arg, key) && arg[key]) {
-						classes.push(key);
-					}
-				}
-			}
-		}
-
-		return classes.join(' ');
-	}
-
-	if (typeof module !== 'undefined' && module.exports) {
-		classNames.default = classNames;
-		module.exports = classNames;
-	} else if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
-		// register as 'classnames', consistent with npm package name
-		define('classnames', [], function () {
-			return classNames;
-		});
-	} else {
-		window.classNames = classNames;
-	}
-}());
-
-},{}],"../node_modules/invariant/browser.js":[function(require,module,exports) {
+},{"@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","react-markdown":"../node_modules/react-markdown/lib/react-markdown.js","react":"../node_modules/react/index.js"}],"../node_modules/invariant/browser.js":[function(require,module,exports) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -55161,9 +55172,10 @@ function (_React$Component) {
         source: task.notes || ""
       }), task.links ? _react.default.createElement("div", {
         className: "TaskLinks"
-      }, task.links.map(function (link) {
+      }, task.links.map(function (link, idx) {
         return _react.default.createElement("div", {
-          className: "TaskLink"
+          className: "TaskLink",
+          key: idx
         }, _react.default.createElement("a", {
           href: link.link,
           target: "_blank"
@@ -55908,7 +55920,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49631" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53602" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
