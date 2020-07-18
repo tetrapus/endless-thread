@@ -32719,12 +32719,12 @@ function reloadCSS() {
 }
 
 module.exports = reloadCSS;
-},{"./bundle-url":"../node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"EmailViewer/UI/Logo.scss":[function(require,module,exports) {
+},{"./bundle-url":"../node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"Inbox/UI/Logo.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"EmailViewer/UI/Logo.tsx":[function(require,module,exports) {
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"Inbox/UI/Logo.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32747,12 +32747,12 @@ var Logo = function Logo() {
 };
 
 exports.Logo = Logo;
-},{"react":"../node_modules/react/index.js","./Logo.scss":"EmailViewer/UI/Logo.scss"}],"EmailViewer/UI/Spinner.scss":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./Logo.scss":"Inbox/UI/Logo.scss"}],"Inbox/UI/Spinner.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"EmailViewer/UI/Spinner.tsx":[function(require,module,exports) {
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"Inbox/UI/Spinner.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32779,7 +32779,7 @@ var Spinner = function Spinner() {
 };
 
 exports.Spinner = Spinner;
-},{"./Spinner.scss":"EmailViewer/UI/Spinner.scss","react":"../node_modules/react/index.js"}],"../node_modules/@babel/runtime/helpers/arrayWithoutHoles.js":[function(require,module,exports) {
+},{"./Spinner.scss":"Inbox/UI/Spinner.scss","react":"../node_modules/react/index.js"}],"../node_modules/@babel/runtime/helpers/arrayWithoutHoles.js":[function(require,module,exports) {
 function _arrayWithoutHoles(arr) {
   if (Array.isArray(arr)) {
     for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
@@ -32871,7 +32871,7 @@ function _slicedToArray(arr, i) {
 }
 
 module.exports = _slicedToArray;
-},{"./arrayWithHoles":"../node_modules/@babel/runtime/helpers/arrayWithHoles.js","./iterableToArrayLimit":"../node_modules/@babel/runtime/helpers/iterableToArrayLimit.js","./nonIterableRest":"../node_modules/@babel/runtime/helpers/nonIterableRest.js"}],"EmailViewer/UI/EndlessThread.tsx":[function(require,module,exports) {
+},{"./arrayWithHoles":"../node_modules/@babel/runtime/helpers/arrayWithHoles.js","./iterableToArrayLimit":"../node_modules/@babel/runtime/helpers/iterableToArrayLimit.js","./nonIterableRest":"../node_modules/@babel/runtime/helpers/nonIterableRest.js"}],"Inbox/UI/EndlessThread.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -33033,11 +33033,11 @@ exports.Login = void 0;
 
 var React = _interopRequireWildcard(require("react"));
 
-var _Logo = require("../EmailViewer/UI/Logo");
+var _Logo = require("../Inbox/UI/Logo");
 
-var _Spinner = require("../EmailViewer/UI/Spinner");
+var _Spinner = require("../Inbox/UI/Spinner");
 
-var _EndlessThread = require("../EmailViewer/UI/EndlessThread");
+var _EndlessThread = require("../Inbox/UI/EndlessThread");
 
 require("./Login.scss");
 
@@ -33099,12 +33099,12 @@ var Login = function Login(_ref) {
 };
 
 exports.Login = Login;
-},{"react":"../node_modules/react/index.js","../EmailViewer/UI/Logo":"EmailViewer/UI/Logo.tsx","../EmailViewer/UI/Spinner":"EmailViewer/UI/Spinner.tsx","../EmailViewer/UI/EndlessThread":"EmailViewer/UI/EndlessThread.tsx","./Login.scss":"Homepage/Login.scss"}],"EmailViewer/Navigation/Navigation.scss":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","../Inbox/UI/Logo":"Inbox/UI/Logo.tsx","../Inbox/UI/Spinner":"Inbox/UI/Spinner.tsx","../Inbox/UI/EndlessThread":"Inbox/UI/EndlessThread.tsx","./Login.scss":"Homepage/Login.scss"}],"Inbox/Navigation/Navigation.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"EmailViewer/UI/Icon.tsx":[function(require,module,exports) {
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"Inbox/UI/Icon.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -33250,7 +33250,7 @@ var Icon = function Icon(_ref) {
 };
 
 exports.Icon = Icon;
-},{"react":"../node_modules/react/index.js"}],"EmailViewer/Navigation/Navigation.tsx":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js"}],"Inbox/Navigation/Navigation.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -33294,7 +33294,7 @@ var Navigation = function Navigation(_ref) {
 };
 
 exports.Navigation = Navigation;
-},{"react":"../node_modules/react/index.js","./Navigation.scss":"EmailViewer/Navigation/Navigation.scss","../UI/Logo":"EmailViewer/UI/Logo.tsx","../UI/Icon":"EmailViewer/UI/Icon.tsx"}],"../node_modules/@babel/runtime/helpers/defineProperty.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./Navigation.scss":"Inbox/Navigation/Navigation.scss","../UI/Logo":"Inbox/UI/Logo.tsx","../UI/Icon":"Inbox/UI/Icon.tsx"}],"../node_modules/@babel/runtime/helpers/defineProperty.js":[function(require,module,exports) {
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -33938,7 +33938,7 @@ module.exports = ReactPropTypesSecret;
 /***/ })
 /******/ ]);
 });
-},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js"}],"EmailViewer/Message.scss":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js"}],"Inbox/EmailViewer/Message.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -36838,12 +36838,12 @@ exports.validate = function validate(base64) {
 },{"buffer":"../node_modules/buffer/index.js"}],"../node_modules/urlsafe-base64/index.js":[function(require,module,exports) {
 
 module.exports = require('./lib/urlsafe-base64');
-},{"./lib/urlsafe-base64":"../node_modules/urlsafe-base64/lib/urlsafe-base64.js"}],"EmailViewer/MessageTypes/HtmlMessage.scss":[function(require,module,exports) {
+},{"./lib/urlsafe-base64":"../node_modules/urlsafe-base64/lib/urlsafe-base64.js"}],"Inbox/EmailViewer/MessageTypes/HtmlMessage.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"EmailViewer/MessageTypes/HtmlMessage.tsx":[function(require,module,exports) {
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"Inbox/EmailViewer/MessageTypes/HtmlMessage.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -36863,11 +36863,11 @@ var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits
 
 var React = _interopRequireWildcard(require("react"));
 
-var _Spinner = require("../UI/Spinner");
+var _Spinner = require("../../UI/Spinner");
 
 var _jsBase = require("js-base64");
 
-var _helpers = require("../../helpers");
+var _helpers = require("../../../helpers");
 
 var _urlsafeBase = require("urlsafe-base64");
 
@@ -36909,7 +36909,6 @@ function (_React$Component) {
       var _this2 = this;
 
       if (!this.renderTarget.current) {
-        console.log("Err: unmounted rendertarget");
         return;
       }
 
@@ -36920,13 +36919,9 @@ function (_React$Component) {
           if (uri.domain_ === "attachments" && uri.scheme_ == "https") {
             var part = _this2.props.attachments[uri.path_.slice(1)];
 
-            if (!part) {
-              console.log("Uh oh!", uri, _this2.props.attachments);
-            }
-
             var _data = _jsBase.Base64.btoa((0, _urlsafeBase.decode)((0, _helpers.definitely)((0, _helpers.definitely)(part.body).data)).toString("binary"));
 
-            return "data:".concat(part.mimeType, ";base64,").concat(_data);
+            return "data:".concat(part.mimeType, ";base64,").concat(_data, "#").concat(uri.path_);
           }
 
           return uri;
@@ -36938,15 +36933,14 @@ function (_React$Component) {
             loading: false
           });
         });
-      }); //this.renderTarget.current.innerHTML = Base64.decode(data);
-      //this.setState({loading: false});
+      });
     }
   }]);
   return HtmlMessage;
 }(React.Component);
 
 exports.HtmlMessage = HtmlMessage;
-},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","../UI/Spinner":"EmailViewer/UI/Spinner.tsx","js-base64":"../node_modules/js-base64/base64.js","../../helpers":"helpers.ts","urlsafe-base64":"../node_modules/urlsafe-base64/index.js","./HtmlMessage.scss":"EmailViewer/MessageTypes/HtmlMessage.scss"}],"EmailViewer/MessageTypes/TextMessage.tsx":[function(require,module,exports) {
+},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","../../UI/Spinner":"Inbox/UI/Spinner.tsx","js-base64":"../node_modules/js-base64/base64.js","../../../helpers":"helpers.ts","urlsafe-base64":"../node_modules/urlsafe-base64/index.js","./HtmlMessage.scss":"Inbox/EmailViewer/MessageTypes/HtmlMessage.scss"}],"Inbox/EmailViewer/MessageTypes/TextMessage.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -37205,7 +37199,7 @@ TimeAgo.defaultProps = {
   }
 };
 exports.default = TimeAgo;
-},{"react":"../node_modules/react/index.js","./defaultFormatter":"../node_modules/react-timeago/lib/defaultFormatter.js","./dateParser":"../node_modules/react-timeago/lib/dateParser.js"}],"EmailViewer/Message.tsx":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./defaultFormatter":"../node_modules/react-timeago/lib/defaultFormatter.js","./dateParser":"../node_modules/react-timeago/lib/dateParser.js"}],"Inbox/EmailViewer/Message.tsx":[function(require,module,exports) {
 var Buffer = require("buffer").Buffer;
 "use strict";
 
@@ -37234,7 +37228,7 @@ var React = _interopRequireWildcard(require("react"));
 
 var _reactVisibilitySensor = _interopRequireDefault(require("react-visibility-sensor"));
 
-var _Spinner = require("./UI/Spinner");
+var _Spinner = require("../UI/Spinner");
 
 require("./Message.scss");
 
@@ -37248,7 +37242,7 @@ var _tsOptchain = require("ts-optchain");
 
 var _urlsafeBase = require("urlsafe-base64");
 
-var _helpers = require("../helpers");
+var _helpers = require("../../helpers");
 
 var _reactTimeago = _interopRequireDefault(require("react-timeago"));
 
@@ -37348,7 +37342,7 @@ function (_React$Component) {
         var prevHeaders = (0, _tsOptchain.oc)(this).props.previous.payload.headers([]);
 
         if (prevHeaders) {
-          var prevFrom = (0, _helpers.getValueByName)(prevHeaders, 'From');
+          var prevFrom = (0, _helpers.getValueByName)(prevHeaders, "From");
 
           if (prevFrom === fromHeader.value) {
             return;
@@ -37397,7 +37391,6 @@ function (_React$Component) {
       var data = (0, _urlsafeBase.decode)(part.body.data).toString("utf8");
 
       if (part.mimeType == "text/html") {
-        console.log(attachments);
         var attachmentMap = Object.fromEntries(attachments.map(function (attachment) {
           var idHeader = (0, _helpers.definitely)(attachment.headers).find(function (header) {
             return header.name == "Content-ID";
@@ -37430,12 +37423,12 @@ function (_React$Component) {
 }(React.Component);
 
 exports.Message = Message;
-},{"@babel/runtime/helpers/slicedToArray":"../node_modules/@babel/runtime/helpers/slicedToArray.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","react":"../node_modules/react/index.js","react-visibility-sensor":"../node_modules/react-visibility-sensor/dist/visibility-sensor.js","./UI/Spinner":"EmailViewer/UI/Spinner.tsx","./Message.scss":"EmailViewer/Message.scss","html-entities":"../node_modules/html-entities/index.js","./MessageTypes/HtmlMessage":"EmailViewer/MessageTypes/HtmlMessage.tsx","./MessageTypes/TextMessage":"EmailViewer/MessageTypes/TextMessage.tsx","ts-optchain":"../node_modules/ts-optchain/dist/proxy/index.js","urlsafe-base64":"../node_modules/urlsafe-base64/index.js","../helpers":"helpers.ts","react-timeago":"../node_modules/react-timeago/lib/index.js","buffer":"../node_modules/buffer/index.js"}],"EmailViewer/Thread.scss":[function(require,module,exports) {
+},{"@babel/runtime/helpers/slicedToArray":"../node_modules/@babel/runtime/helpers/slicedToArray.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","react":"../node_modules/react/index.js","react-visibility-sensor":"../node_modules/react-visibility-sensor/dist/visibility-sensor.js","../UI/Spinner":"Inbox/UI/Spinner.tsx","./Message.scss":"Inbox/EmailViewer/Message.scss","html-entities":"../node_modules/html-entities/index.js","./MessageTypes/HtmlMessage":"Inbox/EmailViewer/MessageTypes/HtmlMessage.tsx","./MessageTypes/TextMessage":"Inbox/EmailViewer/MessageTypes/TextMessage.tsx","ts-optchain":"../node_modules/ts-optchain/dist/proxy/index.js","urlsafe-base64":"../node_modules/urlsafe-base64/index.js","../../helpers":"helpers.ts","react-timeago":"../node_modules/react-timeago/lib/index.js","buffer":"../node_modules/buffer/index.js"}],"Inbox/EmailViewer/Thread.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"EmailViewer/Thread.tsx":[function(require,module,exports) {
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"Inbox/EmailViewer/Thread.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -37471,13 +37464,13 @@ var _Message = require("./Message");
 
 require("./Thread.scss");
 
-var _Icon = require("./UI/Icon");
+var _Icon = require("../UI/Icon");
 
-var _Spinner = require("./UI/Spinner");
+var _Spinner = require("../UI/Spinner");
 
 var _reactVisibilitySensor = _interopRequireDefault(require("react-visibility-sensor"));
 
-var _helpers = require("../helpers");
+var _helpers = require("../../helpers");
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
@@ -37577,7 +37570,6 @@ function (_React$Component) {
     (0, _classCallCheck2.default)(this, Thread);
     _this = (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(Thread).call(this, props));
     var thread = _this.props.thread;
-    console.log(thread);
 
     if (!thread.messages) {
       throw Error("Cannot create thread with no messages.");
@@ -37806,12 +37798,12 @@ function (_React$Component) {
 }(React.Component);
 
 exports.Thread = Thread;
-},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/slicedToArray":"../node_modules/@babel/runtime/helpers/slicedToArray.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","react":"../node_modules/react/index.js","ts-optchain":"../node_modules/ts-optchain/dist/proxy/index.js","./Message":"EmailViewer/Message.tsx","./Thread.scss":"EmailViewer/Thread.scss","./UI/Icon":"EmailViewer/UI/Icon.tsx","./UI/Spinner":"EmailViewer/UI/Spinner.tsx","react-visibility-sensor":"../node_modules/react-visibility-sensor/dist/visibility-sensor.js","../helpers":"helpers.ts"}],"EmailViewer/ThreadList.scss":[function(require,module,exports) {
+},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/slicedToArray":"../node_modules/@babel/runtime/helpers/slicedToArray.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","react":"../node_modules/react/index.js","ts-optchain":"../node_modules/ts-optchain/dist/proxy/index.js","./Message":"Inbox/EmailViewer/Message.tsx","./Thread.scss":"Inbox/EmailViewer/Thread.scss","../UI/Icon":"Inbox/UI/Icon.tsx","../UI/Spinner":"Inbox/UI/Spinner.tsx","react-visibility-sensor":"../node_modules/react-visibility-sensor/dist/visibility-sensor.js","../../helpers":"helpers.ts"}],"Inbox/EmailViewer/ThreadList.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"EmailViewer/ThreadList.tsx":[function(require,module,exports) {
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"Inbox/EmailViewer/ThreadList.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -37841,9 +37833,9 @@ var _Thread = require("./Thread");
 
 require("./ThreadList.scss");
 
-var _Spinner = require("./UI/Spinner");
+var _Spinner = require("../UI/Spinner");
 
-var _helpers = require("../helpers");
+var _helpers = require("../../helpers");
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
@@ -38080,17 +38072,17 @@ function (_React$Component) {
 }(React.Component);
 
 exports.ThreadList = ThreadList;
-},{"@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","./Thread":"EmailViewer/Thread.tsx","./ThreadList.scss":"EmailViewer/ThreadList.scss","./UI/Spinner":"EmailViewer/UI/Spinner.tsx","../helpers":"helpers.ts"}],"EmailViewer/EmailViewer.scss":[function(require,module,exports) {
+},{"@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","./Thread":"Inbox/EmailViewer/Thread.tsx","./ThreadList.scss":"Inbox/EmailViewer/ThreadList.scss","../UI/Spinner":"Inbox/UI/Spinner.tsx","../../helpers":"helpers.ts"}],"Inbox/Inbox.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"EmailViewer/FocusBar.scss":[function(require,module,exports) {
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"Inbox/FocusBar/FocusBar.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"EmailViewer/FocusBar.tsx":[function(require,module,exports) {
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"Inbox/FocusBar/FocusBar.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38177,7 +38169,6 @@ function (_React$Component) {
           events: events,
           nextEvent: nextEvent
         });
-        console.log(this.state);
       }
     }
   }, {
@@ -38308,7 +38299,7 @@ function (_React$Component) {
 }(_react.default.Component);
 
 exports.FocusBar = FocusBar;
-},{"@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","./FocusBar.scss":"EmailViewer/FocusBar.scss","react-timeago":"../node_modules/react-timeago/lib/index.js","react":"../node_modules/react/index.js"}],"EmailViewer/RocketChat/RocketChat.scss":[function(require,module,exports) {
+},{"@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","./FocusBar.scss":"Inbox/FocusBar/FocusBar.scss","react-timeago":"../node_modules/react-timeago/lib/index.js","react":"../node_modules/react/index.js"}],"Inbox/RocketChat/RocketChat.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -48128,7 +48119,7 @@ ReactMarkdown.types = allTypes;
 ReactMarkdown.renderers = defaultRenderers;
 ReactMarkdown.uriTransformer = uriTransformer;
 module.exports = ReactMarkdown;
-},{"xtend":"../node_modules/xtend/immutable.js","unified":"../node_modules/unified/index.js","remark-parse":"../node_modules/remark-parse/index.js","prop-types":"../node_modules/prop-types/index.js","mdast-add-list-metadata":"../node_modules/mdast-add-list-metadata/index.js","./plugins/naive-html":"../node_modules/react-markdown/lib/plugins/naive-html.js","./plugins/disallow-node":"../node_modules/react-markdown/lib/plugins/disallow-node.js","./ast-to-react":"../node_modules/react-markdown/lib/ast-to-react.js","./wrap-table-rows":"../node_modules/react-markdown/lib/wrap-table-rows.js","./get-definitions":"../node_modules/react-markdown/lib/get-definitions.js","./uri-transformer":"../node_modules/react-markdown/lib/uri-transformer.js","./renderers":"../node_modules/react-markdown/lib/renderers.js","./symbols":"../node_modules/react-markdown/lib/symbols.js"}],"EmailViewer/UI/Markdown.tsx":[function(require,module,exports) {
+},{"xtend":"../node_modules/xtend/immutable.js","unified":"../node_modules/unified/index.js","remark-parse":"../node_modules/remark-parse/index.js","prop-types":"../node_modules/prop-types/index.js","mdast-add-list-metadata":"../node_modules/mdast-add-list-metadata/index.js","./plugins/naive-html":"../node_modules/react-markdown/lib/plugins/naive-html.js","./plugins/disallow-node":"../node_modules/react-markdown/lib/plugins/disallow-node.js","./ast-to-react":"../node_modules/react-markdown/lib/ast-to-react.js","./wrap-table-rows":"../node_modules/react-markdown/lib/wrap-table-rows.js","./get-definitions":"../node_modules/react-markdown/lib/get-definitions.js","./uri-transformer":"../node_modules/react-markdown/lib/uri-transformer.js","./renderers":"../node_modules/react-markdown/lib/renderers.js","./symbols":"../node_modules/react-markdown/lib/symbols.js"}],"Inbox/UI/Markdown.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -53375,7 +53366,7 @@ EmojioneV4.propTypes = {
 EmojioneV4.defaultProps = {
   size: 64
 };
-},{"./renderer":"../node_modules/react-emoji-render/lib/renderer.js","react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js"}],"EmailViewer/RocketChat/Renderers/Emoji.tsx":[function(require,module,exports) {
+},{"./renderer":"../node_modules/react-emoji-render/lib/renderer.js","react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js"}],"Inbox/RocketChat/Renderers/Emoji.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -53435,7 +53426,7 @@ function (_React$Component) {
 }(_react.default.Component);
 
 exports.Emoji = Emoji;
-},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","react-emoji-render":"../node_modules/react-emoji-render/lib/index.js"}],"EmailViewer/RocketChat/Renderers/Text.tsx":[function(require,module,exports) {
+},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","react-emoji-render":"../node_modules/react-emoji-render/lib/index.js"}],"Inbox/RocketChat/Renderers/Text.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -53509,12 +53500,12 @@ function (_React$Component) {
 }(_react.default.Component);
 
 exports.Text = Text;
-},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","./Emoji":"EmailViewer/RocketChat/Renderers/Emoji.tsx"}],"EmailViewer/RocketChat/RocketAttachment.scss":[function(require,module,exports) {
+},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","./Emoji":"Inbox/RocketChat/Renderers/Emoji.tsx"}],"Inbox/RocketChat/RocketAttachment.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"EmailViewer/RocketChat/RocketAttachment.tsx":[function(require,module,exports) {
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"Inbox/RocketChat/RocketAttachment.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -53564,12 +53555,12 @@ function RocketAttachment(_ref) {
     }));
   })) : null);
 }
-},{"react":"../node_modules/react/index.js","./RocketAttachment.scss":"EmailViewer/RocketChat/RocketAttachment.scss","../UI/Markdown":"EmailViewer/UI/Markdown.tsx"}],"EmailViewer/RocketChat/Message/MessageBox.scss":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./RocketAttachment.scss":"Inbox/RocketChat/RocketAttachment.scss","../UI/Markdown":"Inbox/UI/Markdown.tsx"}],"Inbox/RocketChat/Message/MessageBox.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"EmailViewer/RocketChat/Message/MessageBox.tsx":[function(require,module,exports) {
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"Inbox/RocketChat/Message/MessageBox.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -53727,7 +53718,7 @@ function (_React$Component) {
 }(_react.default.Component);
 
 exports.MessageBox = MessageBox;
-},{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","./MessageBox.scss":"EmailViewer/RocketChat/Message/MessageBox.scss"}],"EmailViewer/RocketChat/Message/Message.tsx":[function(require,module,exports) {
+},{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","./MessageBox.scss":"Inbox/RocketChat/Message/MessageBox.scss"}],"Inbox/RocketChat/Message/Message.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -53964,7 +53955,7 @@ function (_React$Component) {
 }(_react.default.Component);
 
 exports.Message = Message;
-},{"@babel/runtime/helpers/slicedToArray":"../node_modules/@babel/runtime/helpers/slicedToArray.js","@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","../../UI/Markdown":"EmailViewer/UI/Markdown.tsx","../Renderers/Text":"EmailViewer/RocketChat/Renderers/Text.tsx","../RocketAttachment":"EmailViewer/RocketChat/RocketAttachment.tsx","../Renderers/Emoji":"EmailViewer/RocketChat/Renderers/Emoji.tsx","react-timeago":"../node_modules/react-timeago/lib/index.js","./MessageBox":"EmailViewer/RocketChat/Message/MessageBox.tsx"}],"EmailViewer/RocketChat/Room/Room.tsx":[function(require,module,exports) {
+},{"@babel/runtime/helpers/slicedToArray":"../node_modules/@babel/runtime/helpers/slicedToArray.js","@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","../../UI/Markdown":"Inbox/UI/Markdown.tsx","../Renderers/Text":"Inbox/RocketChat/Renderers/Text.tsx","../RocketAttachment":"Inbox/RocketChat/RocketAttachment.tsx","../Renderers/Emoji":"Inbox/RocketChat/Renderers/Emoji.tsx","react-timeago":"../node_modules/react-timeago/lib/index.js","./MessageBox":"Inbox/RocketChat/Message/MessageBox.tsx"}],"Inbox/RocketChat/Room/Room.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -54029,9 +54020,7 @@ var Channel = function Channel(room) {
   return _react.default.createElement("a", {
     className: "RoomName",
     href: "".concat(document.rocketchatServer, "/").concat(type, "/").concat(id),
-    target: "_blank",
-    "data-shortcut": "n",
-    "data-trigger": "scrollIntoView"
+    target: "_blank"
   }, prefix, room.fname || "general");
 };
 
@@ -54113,8 +54102,6 @@ function (_React$Component) {
                 })));
                 threads.forEach(function (tmid) {
                   _this3.props.rocketchat.call("GET", "chat.getMessage?msgId=".concat(tmid)).then(function (response) {
-                    console.log(response);
-
                     _this3.setState({
                       context: [].concat((0, _toConsumableArray2.default)(_this3.state.context), [response.message])
                     });
@@ -54147,34 +54134,33 @@ function (_React$Component) {
             switch (_context3.prev = _context3.next) {
               case 0:
                 unreadRoom = this.props.room;
-                console.log(unreadRoom);
                 type = {
                   p: "groups",
                   c: "channels",
                   d: "im"
                 }[unreadRoom.t];
-                _context3.next = 5;
+                _context3.next = 4;
                 return this.props.rocketchat.call("GET", "".concat(type, ".history?roomId=").concat(unreadRoom.rid, "&oldest=").concat(unreadRoom.ls, "&count=1000"));
 
-              case 5:
+              case 4:
                 response = _context3.sent;
                 this.setState({
                   messages: response.messages ? response.messages.reverse() : []
                 });
 
                 if (!(response.messages && !response.messages.length)) {
-                  _context3.next = 10;
+                  _context3.next = 9;
                   break;
                 }
 
-                _context3.next = 10;
+                _context3.next = 9;
                 return this.markRead();
 
-              case 10:
-                _context3.next = 12;
+              case 9:
+                _context3.next = 11;
                 return this.fetchContext();
 
-              case 12:
+              case 11:
               case "end":
                 return _context3.stop();
             }
@@ -54201,7 +54187,6 @@ function (_React$Component) {
               case 0:
                 unreadRoom = this.props.room;
                 messages = this.state.messages;
-                console.log(unreadRoom);
                 type = {
                   p: "groups",
                   c: "channels",
@@ -54209,7 +54194,7 @@ function (_React$Component) {
                 }[unreadRoom.t];
 
                 if (!(messages === null || messages === void 0 ? void 0 : messages.length)) {
-                  _context4.next = 11;
+                  _context4.next = 9;
                   break;
                 }
 
@@ -54219,37 +54204,36 @@ function (_React$Component) {
                 timestamps.sort(function (a, b) {
                   return a.localeCompare(b);
                 });
-                _context4.next = 9;
+                _context4.next = 8;
                 return this.props.rocketchat.call("GET", "".concat(type, ".history?roomId=").concat(unreadRoom.rid, "&oldest=").concat(timestamps[timestamps.length - 1], "&count=1000"));
 
-              case 9:
+              case 8:
                 unreadMessages = _context4.sent;
-                console.log(unreadMessages);
 
-              case 11:
+              case 9:
                 if (!(unreadMessages === undefined || !unreadMessages.messages.length)) {
-                  _context4.next = 16;
+                  _context4.next = 14;
                   break;
                 }
 
-                _context4.next = 14;
+                _context4.next = 12;
                 return this.props.rocketchat.call("POST", "subscriptions.read", {
                   rid: unreadRoom.rid
                 });
 
-              case 14:
-                _context4.next = 18;
+              case 12:
+                _context4.next = 16;
                 break;
+
+              case 14:
+                _context4.next = 16;
+                return this.fetchMessages();
 
               case 16:
                 _context4.next = 18;
-                return this.fetchMessages();
-
-              case 18:
-                _context4.next = 20;
                 return this.props.updateAll();
 
-              case 20:
+              case 18:
               case "end":
                 return _context4.stop();
             }
@@ -54303,11 +54287,9 @@ function (_React$Component) {
     value: function render() {
       var _this4 = this;
 
-      console.log(this.state);
       var room = this.props.room;
       var messages = this.state.messages;
       var frequencies = {};
-      console.log(messages);
       (messages || []).forEach(function (message) {
         var username = message.u.username;
         frequencies[username] = frequencies[username] !== undefined ? 0 : frequencies[username] + 1;
@@ -54364,7 +54346,9 @@ function (_React$Component) {
         className: "ChatRoom",
         key: room.rid
       }, _react.default.createElement("h3", {
-        className: "RoomTitle"
+        className: "RoomTitle",
+        "data-shortcut": "n",
+        "data-trigger": "scrollIntoView"
       }, Channel(room), _react.default.createElement("span", {
         className: "UnreadCount"
       }, messages && messages.length), _react.default.createElement("span", {
@@ -54593,7 +54577,7 @@ function (_React$Component) {
 }(_react.default.Component);
 
 exports.Room = Room;
-},{"@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","../../UI/Icon":"EmailViewer/UI/Icon.tsx","react-visibility-sensor":"../node_modules/react-visibility-sensor/dist/visibility-sensor.js","../../UI/Spinner":"EmailViewer/UI/Spinner.tsx","../Message/Message":"EmailViewer/RocketChat/Message/Message.tsx","../Message/MessageBox":"EmailViewer/RocketChat/Message/MessageBox.tsx"}],"EmailViewer/RocketChat/RocketChatService.ts":[function(require,module,exports) {
+},{"@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","../../UI/Icon":"Inbox/UI/Icon.tsx","react-visibility-sensor":"../node_modules/react-visibility-sensor/dist/visibility-sensor.js","../../UI/Spinner":"Inbox/UI/Spinner.tsx","../Message/Message":"Inbox/RocketChat/Message/Message.tsx","../Message/MessageBox":"Inbox/RocketChat/Message/MessageBox.tsx"}],"Inbox/RocketChat/RocketChatService.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -54621,38 +54605,30 @@ var RocketChatService =
 /*#__PURE__*/
 function () {
   function RocketChatService() {
-    var _this = this;
-
     (0, _classCallCheck2.default)(this, RocketChatService);
-
-    document.rocket = function (a, b, c) {
-      return _this.call(a, b, c);
-    };
   }
 
   (0, _createClass2.default)(RocketChatService, [{
     key: "call",
     value: function call(method, endpoint, data) {
-      var _this2 = this;
+      var _this = this;
 
       return new Promise(function (resolve) {
         if (document.rocketchatCorsBypass === undefined) {
           return;
         }
 
-        console.log(_this2.credentials, data);
         document.rocketchatCorsBypass({
           method: method,
           url: "".concat(document.rocketchatServer, "/api/v1/").concat(endpoint),
           headers: _objectSpread({
             "Content-Type": "application/json"
-          }, _this2.credentials ? {
-            "X-Auth-Token": _this2.credentials.authToken,
-            "X-User-Id": _this2.credentials.userId
+          }, _this.credentials ? {
+            "X-Auth-Token": _this.credentials.authToken,
+            "X-User-Id": _this.credentials.userId
           } : {}),
           data: data ? JSON.stringify(data) : undefined,
           onload: function onload(r) {
-            console.log(r);
             resolve(JSON.parse(r.responseText));
           }
         });
@@ -54711,7 +54687,7 @@ function () {
 }();
 
 exports.RocketChatService = RocketChatService;
-},{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js"}],"EmailViewer/RocketChat/RocketChat.tsx":[function(require,module,exports) {
+},{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js"}],"Inbox/RocketChat/RocketChat.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -54853,9 +54829,8 @@ function (_React$Component) {
                     return (0, _defineProperty2.default)({}, unreadRoom.fname, unreadRoom);
                   }))))
                 });
-                console.log(this.state);
 
-              case 7:
+              case 6:
               case "end":
                 return _context2.stop();
             }
@@ -54893,12 +54868,337 @@ function (_React$Component) {
 }(_react.default.Component);
 
 exports.RocketChat = RocketChat;
-},{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","./RocketChat.scss":"EmailViewer/RocketChat/RocketChat.scss","react":"../node_modules/react/index.js","./Room/Room":"EmailViewer/RocketChat/Room/Room.tsx","./RocketChatService":"EmailViewer/RocketChat/RocketChatService.ts"}],"EmailViewer/Tasks/Tasklist.scss":[function(require,module,exports) {
+},{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","./RocketChat.scss":"Inbox/RocketChat/RocketChat.scss","react":"../node_modules/react/index.js","./Room/Room":"Inbox/RocketChat/Room/Room.tsx","./RocketChatService":"Inbox/RocketChat/RocketChatService.ts"}],"Inbox/Tasks/Tasklist.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"EmailViewer/Tasks/Tasklist.tsx":[function(require,module,exports) {
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"Inbox/Tasks/TaskEntry.tsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.TaskEntry = void 0;
+
+var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var _Markdown = require("../UI/Markdown");
+
+var _Icon = require("../UI/Icon");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+var TaskButton = function TaskButton(props) {
+  return _react.default.createElement("button", {
+    className: "TaskButton",
+    onClick: props.onClick,
+    "data-shortcut": props.shortcut,
+    "data-trigger": props.trigger
+  }, _react.default.createElement(_Icon.Icon, {
+    type: props.icon,
+    size: 16
+  }));
+};
+
+var TaskEntry =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2.default)(TaskEntry, _React$Component);
+
+  function TaskEntry() {
+    (0, _classCallCheck2.default)(this, TaskEntry);
+    return (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(TaskEntry).apply(this, arguments));
+  }
+
+  (0, _createClass2.default)(TaskEntry, [{
+    key: "onTaskEdit",
+    value: function () {
+      var _onTaskEdit = (0, _asyncToGenerator2.default)(
+      /*#__PURE__*/
+      _regenerator.default.mark(function _callee(event, task) {
+        return _regenerator.default.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return gapi.client.tasks.tasks.update({
+                  tasklist: "@default",
+                  task: task.id,
+                  resource: _objectSpread({}, task, {
+                    title: event.currentTarget.innerText
+                  })
+                });
+
+              case 2:
+                _context.next = 4;
+                return this.props.onChange();
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function onTaskEdit(_x, _x2) {
+        return _onTaskEdit.apply(this, arguments);
+      }
+
+      return onTaskEdit;
+    }()
+  }, {
+    key: "onEnter",
+    value: function onEnter(event) {
+      if (event.key === "Enter") {
+        event.currentTarget.blur();
+      }
+    }
+  }, {
+    key: "bumpTask",
+    value: function () {
+      var _bumpTask = (0, _asyncToGenerator2.default)(
+      /*#__PURE__*/
+      _regenerator.default.mark(function _callee2(taskId) {
+        return _regenerator.default.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                this.props.onUpdate(_objectSpread({}, this.props.task, {
+                  position: "0"
+                }));
+                _context2.next = 3;
+                return gapi.client.tasks.tasks.move({
+                  task: taskId,
+                  tasklist: "@default"
+                });
+
+              case 3:
+                _context2.next = 5;
+                return this.props.onChange();
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function bumpTask(_x3) {
+        return _bumpTask.apply(this, arguments);
+      }
+
+      return bumpTask;
+    }()
+  }, {
+    key: "deferTask",
+    value: function () {
+      var _deferTask = (0, _asyncToGenerator2.default)(
+      /*#__PURE__*/
+      _regenerator.default.mark(function _callee3(taskId) {
+        return _regenerator.default.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                this.props.onUpdate(_objectSpread({}, this.props.task, {
+                  position: "99999999999999999999"
+                }));
+                _context3.next = 3;
+                return gapi.client.tasks.tasks.move({
+                  task: taskId,
+                  tasklist: "@default",
+                  previous: this.props.lastId
+                });
+
+              case 3:
+                _context3.next = 5;
+                return this.props.onChange();
+
+              case 5:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function deferTask(_x4) {
+        return _deferTask.apply(this, arguments);
+      }
+
+      return deferTask;
+    }()
+  }, {
+    key: "completeTask",
+    value: function () {
+      var _completeTask = (0, _asyncToGenerator2.default)(
+      /*#__PURE__*/
+      _regenerator.default.mark(function _callee4(task) {
+        return _regenerator.default.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                this.props.onUpdate();
+                _context4.next = 3;
+                return gapi.client.tasks.tasks.update({
+                  tasklist: "@default",
+                  task: task.id,
+                  resource: _objectSpread({}, task, {
+                    status: "completed"
+                  })
+                });
+
+              case 3:
+                _context4.next = 5;
+                return this.props.onChange();
+
+              case 5:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this);
+      }));
+
+      function completeTask(_x5) {
+        return _completeTask.apply(this, arguments);
+      }
+
+      return completeTask;
+    }()
+  }, {
+    key: "render",
+    value: function render() {
+      var _this = this;
+
+      var task = this.props.task;
+      return _react.default.createElement("div", {
+        className: "Task"
+      }, _react.default.createElement("div", null, _react.default.createElement("div", {
+        className: "TaskTitle",
+        contentEditable: true,
+        onBlur: function () {
+          var _onBlur = (0, _asyncToGenerator2.default)(
+          /*#__PURE__*/
+          _regenerator.default.mark(function _callee5(event) {
+            return _regenerator.default.wrap(function _callee5$(_context5) {
+              while (1) {
+                switch (_context5.prev = _context5.next) {
+                  case 0:
+                    _context5.next = 2;
+                    return _this.onTaskEdit(event, task);
+
+                  case 2:
+                    return _context5.abrupt("return", _context5.sent);
+
+                  case 3:
+                  case "end":
+                    return _context5.stop();
+                }
+              }
+            }, _callee5);
+          }));
+
+          function onBlur(_x6) {
+            return _onBlur.apply(this, arguments);
+          }
+
+          return onBlur;
+        }(),
+        onKeyPress: function () {
+          var _onKeyPress = (0, _asyncToGenerator2.default)(
+          /*#__PURE__*/
+          _regenerator.default.mark(function _callee6(event) {
+            return _regenerator.default.wrap(function _callee6$(_context6) {
+              while (1) {
+                switch (_context6.prev = _context6.next) {
+                  case 0:
+                    _context6.next = 2;
+                    return _this.onEnter(event);
+
+                  case 2:
+                    return _context6.abrupt("return", _context6.sent);
+
+                  case 3:
+                  case "end":
+                    return _context6.stop();
+                }
+              }
+            }, _callee6);
+          }));
+
+          function onKeyPress(_x7) {
+            return _onKeyPress.apply(this, arguments);
+          }
+
+          return onKeyPress;
+        }()
+      }, task.title), _react.default.createElement("div", {
+        className: "TaskDetails"
+      }, _react.default.createElement(_Markdown.Markdown, {
+        source: task.notes || ""
+      }), task.links ? _react.default.createElement("div", {
+        className: "TaskLinks"
+      }, task.links.map(function (link) {
+        return _react.default.createElement("div", {
+          className: "TaskLink"
+        }, _react.default.createElement("a", {
+          href: link.link,
+          target: "_blank"
+        }, link.description));
+      })) : "")), _react.default.createElement("div", {
+        className: "TaskActions"
+      }, _react.default.createElement(TaskButton, {
+        icon: "top",
+        shortcut: "a",
+        trigger: "click",
+        onClick: function onClick() {
+          return _this.bumpTask(task.id);
+        }
+      }), _react.default.createElement(TaskButton, {
+        icon: "bottom",
+        shortcut: "z",
+        trigger: "click",
+        onClick: function onClick() {
+          return _this.deferTask(task.id);
+        }
+      }), _react.default.createElement(TaskButton, {
+        icon: "check",
+        shortcut: "d",
+        trigger: "click",
+        onClick: function onClick() {
+          return _this.completeTask(task.id);
+        }
+      })));
+    }
+  }]);
+  return TaskEntry;
+}(_react.default.Component);
+
+exports.TaskEntry = TaskEntry;
+},{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","../UI/Markdown":"Inbox/UI/Markdown.tsx","../UI/Icon":"Inbox/UI/Icon.tsx"}],"Inbox/Tasks/Tasklist.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -54906,9 +55206,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Tasklist = void 0;
 
-var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
-
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
@@ -54928,9 +55228,7 @@ var _react = _interopRequireDefault(require("react"));
 
 require("./Tasklist.scss");
 
-var _Markdown = require("../UI/Markdown");
-
-var _Icon = require("../UI/Icon");
+var _TaskEntry = require("./TaskEntry");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -54968,6 +55266,23 @@ function (_React$Component) {
       });
     }
   }, {
+    key: "onTaskUpdate",
+    value: function onTaskUpdate(id, updatedTask) {
+      if (!updatedTask) {
+        this.setState({
+          tasks: this.state.tasks.filter(function (task) {
+            return task.id === id;
+          })
+        });
+      } else {
+        this.setState({
+          tasks: this.state.tasks.map(function (task) {
+            return task.id === id ? updatedTask : task;
+          })
+        });
+      }
+    }
+  }, {
     key: "updateTasks",
     value: function () {
       var _updateTasks = (0, _asyncToGenerator2.default)(
@@ -54987,14 +55302,13 @@ function (_React$Component) {
 
               case 2:
                 tasks = _context.sent;
-                console.log(tasks);
                 this.setState({
                   tasks: tasks.result.items.sort(function (a, b) {
                     return parseInt(a.position) - parseInt(b.position);
                   })
                 });
 
-              case 5:
+              case 4:
               case "end":
                 return _context.stop();
             }
@@ -55007,131 +55321,6 @@ function (_React$Component) {
       }
 
       return updateTasks;
-    }()
-  }, {
-    key: "bumpTask",
-    value: function () {
-      var _bumpTask = (0, _asyncToGenerator2.default)(
-      /*#__PURE__*/
-      _regenerator.default.mark(function _callee2(taskId) {
-        return _regenerator.default.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                this.setState({
-                  tasks: this.state.tasks.map(function (task) {
-                    return task.id == taskId ? _objectSpread({}, task, {
-                      position: "0"
-                    }) : task;
-                  })
-                });
-                _context2.next = 3;
-                return gapi.client.tasks.tasks.move({
-                  task: taskId,
-                  tasklist: "@default"
-                });
-
-              case 3:
-                _context2.next = 5;
-                return this.updateTasks();
-
-              case 5:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, this);
-      }));
-
-      function bumpTask(_x) {
-        return _bumpTask.apply(this, arguments);
-      }
-
-      return bumpTask;
-    }()
-  }, {
-    key: "deferTask",
-    value: function () {
-      var _deferTask = (0, _asyncToGenerator2.default)(
-      /*#__PURE__*/
-      _regenerator.default.mark(function _callee3(taskId) {
-        return _regenerator.default.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                this.setState({
-                  tasks: this.state.tasks.map(function (task) {
-                    return task.id == taskId ? _objectSpread({}, task, {
-                      position: "99999999999999999999"
-                    }) : task;
-                  })
-                });
-                _context3.next = 3;
-                return gapi.client.tasks.tasks.move({
-                  task: taskId,
-                  tasklist: "@default",
-                  previous: this.state.tasks[this.state.tasks.length - 1].id
-                });
-
-              case 3:
-                _context3.next = 5;
-                return this.updateTasks();
-
-              case 5:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3, this);
-      }));
-
-      function deferTask(_x2) {
-        return _deferTask.apply(this, arguments);
-      }
-
-      return deferTask;
-    }()
-  }, {
-    key: "completeTask",
-    value: function () {
-      var _completeTask = (0, _asyncToGenerator2.default)(
-      /*#__PURE__*/
-      _regenerator.default.mark(function _callee4(task) {
-        return _regenerator.default.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                this.setState({
-                  tasks: this.state.tasks.filter(function (task) {
-                    return task.id;
-                  })
-                });
-                _context4.next = 3;
-                return gapi.client.tasks.tasks.update({
-                  tasklist: "@default",
-                  task: task.id,
-                  resource: _objectSpread({}, task, {
-                    status: "completed"
-                  })
-                });
-
-              case 3:
-                _context4.next = 5;
-                return this.updateTasks();
-
-              case 5:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4, this);
-      }));
-
-      function completeTask(_x3) {
-        return _completeTask.apply(this, arguments);
-      }
-
-      return completeTask;
     }()
   }, {
     key: "render",
@@ -55152,163 +55341,94 @@ function (_React$Component) {
         onKeyPress: function () {
           var _onKeyPress = (0, _asyncToGenerator2.default)(
           /*#__PURE__*/
-          _regenerator.default.mark(function _callee5(event) {
-            return _regenerator.default.wrap(function _callee5$(_context5) {
+          _regenerator.default.mark(function _callee2(event) {
+            return _regenerator.default.wrap(function _callee2$(_context2) {
               while (1) {
-                switch (_context5.prev = _context5.next) {
+                switch (_context2.prev = _context2.next) {
                   case 0:
-                    _context5.next = 2;
+                    _context2.next = 2;
                     return _this3.onKeyPress(event);
 
                   case 2:
-                    return _context5.abrupt("return", _context5.sent);
+                    return _context2.abrupt("return", _context2.sent);
 
                   case 3:
                   case "end":
-                    return _context5.stop();
+                    return _context2.stop();
                 }
               }
-            }, _callee5);
+            }, _callee2);
           }));
 
-          function onKeyPress(_x4) {
+          function onKeyPress(_x) {
             return _onKeyPress.apply(this, arguments);
           }
 
           return onKeyPress;
-        }()
+        }(),
+        "data-shortcut": "c",
+        "data-trigger": "focus"
       }), _react.default.createElement("div", {
         className: "Tasks"
       }, tasks.map(function (task) {
-        return _react.default.createElement("div", {
-          className: "Task"
-        }, _react.default.createElement("div", null, _react.default.createElement("div", {
-          className: "TaskTitle",
-          contentEditable: true,
-          onBlur: function () {
-            var _onBlur = (0, _asyncToGenerator2.default)(
+        return _react.default.createElement(_TaskEntry.TaskEntry, {
+          key: task.id,
+          task: task,
+          lastId: _this3.state.tasks[_this3.state.tasks.length - 1].id,
+          onUpdate: function onUpdate(updatedTask) {
+            return _this3.onTaskUpdate(task.id, updatedTask);
+          },
+          onChange: function () {
+            var _onChange = (0, _asyncToGenerator2.default)(
             /*#__PURE__*/
-            _regenerator.default.mark(function _callee6(event) {
-              return _regenerator.default.wrap(function _callee6$(_context6) {
+            _regenerator.default.mark(function _callee3() {
+              return _regenerator.default.wrap(function _callee3$(_context3) {
                 while (1) {
-                  switch (_context6.prev = _context6.next) {
+                  switch (_context3.prev = _context3.next) {
                     case 0:
-                      _context6.next = 2;
-                      return _this3.onTaskEdit(event, task);
+                      _context3.next = 2;
+                      return _this3.updateTasks();
 
                     case 2:
-                      return _context6.abrupt("return", _context6.sent);
+                      return _context3.abrupt("return", _context3.sent);
 
                     case 3:
                     case "end":
-                      return _context6.stop();
+                      return _context3.stop();
                   }
                 }
-              }, _callee6);
+              }, _callee3);
             }));
 
-            function onBlur(_x5) {
-              return _onBlur.apply(this, arguments);
+            function onChange() {
+              return _onChange.apply(this, arguments);
             }
 
-            return onBlur;
-          }(),
-          onKeyPress: function () {
-            var _onKeyPress2 = (0, _asyncToGenerator2.default)(
-            /*#__PURE__*/
-            _regenerator.default.mark(function _callee7(event) {
-              return _regenerator.default.wrap(function _callee7$(_context7) {
-                while (1) {
-                  switch (_context7.prev = _context7.next) {
-                    case 0:
-                      _context7.next = 2;
-                      return _this3.onEnter(event);
-
-                    case 2:
-                      return _context7.abrupt("return", _context7.sent);
-
-                    case 3:
-                    case "end":
-                      return _context7.stop();
-                  }
-                }
-              }, _callee7);
-            }));
-
-            function onKeyPress(_x6) {
-              return _onKeyPress2.apply(this, arguments);
-            }
-
-            return onKeyPress;
+            return onChange;
           }()
-        }, task.title), _react.default.createElement("div", {
-          className: "TaskDetails"
-        }, _react.default.createElement(_Markdown.Markdown, {
-          source: task.notes || ""
-        }), task.links ? _react.default.createElement("div", {
-          className: "TaskLinks"
-        }, task.links.map(function (link) {
-          return _react.default.createElement("div", {
-            className: "TaskLink"
-          }, _react.default.createElement("a", {
-            href: link.link,
-            target: "_blank"
-          }, link.description));
-        })) : "")), _react.default.createElement("div", {
-          className: "TaskActions"
-        }, _react.default.createElement("button", {
-          className: "TaskButton",
-          onClick: function onClick() {
-            return _this3.bumpTask(task.id);
-          },
-          "data-shortcut": "a",
-          "data-trigger": "click"
-        }, _react.default.createElement(_Icon.Icon, {
-          type: "top",
-          size: 16
-        })), _react.default.createElement("button", {
-          className: "TaskButton",
-          onClick: function onClick() {
-            return _this3.deferTask(task.id);
-          },
-          "data-shortcut": "z",
-          "data-trigger": "click"
-        }, _react.default.createElement(_Icon.Icon, {
-          type: "bottom",
-          size: 16
-        })), _react.default.createElement("button", {
-          className: "TaskButton",
-          onClick: function onClick() {
-            return _this3.completeTask(task);
-          },
-          "data-shortcut": "d",
-          "data-trigger": "click"
-        }, _react.default.createElement(_Icon.Icon, {
-          type: "check",
-          size: 16
-        }))));
+        });
       }))));
     }
   }, {
     key: "onKeyPress",
     value: function () {
-      var _onKeyPress3 = (0, _asyncToGenerator2.default)(
+      var _onKeyPress2 = (0, _asyncToGenerator2.default)(
       /*#__PURE__*/
-      _regenerator.default.mark(function _callee8(event) {
+      _regenerator.default.mark(function _callee4(event) {
         var value, newTask;
-        return _regenerator.default.wrap(function _callee8$(_context8) {
+        return _regenerator.default.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context8.prev = _context8.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
                 if (!(event.key === "Enter" && !event.shiftKey)) {
-                  _context8.next = 9;
+                  _context4.next = 9;
                   break;
                 }
 
                 value = event.currentTarget.innerText;
                 event.currentTarget.innerText = "";
                 event.currentTarget.blur();
-                _context8.next = 6;
+                _context4.next = 6;
                 return gapi.client.tasks.tasks.insert({
                   tasklist: "@default",
                   resource: {
@@ -55317,20 +55437,20 @@ function (_React$Component) {
                 });
 
               case 6:
-                newTask = _context8.sent;
-                _context8.next = 9;
+                newTask = _context4.sent;
+                _context4.next = 9;
                 return this.updateTasks();
 
               case 9:
               case "end":
-                return _context8.stop();
+                return _context4.stop();
             }
           }
-        }, _callee8, this);
+        }, _callee4, this);
       }));
 
-      function onKeyPress(_x7) {
-        return _onKeyPress3.apply(this, arguments);
+      function onKeyPress(_x2) {
+        return _onKeyPress2.apply(this, arguments);
       }
 
       return onKeyPress;
@@ -55347,12 +55467,12 @@ function (_React$Component) {
     value: function () {
       var _onTaskEdit = (0, _asyncToGenerator2.default)(
       /*#__PURE__*/
-      _regenerator.default.mark(function _callee9(event, task) {
-        return _regenerator.default.wrap(function _callee9$(_context9) {
+      _regenerator.default.mark(function _callee5(event, task) {
+        return _regenerator.default.wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context9.prev = _context9.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
-                _context9.next = 2;
+                _context5.next = 2;
                 return gapi.client.tasks.tasks.update({
                   tasklist: "@default",
                   task: task.id,
@@ -55362,18 +55482,18 @@ function (_React$Component) {
                 });
 
               case 2:
-                _context9.next = 4;
+                _context5.next = 4;
                 return this.updateTasks();
 
               case 4:
               case "end":
-                return _context9.stop();
+                return _context5.stop();
             }
           }
-        }, _callee9, this);
+        }, _callee5, this);
       }));
 
-      function onTaskEdit(_x8, _x9) {
+      function onTaskEdit(_x3, _x4) {
         return _onTaskEdit.apply(this, arguments);
       }
 
@@ -55384,12 +55504,12 @@ function (_React$Component) {
 }(_react.default.Component);
 
 exports.Tasklist = Tasklist;
-},{"@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","./Tasklist.scss":"EmailViewer/Tasks/Tasklist.scss","../UI/Markdown":"EmailViewer/UI/Markdown.tsx","../UI/Icon":"EmailViewer/UI/Icon.tsx"}],"EmailViewer/Shortcuts.scss":[function(require,module,exports) {
+},{"@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","./Tasklist.scss":"Inbox/Tasks/Tasklist.scss","./TaskEntry":"Inbox/Tasks/TaskEntry.tsx"}],"Inbox/Shortcuts.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"EmailViewer/Shortcuts.tsx":[function(require,module,exports) {
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"Inbox/Shortcuts.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -55424,7 +55544,7 @@ function (_React$Component) {
     (0, _classCallCheck2.default)(this, Shortcuts);
     _this = (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(Shortcuts).call(this, props));
     _this.state = {
-      overlay: false
+      targets: []
     };
     return _this;
   }
@@ -55456,19 +55576,36 @@ function (_React$Component) {
 
         if (targets.length) {
           var target = targets[0];
+          this.setState({
+            targets: [target]
+          });
           setTimeout(function () {
-            return target[target.getAttribute("data-trigger")]();
-          }, 10);
+            target[target.getAttribute("data-trigger")]();
+
+            _this3.setState({
+              targets: []
+            });
+          }, 150);
         }
       }
     }
   }, {
     key: "onKeyDown",
     value: function onKeyDown(event) {
+      var _this4 = this;
+
       if (event.target == document.body) {
         if (event.key == "?") {
+          var targets = Array.from(document.querySelectorAll("[data-shortcut]")).filter(function (elem) {
+            return _this4.inViewport(elem);
+          });
+          var firstTargets = targets.filter(function (target) {
+            return target === targets.find(function (t) {
+              return t.getAttribute("data-shortcut") == target.getAttribute("data-shortcut");
+            });
+          });
           this.setState({
-            overlay: true
+            targets: firstTargets
           });
         }
       }
@@ -55479,7 +55616,7 @@ function (_React$Component) {
       if (event.target == document.body) {
         if (event.key == "?") {
           this.setState({
-            overlay: false
+            targets: []
           });
         }
       }
@@ -55504,37 +55641,27 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
+      var _this5 = this;
 
-      if (!this.state.overlay) {
+      if (!this.state.targets.length) {
         return null;
       }
 
-      var targets = Array.from(document.querySelectorAll("[data-shortcut]")).filter(function (elem) {
-        return _this4.inViewport(elem);
-      });
-      var firstTargets = targets.filter(function (target) {
-        return target === targets.find(function (t) {
-          return t.getAttribute("data-shortcut") == target.getAttribute("data-shortcut");
-        });
-      });
-      return _react.default.createElement("div", null, _react.default.createElement("div", {
-        className: "ShortcutOverlay"
-      }), firstTargets.map(function (target) {
-        var position = _this4.offset(target);
+      return _react.default.createElement("div", null, this.state.targets.map(function (target) {
+        var position = _this5.offset(target);
 
         return _react.default.createElement("div", null, _react.default.createElement("div", {
           className: "ShortcutHint",
           style: {
-            top: position.top - 30,
+            top: position.top > 30 + window.pageYOffset ? position.top - 30 : window.pageYOffset,
             left: position.left - 30
           }
         }, target.getAttribute("data-shortcut")), _react.default.createElement("div", {
           className: "ShortcutOverlay",
           style: {
             top: position.top,
-            left: position.left,
-            width: target.clientWidth,
+            left: position.left + 2,
+            width: target.clientWidth - 2,
             height: target.clientHeight
           }
         }));
@@ -55545,13 +55672,13 @@ function (_React$Component) {
 }(_react.default.Component);
 
 exports.Shortcuts = Shortcuts;
-},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","./Shortcuts.scss":"EmailViewer/Shortcuts.scss"}],"EmailViewer/EmailViewer.tsx":[function(require,module,exports) {
+},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","./Shortcuts.scss":"Inbox/Shortcuts.scss"}],"Inbox/Inbox.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.EmailViewer = void 0;
+exports.Inbox = void 0;
 
 var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
 
@@ -55567,11 +55694,11 @@ var React = _interopRequireWildcard(require("react"));
 
 var _Navigation = require("./Navigation/Navigation");
 
-var _ThreadList = require("./ThreadList");
+var _ThreadList = require("./EmailViewer/ThreadList");
 
-require("./EmailViewer.scss");
+require("./Inbox.scss");
 
-var _FocusBar = require("./FocusBar");
+var _FocusBar = require("./FocusBar/FocusBar");
 
 var _RocketChat = require("./RocketChat/RocketChat");
 
@@ -55585,17 +55712,17 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var EmailViewer =
+var Inbox =
 /*#__PURE__*/
 function (_React$Component) {
-  (0, _inherits2.default)(EmailViewer, _React$Component);
+  (0, _inherits2.default)(Inbox, _React$Component);
 
-  function EmailViewer() {
-    (0, _classCallCheck2.default)(this, EmailViewer);
-    return (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(EmailViewer).apply(this, arguments));
+  function Inbox() {
+    (0, _classCallCheck2.default)(this, Inbox);
+    return (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(Inbox).apply(this, arguments));
   }
 
-  (0, _createClass2.default)(EmailViewer, [{
+  (0, _createClass2.default)(Inbox, [{
     key: "render",
     value: function render() {
       return React.createElement("div", {
@@ -55611,11 +55738,11 @@ function (_React$Component) {
       })), React.createElement(_Shortcuts.Shortcuts, null));
     }
   }]);
-  return EmailViewer;
+  return Inbox;
 }(React.Component);
 
-exports.EmailViewer = EmailViewer;
-},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","./Navigation/Navigation":"EmailViewer/Navigation/Navigation.tsx","./ThreadList":"EmailViewer/ThreadList.tsx","./EmailViewer.scss":"EmailViewer/EmailViewer.scss","./FocusBar":"EmailViewer/FocusBar.tsx","./RocketChat/RocketChat":"EmailViewer/RocketChat/RocketChat.tsx","./Tasks/Tasklist":"EmailViewer/Tasks/Tasklist.tsx","./Shortcuts":"EmailViewer/Shortcuts.tsx"}],"../node_modules/normalize.css/normalize.css":[function(require,module,exports) {
+exports.Inbox = Inbox;
+},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","./Navigation/Navigation":"Inbox/Navigation/Navigation.tsx","./EmailViewer/ThreadList":"Inbox/EmailViewer/ThreadList.tsx","./Inbox.scss":"Inbox/Inbox.scss","./FocusBar/FocusBar":"Inbox/FocusBar/FocusBar.tsx","./RocketChat/RocketChat":"Inbox/RocketChat/RocketChat.tsx","./Tasks/Tasklist":"Inbox/Tasks/Tasklist.tsx","./Shortcuts":"Inbox/Shortcuts.tsx"}],"../node_modules/normalize.css/normalize.css":[function(require,module,exports) {
 
         var reloadCSS = require('_css_loader');
         module.hot.dispose(reloadCSS);
@@ -55652,7 +55779,7 @@ var React = _interopRequireWildcard(require("react"));
 
 var _Login = require("./Homepage/Login");
 
-var _EmailViewer = require("./EmailViewer/EmailViewer");
+var _Inbox = require("./Inbox/Inbox");
 
 require("normalize.css");
 
@@ -55712,7 +55839,7 @@ function (_React$Component) {
   (0, _createClass2.default)(App, [{
     key: "render",
     value: function render() {
-      return this.state.auth && this.state.profile ? React.createElement(_EmailViewer.EmailViewer, {
+      return this.state.auth && this.state.profile ? React.createElement(_Inbox.Inbox, {
         profile: this.state.profile
       }) : React.createElement(_Login.Login, {
         loading: this.state.auth === undefined
@@ -55725,14 +55852,13 @@ function (_React$Component) {
         profile: isAuthenticated ? gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile() : undefined,
         auth: isAuthenticated
       });
-      console.log(gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse());
     }
   }]);
   return App;
 }(React.Component);
 
 exports.App = App;
-},{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","./Homepage/Login":"Homepage/Login.tsx","./EmailViewer/EmailViewer":"EmailViewer/EmailViewer.tsx","normalize.css":"../node_modules/normalize.css/normalize.css","./App.scss":"App.scss"}],"styles.scss":[function(require,module,exports) {
+},{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","./Homepage/Login":"Homepage/Login.tsx","./Inbox/Inbox":"Inbox/Inbox.tsx","normalize.css":"../node_modules/normalize.css/normalize.css","./App.scss":"App.scss"}],"styles.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -55782,7 +55908,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63770" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49631" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
