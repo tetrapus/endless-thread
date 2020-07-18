@@ -2,10 +2,10 @@ import * as React from "react";
 import { oc } from "ts-optchain";
 import { Message } from "./Message";
 import "./Thread.scss";
-import { Icon } from "./UI/Icon";
-import { Spinner } from "./UI/Spinner";
+import { Icon } from "../UI/Icon";
+import { Spinner } from "../UI/Spinner";
 import VisibilitySensor from "react-visibility-sensor";
-import { definitely, isDefined } from "../helpers";
+import { definitely, isDefined } from "../../helpers";
 
 interface ThreadProps {
   thread: gapi.client.gmail.Thread;
@@ -69,7 +69,6 @@ class Thread extends React.Component<ThreadProps, ThreadState> {
   constructor(props: Readonly<ThreadProps>) {
     super(props);
     const thread = this.props.thread;
-    console.log(thread);
     if (!thread.messages) {
       throw Error("Cannot create thread with no messages.");
     }

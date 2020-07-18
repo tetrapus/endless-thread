@@ -1,4 +1,4 @@
-interface GreasyDocument extends Document {
+export interface GreasyDocument extends Document {
   rocketchatServer?: string;
   rocketchatCorsBypass?: (options: {
     method: string;
@@ -9,5 +9,3 @@ interface GreasyDocument extends Document {
   }) => void;
   rocket?: (method: string, endpoint: string, data?: any) => Promise<any>;
 }
-
-export var document: GreasyDocument;

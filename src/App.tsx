@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Login } from "./Homepage/Login";
-import { EmailViewer } from "./EmailViewer/EmailViewer";
+import { Inbox } from "./Inbox/Inbox";
 
 import "normalize.css";
 import "./App.scss";
@@ -16,15 +16,15 @@ class App extends React.Component<{}, State> {
 
     this.state = {
       profile: undefined,
-      auth: undefined
+      auth: undefined,
     };
     gapi.load("client:auth2", async () => {
       gapi.auth2.init({
-        client_id: process.env.GOOGLE_CLIENT_ID
+        client_id: process.env.GOOGLE_CLIENT_ID,
       });
       const authClient = gapi.auth2.getAuthInstance();
       authClient.then(() => this.handleAuthChange(authClient.isSignedIn.get()));
-      authClient.isSignedIn.listen(authState =>
+      authClient.isSignedIn.listen((authState) =>
         this.handleAuthChange(authState)
       );
     });
@@ -32,7 +32,7 @@ class App extends React.Component<{}, State> {
 
   render() {
     return this.state.auth && this.state.profile ? (
-      <EmailViewer profile={this.state.profile}></EmailViewer>
+      <Inbox profile={this.state.profile}></Inbox>
     ) : (
       <Login loading={this.state.auth === undefined}></Login>
     );
@@ -46,10 +46,8 @@ class App extends React.Component<{}, State> {
             .currentUser.get()
             .getBasicProfile()
         : undefined,
-      auth: isAuthenticated
+      auth: isAuthenticated,
     });
-    console.log(gapi.auth2
-      .getAuthInstance().currentUser.get().getAuthResponse());
   }
 }
 

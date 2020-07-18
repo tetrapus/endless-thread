@@ -40,7 +40,6 @@ const Channel = (room) => {
       className="RoomName"
       href={`${document.rocketchatServer}/${type}/${id}`}
       target="_blank"
-      data-shortcut="n" data-trigger="scrollIntoView"
     >
       {prefix}
       {room.fname || "general"}
@@ -75,7 +74,8 @@ export class Room extends React.Component<Props, State> {
         this.state.messages
           .map((message) => message.tmid)
           .filter(
-            (tmid) => tmid &&
+            (tmid) =>
+              tmid &&
               ![...this.state.context, ...this.state.messages].find(
                 (msg) => msg._id === tmid
               )
@@ -86,7 +86,6 @@ export class Room extends React.Component<Props, State> {
       this.props.rocketchat
         .call("GET", `chat.getMessage?msgId=${tmid}`)
         .then((response: any) => {
-          console.log(, response);
           this.setState({ context: [...this.state.context, response.message] });
         });
     });
@@ -94,7 +93,6 @@ export class Room extends React.Component<Props, State> {
 
   async fetchMessages() {
     const unreadRoom = this.props.room;
-    console.log(unreadRoom);
     const type = { p: "groups", c: "channels", d: "im" }[unreadRoom.t];
     const response = await this.props.rocketchat.call(
       "GET",
@@ -112,11 +110,10 @@ export class Room extends React.Component<Props, State> {
   async markRead() {
     const unreadRoom = this.props.room;
     const messages = this.state.messages;
-    console.log(unreadRoom);
     const type = { p: "groups", c: "channels", d: "im" }[unreadRoom.t];
     let unreadMessages;
     if (messages?.length) {
-      const timestamps = messages.map(msg => msg._updatedAt);
+      const timestamps = messages.map((msg) => msg._updatedAt);
       timestamps.sort((a, b) => a.localeCompare(b));
       unreadMessages = await this.props.rocketchat.call(
         "GET",
@@ -124,7 +121,6 @@ export class Room extends React.Component<Props, State> {
           timestamps[timestamps.length - 1]
         }&count=1000`
       );
-      console.log(unreadMessages);
     }
     if (unreadMessages === undefined || !unreadMessages.messages.length) {
       await this.props.rocketchat.call("POST", "subscriptions.read", {
@@ -145,11 +141,9 @@ export class Room extends React.Component<Props, State> {
   }
 
   render() {
-    console.log(this.state);
     const { room } = this.props;
-    const { messages } = this.state as { messages ?: any[] };
+    const { messages } = this.state as { messages?: any[] };
     const frequencies: { [key: string]: number } = {};
-    console.log(messages);
     (messages || []).forEach((message) => {
       const username = message.u.username;
       frequencies[username] =
@@ -158,25 +152,33 @@ export class Room extends React.Component<Props, State> {
     const participants: string[] = Object.keys(frequencies).sort(
       (a, b) => frequencies[b] - frequencies[a]
     );
-    const msgSortKey = message => {
+    const msgSortKey = (message) => {
       if (message.tmid) {
-        const parent = [...this.state.context, ...this.state.messages].find(msg => msg._id == message.tmid);
+        const parent = [...this.state.context, ...this.state.messages].find(
+          (msg) => msg._id == message.tmid
+        );
         if (!parent) {
           return message.ts;
         }
         return `${parent.ts} ${message.ts}`;
       }
       return message.ts;
-    }
+    };
     if (messages) {
-      this.state.context.forEach(cmessage => {
-        if (!messages.find(msg => cmessage._id == msg._id) && messages.find(msg => msg.tmid == cmessage._id)) {
-          messages.push({...cmessage, isContext: true});
+      this.state.context.forEach((cmessage) => {
+        if (
+          !messages.find((msg) => cmessage._id == msg._id) &&
+          messages.find((msg) => msg.tmid == cmessage._id)
+        ) {
+          messages.push({ ...cmessage, isContext: true });
         }
       });
-      this.state.threadContext.forEach(tmessage => {
-        if (!messages.find(msg => tmessage._id == msg._id) && messages.find(msg => tmessage.tmid == msg._id)) {
-          messages.push({...tmessage, isContext: true});
+      this.state.threadContext.forEach((tmessage) => {
+        if (
+          !messages.find((msg) => tmessage._id == msg._id) &&
+          messages.find((msg) => tmessage.tmid == msg._id)
+        ) {
+          messages.push({ ...tmessage, isContext: true });
         }
       });
       messages.sort((a, b) => msgSortKey(a).localeCompare(msgSortKey(b)));
@@ -184,7 +186,11 @@ export class Room extends React.Component<Props, State> {
 
     return (
       <div className="ChatRoom" key={room.rid}>
-        <h3 className="RoomTitle">
+        <h3
+          className="RoomTitle"
+          data-shortcut="n"
+          data-trigger="scrollIntoView"
+        >
           {Channel(room)}
           <span className="UnreadCount">{messages && messages.length}</span>
           <span className="Participants">
@@ -198,10 +204,18 @@ export class Room extends React.Component<Props, State> {
             ))}
           </span>
           <span className="ReadButton">
-            <span onClick={async () => await this.leaveRoom()} data-shortcut="x" data-trigger="click">
+            <span
+              onClick={async () => await this.leaveRoom()}
+              data-shortcut="x"
+              data-trigger="click"
+            >
               <Icon type="close"></Icon>
             </span>
-            <span onClick={async () => await this.markRead()} data-shortcut="r" data-trigger="click">
+            <span
+              onClick={async () => await this.markRead()}
+              data-shortcut="r"
+              data-trigger="click"
+            >
               <Icon type="done"></Icon>
             </span>
           </span>
@@ -220,7 +234,12 @@ export class Room extends React.Component<Props, State> {
               previous={messages[idx - 1]}
               emoji={this.props.emoji}
               rocketchat={this.props.rocketchat}
-              unloadedChildren={message.tcount ? message.tcount - messages.filter(msg => msg.tmid == message._id).length : 0}
+              unloadedChildren={
+                message.tcount
+                  ? message.tcount -
+                    messages.filter((msg) => msg.tmid == message._id).length
+                  : 0
+              }
               onExpand={async () => await this.onExpandMessage(message)}
               onUpdate={async () => await this.fetchMessages()}
             ></Message>
@@ -235,11 +254,20 @@ export class Room extends React.Component<Props, State> {
     );
   }
   async onExpandMessage(message: any) {
-    const response = await this.props.rocketchat.call("GET", `chat.getThreadMessages?tmid=${message._id}`);
+    const response = await this.props.rocketchat.call(
+      "GET",
+      `chat.getThreadMessages?tmid=${message._id}`
+    );
     this.setState({
-      threadContext: [...this.state.threadContext, ...response.messages.filter(
-        tMessage => !(this.state.messages || []).find(message => message._id === tMessage._id)
-      )]
-    })
+      threadContext: [
+        ...this.state.threadContext,
+        ...response.messages.filter(
+          (tMessage) =>
+            !(this.state.messages || []).find(
+              (message) => message._id === tMessage._id
+            )
+        ),
+      ],
+    });
   }
 }

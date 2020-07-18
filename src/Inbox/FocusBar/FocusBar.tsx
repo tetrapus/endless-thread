@@ -39,7 +39,6 @@ export class FocusBar extends React.Component<Props, State> {
         events,
         nextEvent,
       });
-      console.log(this.state);
     }
   }
 

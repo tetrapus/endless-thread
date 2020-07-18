@@ -1,7 +1,16 @@
 import * as React from "react";
 
+export type IconType =
+  | "close"
+  | "expand"
+  | "collapse"
+  | "done"
+  | "top"
+  | "bottom"
+  | "check";
+
 type Props = {
-  type: "close" | "expand" | "collapse" | "done";
+  type: IconType;
   size?: number;
   fill?: string;
 };

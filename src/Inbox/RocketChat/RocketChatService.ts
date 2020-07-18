@@ -1,19 +1,17 @@
 import { Credentials } from "./Credentials";
+import { GreasyDocument } from "./GreasyDocument";
+
+declare var document: GreasyDocument;
 
 export class RocketChatService {
   credentials?: Credentials;
   identity: any;
-
-  constructor() {
-    document.rocket = (a, b, c) => this.call(a, b, c);
-  }
 
   call(method: "POST" | "GET", endpoint: string, data?: any) {
     return new Promise((resolve) => {
       if (document.rocketchatCorsBypass === undefined) {
         return;
       }
-      console.log(this.credentials, data);
       document.rocketchatCorsBypass({
         method,
         url: `${document.rocketchatServer}/api/v1/${endpoint}`,
@@ -28,7 +26,6 @@ export class RocketChatService {
         },
         data: data ? JSON.stringify(data) : undefined,
         onload: (r: any) => {
-          console.log(r);
           resolve(JSON.parse(r.responseText));
         },
       });

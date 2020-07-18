@@ -81,7 +81,6 @@ export class RocketChat extends React.Component<Props, State> {
         }))
       ),
     });
-    console.log(this.state);
   }
 
   render() {

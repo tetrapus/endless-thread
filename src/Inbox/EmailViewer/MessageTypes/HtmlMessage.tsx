@@ -1,8 +1,8 @@
 import * as React from "react";
-import { Spinner } from "../UI/Spinner";
+import { Spinner } from "../../UI/Spinner";
 import { Base64 } from "js-base64";
 import gmail = gapi.client.gmail;
-import { definitely } from "../../helpers";
+import { definitely } from "../../../helpers";
 import { decode } from "urlsafe-base64";
 import "./HtmlMessage.scss";
 
@@ -42,7 +42,6 @@ class HtmlMessage extends React.Component<Props, State> {
 
   componentDidMount(): void {
     if (!this.renderTarget.current) {
-      console.log("Err: unmounted rendertarget");
       return;
     }
     const data = Base64.encode(
@@ -57,16 +56,13 @@ class HtmlMessage extends React.Component<Props, State> {
       rewrite: (uri: { domain_?: string; scheme_?: string; path_: string }) => {
         if (uri.domain_ === "attachments" && uri.scheme_ == "https") {
           const part = this.props.attachments[uri.path_.slice(1)];
-          if (!part) {
-            console.log("Uh oh!", uri, this.props.attachments);
-          }
           const data = Base64.btoa(
             decode(definitely(definitely(part.body).data)).toString("binary")
           );
-          return `data:${part.mimeType};base64,${data}`;
+          return `data:${part.mimeType};base64,${data}#${uri.path_}`;
         }
         return uri;
-      }
+      },
     };
 
     caja.load(this.renderTarget.current, uriPolicy, (frame: any) => {
@@ -74,9 +70,6 @@ class HtmlMessage extends React.Component<Props, State> {
         .code(`data:text/html;base64,${data}`, "text/html")
         .run(() => this.setState({ loading: false }));
     });
-
-    //this.renderTarget.current.innerHTML = Base64.decode(data);
-    //this.setState({loading: false});
   }
 }
 

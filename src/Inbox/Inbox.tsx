@@ -1,8 +1,8 @@
 import * as React from "react";
 import { Navigation } from "./Navigation/Navigation";
-import { ThreadList } from "./ThreadList";
-import "./EmailViewer.scss";
-import { FocusBar } from "./FocusBar";
+import { ThreadList } from "./EmailViewer/ThreadList";
+import "./Inbox.scss";
+import { FocusBar } from "./FocusBar/FocusBar";
 import { RocketChat } from "./RocketChat/RocketChat";
 import { Tasklist } from "./Tasks/Tasklist";
 import { Shortcuts } from "./Shortcuts";
@@ -12,7 +12,7 @@ interface Props {
 }
 interface State {}
 
-export class EmailViewer extends React.Component<Props, State> {
+export class Inbox extends React.Component<Props, State> {
   render() {
     return (
       <div className="EmailViewer">

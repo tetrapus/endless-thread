@@ -1,8 +1,8 @@
 import * as React from "react";
 import { Thread } from "./Thread";
 import "./ThreadList.scss";
-import { Spinner } from "./UI/Spinner";
-import { definitely } from "../helpers";
+import { Spinner } from "../UI/Spinner";
+import { definitely } from "../../helpers";
 
 interface Props {
   email: string;
@@ -69,7 +69,7 @@ class ThreadList extends React.Component<Props, State> {
     const miniThreads = threadsResponse.result.threads || [];
     if (!miniThreads.length) {
       this.setState({
-        threadsList: []
+        threadsList: [],
       });
       return;
     }

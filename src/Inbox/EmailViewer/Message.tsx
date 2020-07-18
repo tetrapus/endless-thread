@@ -1,6 +1,6 @@
 import * as React from "react";
 import VisibilitySensor from "react-visibility-sensor";
-import { Spinner } from "./UI/Spinner";
+import { Spinner } from "../UI/Spinner";
 import "./Message.scss";
 import { Html5Entities } from "html-entities";
 import { HtmlMessage } from "./MessageTypes/HtmlMessage";
@@ -9,7 +9,7 @@ import { oc } from "ts-optchain";
 import { encode, decode } from "urlsafe-base64";
 
 import gmail = gapi.client.gmail;
-import { definitely, isDefined, getValueByName } from "../helpers";
+import { definitely, isDefined, getValueByName } from "../../helpers";
 import ReactTimeAgo from "react-timeago";
 
 interface Props {
@@ -28,11 +28,11 @@ const unfoldParts = (part: gmail.MessagePart): gmail.MessagePart[] => {
     "multipart/alternative",
     "multipart/related",
     "text/plain",
-    "text/html"
+    "text/html",
   ];
 
   if (part.mimeType == "multipart/alternative" && part.parts) {
-    const supported = part.parts.filter(part =>
+    const supported = part.parts.filter((part) =>
       supportedTypes.includes(part.mimeType || "")
     );
     return supported ? unfoldParts(supported[supported.length - 1]) : [];
@@ -41,19 +41,16 @@ const unfoldParts = (part: gmail.MessagePart): gmail.MessagePart[] => {
     const main = definitely(newParts[0]);
     const data = decode(definitely(definitely(main.body).data))
       .toString("utf8")
-      .replace(
-        /cid:/g,
-        "https://attachments/"
-      );
+      .replace(/cid:/g, "https://attachments/");
     return [
       {
         ...main,
         body: {
           ...main.body,
-          data: encode(Buffer.from(data, "utf8"))
-        }
+          data: encode(Buffer.from(data, "utf8")),
+        },
       },
-      ...newParts.slice(1)
+      ...newParts.slice(1),
     ];
   } else if (part.mimeType == "multipart/mixed" && part.parts) {
     return ([] as gmail.MessagePart[]).concat(...part.parts.map(unfoldParts));
@@ -68,7 +65,7 @@ class Message extends React.Component<Props, State> {
   constructor(props: Readonly<Props>) {
     super(props);
     this.state = {
-      expanded: undefined
+      expanded: undefined,
     };
   }
 
@@ -85,7 +82,7 @@ class Message extends React.Component<Props, State> {
       .find((header: { name: string }) => header.name == "From");
 
     return (
-      <div className={this.props.previous === undefined? "First" : "NotFirst"}>
+      <div className={this.props.previous === undefined ? "First" : "NotFirst"}>
         {isUnread || (
           <div>
             {this.getSenderComponent(fromHeader, true)}
@@ -102,7 +99,7 @@ class Message extends React.Component<Props, State> {
         {isUnread &&
           (this.state.expanded === undefined ? (
             <VisibilitySensor
-              onChange={isVisible => this.handleVisibilityChange(isVisible)}
+              onChange={(isVisible) => this.handleVisibilityChange(isVisible)}
             >
               <Spinner></Spinner>
             </VisibilitySensor>
@@ -130,12 +127,10 @@ class Message extends React.Component<Props, State> {
       return;
     }
 
-    if (
-      this.props.previous
-    ) {
+    if (this.props.previous) {
       const prevHeaders = oc(this).props.previous.payload.headers([]);
       if (prevHeaders) {
-        const prevFrom = getValueByName(prevHeaders, 'From');
+        const prevFrom = getValueByName(prevHeaders, "From");
         if (prevFrom === fromHeader.value) {
           return;
         }
@@ -166,7 +161,7 @@ class Message extends React.Component<Props, State> {
     if (parts.length == 1) {
       return [parts[0]];
     } else {
-      return parts.filter(part => part.mimeType != "text/plain");
+      return parts.filter((part) => part.mimeType != "text/plain");
     }
   }
 
@@ -176,12 +171,11 @@ class Message extends React.Component<Props, State> {
     }
     const data = decode(part.body.data).toString("utf8");
     if (part.mimeType == "text/html") {
-      console.log(attachments);
       const attachmentMap = Object.fromEntries(
         attachments
-          .map(attachment => {
+          .map((attachment) => {
             const idHeader = definitely(attachment.headers).find(
-              header => header.name == "Content-ID"
+              (header) => header.name == "Content-ID"
             );
             return idHeader
               ? [definitely(idHeader.value).slice(1, -1), attachment]

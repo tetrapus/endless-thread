@@ -3,13 +3,13 @@ import "./Shortcuts.scss";
 
 interface Props {}
 interface State {
-  overlay: boolean;
+  targets: ReadonlyArray<Element>;
 }
 
 export class Shortcuts extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = { overlay: false };
+    this.state = { targets: [] };
   }
 
   componentDidMount() {
@@ -29,7 +29,11 @@ export class Shortcuts extends React.Component<Props, State> {
       ).filter((elem) => this.inViewport(elem));
       if (targets.length) {
         const target = targets[0];
-        setTimeout(() => target[target.getAttribute("data-trigger")](), 10);
+        this.setState({ targets: [target] });
+        setTimeout(() => {
+          target[target.getAttribute("data-trigger")]();
+          this.setState({ targets: [] });
+        }, 150);
       }
     }
   }
@@ -37,7 +41,19 @@ export class Shortcuts extends React.Component<Props, State> {
   onKeyDown(event: KeyboardEvent) {
     if (event.target == document.body) {
       if (event.key == "?") {
-        this.setState({ overlay: true });
+        const targets = Array.from(
+          document.querySelectorAll("[data-shortcut]")
+        ).filter((elem) => this.inViewport(elem));
+        const firstTargets = targets.filter(
+          (target) =>
+            target ===
+            targets.find(
+              (t) =>
+                t.getAttribute("data-shortcut") ==
+                target.getAttribute("data-shortcut")
+            )
+        );
+        this.setState({ targets: firstTargets });
       }
     }
   }
@@ -45,7 +61,7 @@ export class Shortcuts extends React.Component<Props, State> {
   onKeyUp(event: KeyboardEvent) {
     if (event.target == document.body) {
       if (event.key == "?") {
-        this.setState({ overlay: false });
+        this.setState({ targets: [] });
       }
     }
   }
@@ -70,34 +86,23 @@ export class Shortcuts extends React.Component<Props, State> {
   }
 
   render() {
-    if (!this.state.overlay) {
+    if (!this.state.targets.length) {
       return null;
     }
 
-    const targets = Array.from(
-      document.querySelectorAll("[data-shortcut]")
-    ).filter((elem) => this.inViewport(elem));
-    const firstTargets = targets.filter(
-      (target) =>
-        target ===
-        targets.find(
-          (t) =>
-            t.getAttribute("data-shortcut") ==
-            target.getAttribute("data-shortcut")
-        )
-    );
-
     return (
       <div>
-        <div className="ShortcutOverlay"></div>
-        {firstTargets.map((target) => {
+        {this.state.targets.map((target) => {
           const position = this.offset(target);
           return (
             <div>
               <div
                 className="ShortcutHint"
                 style={{
-                  top: position.top - 30,
+                  top:
+                    position.top > 30 + window.pageYOffset
+                      ? position.top - 30
+                      : window.pageYOffset,
                   left: position.left - 30,
                 }}
               >
@@ -107,8 +112,8 @@ export class Shortcuts extends React.Component<Props, State> {
                 className="ShortcutOverlay"
                 style={{
                   top: position.top,
-                  left: position.left,
-                  width: target.clientWidth,
+                  left: position.left + 2,
+                  width: target.clientWidth - 2,
                   height: target.clientHeight,
                 }}
               ></div>

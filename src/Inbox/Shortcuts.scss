@@ -9,12 +9,12 @@
   padding: 4px;
   text-align: center;
   box-shadow: grey 1px 1px 4px;
-  background: #2259b5;
+  background: black;
 }
 
 .ShortcutOverlay {
   z-index: 9001;
-  box-shadow: #2259b5 0 0 8px;
   position: absolute;
-  border: 2px solid #2259b5;
+  border-top: 2px solid #2259b5;
+  border-bottom: 2px solid #2259b5;
 }
