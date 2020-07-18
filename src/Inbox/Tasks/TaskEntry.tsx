@@ -101,8 +101,8 @@ export class TaskEntry extends React.Component<Props, State> {
             <Markdown source={task.notes || ""}></Markdown>
             {task.links ? (
               <div className="TaskLinks">
-                {task.links.map((link) => (
-                  <div className="TaskLink">
+                {task.links.map((link, idx) => (
+                  <div className="TaskLink" key={idx}>
                     <a href={link.link} target="_blank">
                       {link.description}
                     </a>

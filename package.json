@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@babel/runtime": "7.7.2",
+    "@types/classnames": "^2.2.10",
     "@types/gapi": "^0.0.39",
     "@types/gapi.auth2": "^0.0.50",
     "@types/gapi.client": "^1.0.1",
@@ -30,6 +31,7 @@
     "@types/timeago": "^1.6.0",
     "@types/urlsafe-base64": "^1.0.28",
     "base-64": "^0.1.0",
+    "classnames": "^2.2.6",
     "html-entities": "^1.2.1",
     "js-base64": "^2.5.1",
     "normalize.css": "^8.0.1",

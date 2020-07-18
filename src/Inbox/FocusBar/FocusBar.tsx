@@ -1,7 +1,25 @@
 import "./FocusBar.scss";
 import ReactTimeAgo from "react-timeago";
+import classNames from "classnames";
 
 import React from "react";
+import { Icon } from "../UI/Icon";
+
+const Attendee = ({ attendee }) => {
+  const statuses = {
+    declined: "close",
+    accepted: "check",
+  };
+  console.log(attendee);
+  const icon = statuses[attendee.responseStatus] ? (
+    <Icon size={12} type={statuses[attendee.responseStatus]}></Icon>
+  ) : null;
+  return (
+    <div>
+      {attendee.displayName || attendee.email} {icon}
+    </div>
+  );
+};
 
 interface Props {}
 interface State {
@@ -51,11 +69,17 @@ export class FocusBar extends React.Component<Props, State> {
         timeMin: this.dateToLocalISO(new Date(Date.now())),
       })
       .then((response) => {
+        console.log(response);
         const events = response.result.items.filter(
           (event) =>
             new Date(event.end.dateTime) > new Date(Date.now() + 60000) &&
             new Date(event.start.dateTime) <
-              new Date(Date.now() + 12 * 60 * 60 * 1000)
+              new Date(Date.now() + 120 * 60 * 60 * 1000) &&
+            (!event.attendees ||
+              !event.attendees.some(
+                (attendee) =>
+                  attendee.self && attendee.responseStatus == "declined"
+              ))
         );
         this.setState({
           events: events,
@@ -86,22 +110,23 @@ export class FocusBar extends React.Component<Props, State> {
   }
 
   render() {
-    if (!this.state.nextEvent) {
-      return (
-        <div className="FocusBar Inactive">
-          <div className="Content">
-            <div className="Event">☀️ No events today!</div>
-          </div>
-        </div>
-      );
-    }
-
     const topEvent = this.state.nextEvent;
-    if (new Date(topEvent.start.dateTime) < new Date(Date.now() + 120000)) {
-      return (
-        <div className="FocusBar Active">
-          <div className="Content">
-            <div className="Event">
+
+    const isActive =
+      topEvent &&
+      new Date(topEvent.start.dateTime) < new Date(Date.now() + 120000);
+
+    return (
+      <div
+        className={classNames({
+          FocusBar: true,
+          Active: isActive,
+          Inactive: !topEvent,
+        })}
+      >
+        <div className="Content">
+          <div className="Event">
+            {topEvent ? (
               <a
                 href={topEvent.hangoutLink}
                 target="_blank"
@@ -110,40 +135,46 @@ export class FocusBar extends React.Component<Props, State> {
               >
                 🗓️ {topEvent.summary}
               </a>
-            </div>
+            ) : (
+              "☀️ No events today!"
+            )}
+          </div>
+          {topEvent ? (
             <div className="EventTimestamp">
-              <span>Ends&nbsp;</span>
-              <ReactTimeAgo date={topEvent.end.dateTime}></ReactTimeAgo>
+              {isActive ? (
+                <span>
+                  Ends&nbsp;
+                  <ReactTimeAgo date={topEvent.end.dateTime}></ReactTimeAgo>
+                </span>
+              ) : (
+                <span>
+                  Starts&nbsp;
+                  <ReactTimeAgo date={topEvent.start.dateTime}></ReactTimeAgo>
+                </span>
+              )}
             </div>
+          ) : null}
+          {topEvent ? (
             <span className="ActionBar" onClick={() => this.skipEvent()}>
-              ✓
+              <Icon type="check" size={16}></Icon>
             </span>
-          </div>
+          ) : null}
         </div>
-      );
-    }
-
-    return (
-      <div className="FocusBar">
-        <div className="Content">
-          <div className="Event">
-            <a
-              href={topEvent.hangoutLink}
-              target="_blank"
-              data-shortcut="j"
-              data-trigger="click"
-            >
-              🗓️ {topEvent.summary}
-            </a>
+        {topEvent ? (
+          <div className="EventDetails">
+            <div
+              className="EventDescription"
+              dangerouslySetInnerHTML={{ __html: topEvent.description }}
+            ></div>
+            <div className="EventAttendees">
+              {topEvent.attendees
+                .filter((attendee) => !attendee.self)
+                .map((attendee) => (
+                  <Attendee attendee={attendee}></Attendee>
+                ))}
+            </div>
           </div>
-          <div className="EventTimestamp">
-            Starts&nbsp;
-            <ReactTimeAgo date={topEvent.start.dateTime}></ReactTimeAgo>
-          </div>
-          <span className="ActionBar" onClick={() => this.skipEvent()}>
-            ✓
-          </span>
-        </div>
+        ) : null}
       </div>
     );
   }

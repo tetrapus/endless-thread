@@ -42,3 +42,20 @@
 .EventTimestamp {
   white-space: nowrap;
 }
+
+.EventDescription {
+  padding: 4px;
+}
+
+.EventDetails {
+  max-width: 800px;
+  margin-left: auto;
+  display: flex;
+  font-size: 14px;
+}
+
+.EventAttendees {
+  max-height: 200px;
+  min-width: 200px;
+  overflow: scroll;
+}
