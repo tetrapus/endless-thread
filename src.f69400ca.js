@@ -55201,7 +55201,7 @@ function (_React$Component) {
         shortcut: "d",
         trigger: "click",
         onClick: function onClick() {
-          return _this.completeTask(task.id);
+          return _this.completeTask(task);
         }
       })));
     }
@@ -55283,7 +55283,7 @@ function (_React$Component) {
       if (!updatedTask) {
         this.setState({
           tasks: this.state.tasks.filter(function (task) {
-            return task.id === id;
+            return task.id !== id;
           })
         });
       } else {
@@ -55920,7 +55920,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53602" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55837" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
