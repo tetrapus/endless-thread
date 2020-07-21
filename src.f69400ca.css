@@ -606,31 +606,6 @@ p {
   opacity: 1;
 }
 
-.Task {
-  padding: 8px 16px;
-  opacity: 0.5;
-}
-@media only screen and (max-width: 1024px) {
-  .Task:nth-child(n+4) {
-    display: none;
-  }
-}
-
-.TaskActions {
-  position: absolute;
-  right: 0;
-  transform: translateY(-16px) translateX(-16px);
-}
-.TaskActions button {
-  border: none;
-  background: none;
-  padding: 2px;
-}
-
-.Task:not(:hover):not(:first-child):not(:focus-within) .TaskActions {
-  display: none;
-}
-
 .TaskDetails {
   font-size: 14px;
   padding-left: 8px;
@@ -658,6 +633,41 @@ p {
 
 .Tasklist {
   height: 100%;
+}
+.Task {
+  padding: 8px;
+  padding: 8px 8px 8px 4px;
+  opacity: 0.5;
+}
+@media only screen and (max-width: 1024px) {
+  .Task:nth-child(n+4) {
+    display: none;
+  }
+}
+.TaskButton {
+  border: none;
+  background: none;
+}
+.Task-titleRow {
+  display: flex;
+  align-items: center;
+}
+.TaskTitle {
+  flex-grow: 1;
+  padding-left: 8px;
+}
+.TaskActions {
+  position: absolute;
+  right: 0;
+  transform: translateY(-16px) translateX(-16px);
+}
+.Task:not(:hover):not(:first-child):not(:focus-within) .TaskButton {
+  visibility: hidden;
+}
+.TaskNumber {
+  color: #aaa;
+  width: 16px;
+  padding-left: 2px;
 }
 .ShortcutHint {
   position: absolute;
@@ -1037,6 +1047,7 @@ a:hover {
   text-decoration: underline;
 }
 @import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap");
 body {
   font-family: "Roboto", sans-serif;
   background-color: white;

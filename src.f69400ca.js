@@ -37648,23 +37648,14 @@ function (_React$Component) {
           return _this2.loadThread(visible);
         }
       }, React.createElement(_Spinner.Spinner, null)) : thread.messages.map(function (message, idx, all) {
-        return _this2.getMessage(message, idx, all);
+        return React.createElement(_Message.Message, {
+          message: message,
+          key: message.id,
+          email: _this2.props.email,
+          attachments: (0, _helpers.definitely)(_this2.state.attachments),
+          previous: all[idx - 1]
+        });
       })));
-    }
-  }, {
-    key: "getMessage",
-    value: function getMessage(message, idx, all) {
-      var isUnread = function isUnread(message) {
-        return (0, _helpers.definitely)(message.labelIds).includes("UNREAD");
-      };
-
-      return React.createElement(_Message.Message, {
-        message: message,
-        key: message.id,
-        email: this.props.email,
-        attachments: (0, _helpers.definitely)(this.state.attachments),
-        previous: all[idx - 1]
-      });
     }
   }, {
     key: "loadThread",
@@ -38264,7 +38255,7 @@ function (_React$Component) {
                 }).then(function (response) {
                   console.log(response);
                   var events = response.result.items.filter(function (event) {
-                    return new Date(event.end.dateTime) > new Date(Date.now() + 60000) && new Date(event.start.dateTime) < new Date(Date.now() + 120 * 60 * 60 * 1000) && (!event.attendees || !event.attendees.some(function (attendee) {
+                    return new Date(event.end.dateTime) > new Date(Date.now() + 60000) && new Date(event.start.dateTime) < new Date(Date.now() + 12 * 60 * 60 * 1000) && (!event.attendees || !event.attendees.some(function (attendee) {
                       return attendee.self && attendee.responseStatus == "declined";
                     }));
                   });
@@ -38339,7 +38330,9 @@ function (_React$Component) {
         className: "ActionBar",
         onClick: function onClick() {
           return _this4.skipEvent();
-        }
+        },
+        "data-shortcut": "e",
+        "data-trigger": "click"
       }, _react.default.createElement(_Icon.Icon, {
         type: "check",
         size: 16
@@ -54745,7 +54738,7 @@ function (_React$Component) {
     (0, _classCallCheck2.default)(this, RocketChat);
     _this = (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(RocketChat).call(this, props));
     _this.state = {
-      unreads: {},
+      unreads: [],
       emoji: {},
       rocketchat: new _RocketChatService.RocketChatService()
     };
@@ -54821,11 +54814,14 @@ function (_React$Component) {
 
               case 2:
                 response = _context2.sent;
+                console.log(response);
                 unreads = response.update.filter(function (x) {
                   return new Date(x.ls) < new Date(x._updatedAt) - 1000 && !x.archived;
                 });
                 updated = unreads.map(function (unread) {
-                  var old = _this3.state.unreads[unread.fname];
+                  var old = _this3.state.unreads.find(function (room) {
+                    return unread._id === room._id;
+                  });
 
                   if (old === undefined) {
                     return unread;
@@ -54835,13 +54831,14 @@ function (_React$Component) {
                     return unread;
                   }
                 });
+                updated.sort(function (a, b) {
+                  return new Date(a.ls) - new Date(b.ls);
+                });
                 this.setState({
-                  unreads: Object.assign.apply(Object, [{}].concat((0, _toConsumableArray2.default)(updated.map(function (unreadRoom) {
-                    return (0, _defineProperty2.default)({}, unreadRoom.fname, unreadRoom);
-                  }))))
+                  unreads: updated
                 });
 
-              case 6:
+              case 8:
               case "end":
                 return _context2.stop();
             }
@@ -54862,10 +54859,10 @@ function (_React$Component) {
 
       return _react.default.createElement("div", {
         className: "RocketContainer"
-      }, Object.keys(this.state.unreads).map(function (name) {
+      }, this.state.unreads.map(function (room) {
         return _react.default.createElement(_Room.Room, {
-          key: name,
-          room: _this4.state.unreads[name],
+          key: room._id,
+          room: room,
           rocketchat: _this4.state.rocketchat,
           updateAll: function updateAll() {
             return _this4.updateAll();
@@ -54880,6 +54877,11 @@ function (_React$Component) {
 
 exports.RocketChat = RocketChat;
 },{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","./RocketChat.scss":"Inbox/RocketChat/RocketChat.scss","react":"../node_modules/react/index.js","./Room/Room":"Inbox/RocketChat/Room/Room.tsx","./RocketChatService":"Inbox/RocketChat/RocketChatService.ts"}],"Inbox/Tasks/Tasklist.scss":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"Inbox/Tasks/TaskEntry.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -54914,6 +54916,8 @@ var _Markdown = require("../UI/Markdown");
 
 var _Icon = require("../UI/Icon");
 
+require("./TaskEntry.scss");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
@@ -54925,7 +54929,7 @@ var TaskButton = function TaskButton(props) {
     className: "TaskButton",
     onClick: props.onClick,
     "data-shortcut": props.shortcut,
-    "data-trigger": props.trigger
+    "data-trigger": "click"
   }, _react.default.createElement(_Icon.Icon, {
     type: props.icon,
     size: 16
@@ -55107,7 +55111,17 @@ function (_React$Component) {
       var task = this.props.task;
       return _react.default.createElement("div", {
         className: "Task"
-      }, _react.default.createElement("div", null, _react.default.createElement("div", {
+      }, _react.default.createElement("div", {
+        className: "Task-titleRow"
+      }, _react.default.createElement(TaskButton, {
+        icon: "check",
+        shortcut: "d",
+        onClick: function onClick() {
+          return _this.completeTask(task);
+        }
+      }), _react.default.createElement("div", {
+        className: "TaskNumber"
+      }, this.props.position + 1), _react.default.createElement("div", {
         className: "TaskTitle",
         contentEditable: true,
         onBlur: function () {
@@ -55166,7 +55180,19 @@ function (_React$Component) {
 
           return onKeyPress;
         }()
-      }, task.title), _react.default.createElement("div", {
+      }, task.title), this.props.position ? _react.default.createElement(TaskButton, {
+        icon: "top",
+        shortcut: this.props.position > 0 && this.props.position < 9 ? "".concat(this.props.position + 1) : undefined,
+        onClick: function onClick() {
+          return _this.bumpTask(task.id);
+        }
+      }) : _react.default.createElement(TaskButton, {
+        icon: "bottom",
+        shortcut: "z",
+        onClick: function onClick() {
+          return _this.deferTask(task.id);
+        }
+      }), " "), _react.default.createElement("div", {
         className: "TaskDetails"
       }, _react.default.createElement(_Markdown.Markdown, {
         source: task.notes || ""
@@ -55180,37 +55206,14 @@ function (_React$Component) {
           href: link.link,
           target: "_blank"
         }, link.description));
-      })) : "")), _react.default.createElement("div", {
-        className: "TaskActions"
-      }, _react.default.createElement(TaskButton, {
-        icon: "top",
-        shortcut: "a",
-        trigger: "click",
-        onClick: function onClick() {
-          return _this.bumpTask(task.id);
-        }
-      }), _react.default.createElement(TaskButton, {
-        icon: "bottom",
-        shortcut: "z",
-        trigger: "click",
-        onClick: function onClick() {
-          return _this.deferTask(task.id);
-        }
-      }), _react.default.createElement(TaskButton, {
-        icon: "check",
-        shortcut: "d",
-        trigger: "click",
-        onClick: function onClick() {
-          return _this.completeTask(task);
-        }
-      })));
+      })) : ""));
     }
   }]);
   return TaskEntry;
 }(_react.default.Component);
 
 exports.TaskEntry = TaskEntry;
-},{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","../UI/Markdown":"Inbox/UI/Markdown.tsx","../UI/Icon":"Inbox/UI/Icon.tsx"}],"Inbox/Tasks/Tasklist.tsx":[function(require,module,exports) {
+},{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","../UI/Markdown":"Inbox/UI/Markdown.tsx","../UI/Icon":"Inbox/UI/Icon.tsx","./TaskEntry.scss":"Inbox/Tasks/TaskEntry.scss"}],"Inbox/Tasks/Tasklist.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -55382,10 +55385,11 @@ function (_React$Component) {
         "data-trigger": "focus"
       }), _react.default.createElement("div", {
         className: "Tasks"
-      }, tasks.map(function (task) {
+      }, tasks.map(function (task, idx) {
         return _react.default.createElement(_TaskEntry.TaskEntry, {
           key: task.id,
           task: task,
+          position: idx,
           lastId: _this3.state.tasks[_this3.state.tasks.length - 1].id,
           onUpdate: function onUpdate(updatedTask) {
             return _this3.onTaskUpdate(task.id, updatedTask);
@@ -55665,8 +55669,8 @@ function (_React$Component) {
         return _react.default.createElement("div", null, _react.default.createElement("div", {
           className: "ShortcutHint",
           style: {
-            top: position.top > 30 + window.pageYOffset ? position.top - 30 : window.pageYOffset,
-            left: position.left - 30
+            top: position.top > 24 + window.pageYOffset ? position.top - 24 : window.pageYOffset,
+            left: position.left - 24
           }
         }, target.getAttribute("data-shortcut")), _react.default.createElement("div", {
           className: "ShortcutOverlay",
@@ -55920,7 +55924,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55837" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52106" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
