@@ -11,6 +11,8 @@ interface Props {
   emoji: any;
   updateAll: any;
   rocketchat: RocketChatService;
+  pinned: boolean;
+  onPin: () => void;
 }
 interface State {
   context: ReadonlyArray<any>;
@@ -194,16 +196,29 @@ export class Room extends React.Component<Props, State> {
           {Channel(room)}
           <span className="UnreadCount">{messages && messages.length}</span>
           <span className="Participants">
-            {participants.map((username) => (
-              <img
-                key={username}
-                title={`@${username}`}
-                src={`${document.rocketchatServer}/avatar/${username}`}
-                width="16"
-              ></img>
-            ))}
+            {false &&
+              participants.map((username) => (
+                <img
+                  key={username}
+                  title={`@${username}`}
+                  src={`${document.rocketchatServer}/avatar/${username}`}
+                  width="16"
+                ></img>
+              ))}
           </span>
           <span className="ReadButton">
+            <span
+              onClick={() => this.props.onPin()}
+              style={{ paddingTop: 4 }}
+              data-shortcut="p"
+              data-trigger="click"
+            >
+              <Icon
+                type="pin"
+                size={24}
+                fill={this.props.pinned ? "#000" : undefined}
+              ></Icon>
+            </span>
             <span
               onClick={async () => await this.leaveRoom()}
               data-shortcut="x"
@@ -242,6 +257,7 @@ export class Room extends React.Component<Props, State> {
               }
               onExpand={async () => await this.onExpandMessage(message)}
               onUpdate={async () => await this.fetchMessages()}
+              onSubmit={() => this.props.onPin()}
             ></Message>
           ))
         )}
@@ -249,6 +265,7 @@ export class Room extends React.Component<Props, State> {
           rocketchat={this.props.rocketchat}
           roomId={this.props.room.rid}
           onUpdate={async () => await this.fetchMessages()}
+          onSubmit={() => this.props.onPin()}
         ></MessageBox>
       </div>
     );

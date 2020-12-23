@@ -1,0 +1,45 @@
+.Task {
+  @media only screen and (max-width: 1024px) {
+    &:nth-child(n + 4) {
+      display: none;
+    }
+  }
+  @media only screen and (min-width: 1280px) {
+    max-width: calc(50vw - 400px);
+  }
+
+  padding: 8px;
+  padding: 8px 8px 8px 4px;
+  opacity: 0.5;
+
+  &Button {
+    border: none;
+    background: none;
+  }
+
+  &-titleRow {
+    display: flex;
+    align-items: center;
+  }
+
+  &Title {
+    flex-grow: 1;
+    padding-left: 8px;
+  }
+
+  &Actions {
+    position: absolute;
+    right: 0;
+    transform: translateY(-16px) translateX(-16px);
+  }
+
+  &:not(:hover):not(:first-child):not(:focus-within) .TaskButton {
+    visibility: hidden;
+  }
+
+  &Number {
+    color: #aaa;
+    width: 16px;
+    padding-left: 2px;
+  }
+}

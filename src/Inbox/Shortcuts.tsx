@@ -100,10 +100,10 @@ export class Shortcuts extends React.Component<Props, State> {
                 className="ShortcutHint"
                 style={{
                   top:
-                    position.top > 30 + window.pageYOffset
-                      ? position.top - 30
+                    position.top > 24 + window.pageYOffset
+                      ? position.top - 24
                       : window.pageYOffset,
-                  left: position.left - 30,
+                  left: position.left - 24,
                 }}
               >
                 {target.getAttribute("data-shortcut")}

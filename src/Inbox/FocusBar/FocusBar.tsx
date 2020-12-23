@@ -74,7 +74,7 @@ export class FocusBar extends React.Component<Props, State> {
           (event) =>
             new Date(event.end.dateTime) > new Date(Date.now() + 60000) &&
             new Date(event.start.dateTime) <
-              new Date(Date.now() + 120 * 60 * 60 * 1000) &&
+              new Date(Date.now() + 12 * 60 * 60 * 1000) &&
             (!event.attendees ||
               !event.attendees.some(
                 (attendee) =>
@@ -155,7 +155,12 @@ export class FocusBar extends React.Component<Props, State> {
             </div>
           ) : null}
           {topEvent ? (
-            <span className="ActionBar" onClick={() => this.skipEvent()}>
+            <span
+              className="ActionBar"
+              onClick={() => this.skipEvent()}
+              data-shortcut="e"
+              data-trigger="click"
+            >
               <Icon type="check" size={16}></Icon>
             </span>
           ) : null}
@@ -167,7 +172,7 @@ export class FocusBar extends React.Component<Props, State> {
               dangerouslySetInnerHTML={{ __html: topEvent.description }}
             ></div>
             <div className="EventAttendees">
-              {topEvent.attendees
+              {(topEvent.attendees || [])
                 .filter((attendee) => !attendee.self)
                 .map((attendee) => (
                   <Attendee attendee={attendee}></Attendee>

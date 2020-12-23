@@ -102,6 +102,9 @@ class ThreadList extends React.Component<Props, State> {
   render() {
     return (
       <div className="ThreadList">
+        {this.state.unreadCount ? (
+          <div className="UnreadThreads">{this.state.unreadCount} Unread</div>
+        ) : null}
         {this.state.threadsList !== undefined ? (
           this.state.threadsList.map((thread) => (
             <Thread
@@ -118,6 +121,7 @@ class ThreadList extends React.Component<Props, State> {
           className="ReloadButton"
           onClick={() => {
             this.populateThreadList();
+            this.populateUnreadCount();
             window.scrollTo({ top: 0, behavior: "smooth" });
           }}
           data-shortcut="t"

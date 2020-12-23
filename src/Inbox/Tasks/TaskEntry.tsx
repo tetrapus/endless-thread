@@ -2,9 +2,11 @@ import React from "react";
 import { Task } from "./Task";
 import { Markdown } from "../UI/Markdown";
 import { Icon, IconType } from "../UI/Icon";
+import "./TaskEntry.scss";
 
 interface Props {
   task: Task;
+  position: number;
   lastId: string;
   onUpdate: (task?: Task) => void;
   onChange: () => Promise<void>;
@@ -13,8 +15,7 @@ interface State {}
 
 interface TaskButtonProps {
   onClick: () => void;
-  shortcut: string;
-  trigger: string;
+  shortcut?: string;
   icon: IconType;
 }
 
@@ -23,7 +24,7 @@ const TaskButton = (props: TaskButtonProps) => (
     className="TaskButton"
     onClick={props.onClick}
     data-shortcut={props.shortcut}
-    data-trigger={props.trigger}
+    data-trigger="click"
   >
     <Icon type={props.icon} size={16}></Icon>
   </button>
@@ -88,7 +89,13 @@ export class TaskEntry extends React.Component<Props, State> {
     const { task } = this.props;
     return (
       <div className="Task">
-        <div>
+        <div className="Task-titleRow">
+          <TaskButton
+            icon="check"
+            shortcut="d"
+            onClick={() => this.completeTask(task)}
+          ></TaskButton>
+          <div className="TaskNumber">{this.props.position + 1}</div>
           <div
             className="TaskTitle"
             contentEditable={true}
@@ -97,42 +104,40 @@ export class TaskEntry extends React.Component<Props, State> {
           >
             {task.title}
           </div>
-          <div className="TaskDetails">
-            <Markdown source={task.notes || ""}></Markdown>
-            {task.links ? (
-              <div className="TaskLinks">
-                {task.links.map((link, idx) => (
-                  <div className="TaskLink" key={idx}>
-                    <a href={link.link} target="_blank">
-                      {link.description}
-                    </a>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              ""
-            )}
-          </div>
+          {this.props.position ? (
+            <TaskButton
+              icon="top"
+              shortcut={
+                this.props.position > 0 && this.props.position < 9
+                  ? `${this.props.position + 1}`
+                  : undefined
+              }
+              onClick={() => this.bumpTask(task.id)}
+            ></TaskButton>
+          ) : (
+            <TaskButton
+              icon="bottom"
+              shortcut="z"
+              onClick={() => this.deferTask(task.id)}
+            ></TaskButton>
+          )}{" "}
         </div>
-        <div className="TaskActions">
-          <TaskButton
-            icon="top"
-            shortcut="a"
-            trigger="click"
-            onClick={() => this.bumpTask(task.id)}
-          ></TaskButton>
-          <TaskButton
-            icon="bottom"
-            shortcut="z"
-            trigger="click"
-            onClick={() => this.deferTask(task.id)}
-          ></TaskButton>
-          <TaskButton
-            icon="check"
-            shortcut="d"
-            trigger="click"
-            onClick={() => this.completeTask(task.id)}
-          ></TaskButton>
+
+        <div className="TaskDetails">
+          <Markdown source={task.notes || ""}></Markdown>
+          {task.links ? (
+            <div className="TaskLinks">
+              {task.links.map((link, idx) => (
+                <div className="TaskLink" key={idx}>
+                  <a href={link.link} target="_blank">
+                    {link.description}
+                  </a>
+                </div>
+              ))}
+            </div>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     );

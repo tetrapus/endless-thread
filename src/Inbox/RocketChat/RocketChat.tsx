@@ -19,19 +19,22 @@ declare var document: GreasyDocument;
 
 interface Props {}
 interface State {
-  unreads: { [name: string]: any };
+  unreads: ReadonlyArray<any>;
+  pinned: ReadonlyArray<string>;
   emoji: { [name: string]: string };
-  subscriptions?: ReadonlyArray<any>;
   rocketchat: RocketChatService;
+  subscriptions: ReadonlyArray<any>;
 }
 
 export class RocketChat extends React.Component<Props, State> {
   constructor(props: Readonly<Props>) {
     super(props);
     this.state = {
-      unreads: {},
+      unreads: [],
       emoji: {},
       rocketchat: new RocketChatService(),
+      pinned: [],
+      subscriptions: [],
     };
   }
 
@@ -56,15 +59,18 @@ export class RocketChat extends React.Component<Props, State> {
   }
 
   async updateAll() {
-    const response = await this.state.rocketchat.call(
+    const response = (await this.state.rocketchat.call(
       "GET",
       "subscriptions.get"
-    );
+    )) as any;
+    console.log(response);
     const unreads = response.update.filter(
-      (x) => new Date(x.ls) < new Date(x._updatedAt) - 1000 && !x.archived
+      (x) =>
+        this.state.pinned.find((roomId) => roomId == x._id) ||
+        (new Date(x.ls) < new Date(x._updatedAt) - 1000 && !x.archived)
     );
     const updated = unreads.map((unread) => {
-      const old = this.state.unreads[unread.fname];
+      const old = this.state.unreads.find((room) => unread._id === room._id);
       if (old === undefined) {
         return unread;
       } else if (old._updatedAt === unread._updatedAt) {
@@ -73,26 +79,53 @@ export class RocketChat extends React.Component<Props, State> {
         return unread;
       }
     });
+    updated.sort((a, b) => new Date(a.ls) - new Date(b.ls));
     this.setState({
-      unreads: Object.assign(
-        {},
-        ...updated.map((unreadRoom) => ({
-          [unreadRoom.fname]: unreadRoom,
-        }))
-      ),
+      unreads: updated,
+      subscriptions: response.update,
     });
+  }
+
+  onPinRoom(roomId: string) {
+    if (!this.state.pinned.includes(roomId)) {
+      this.setState({ pinned: [...this.state.pinned, roomId] });
+    } else {
+      this.setState({
+        pinned: this.state.pinned.filter((pin) => pin != roomId),
+      });
+    }
   }
 
   render() {
     return (
       <div className="RocketContainer">
-        {Object.keys(this.state.unreads).map((name) => (
+        <input
+          placeholder="Open chat"
+          style={{ marginTop: 16 }}
+          onKeyPress={(e) => {
+            if (e.key == "Enter") {
+              const value = this.state.subscriptions.find(
+                (sub) => sub.name === e.currentTarget.value
+              );
+              if (value) {
+                this.setState({
+                  pinned: [...this.state.pinned, value._id],
+                  unreads: [...this.state.unreads, value],
+                });
+              }
+              e.currentTarget.value = "";
+            }
+          }}
+        ></input>
+        {this.state.unreads.map((room) => (
           <Room
-            key={name}
-            room={this.state.unreads[name]}
+            key={room._id}
+            room={room}
             rocketchat={this.state.rocketchat}
             updateAll={() => this.updateAll()}
             emoji={this.state.emoji}
+            pinned={this.state.pinned.includes(room._id)}
+            onPin={() => this.onPinRoom(room._id)}
           ></Room>
         ))}
       </div>

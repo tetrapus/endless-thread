@@ -15,33 +15,6 @@
   opacity: 1;
 }
 
-.Task {
-  @media only screen and (max-width: 1024px) {
-    &:nth-child(n + 4) {
-      display: none;
-    }
-  }
-
-  padding: 8px 16px;
-  opacity: 0.5;
-}
-
-.TaskActions {
-  position: absolute;
-  right: 0;
-  transform: translateY(-16px) translateX(-16px);
-
-  button {
-    border: none;
-    background: none;
-    padding: 2px;
-  }
-}
-
-.Task:not(:hover):not(:first-child):not(:focus-within) .TaskActions {
-  display: none;
-}
-
 .TaskDetails {
   font-size: 14px;
   padding-left: 8px;
@@ -56,13 +29,12 @@
 
 .Tasks {
   background-color: #f5f5f5;
-  @media only screen and (min-width: 1024px) {
-    position: sticky;
-    top: 0;
-    height: 100vh;
-  }
 }
 
 .Tasklist {
-  height: 100%;
+  height: 100vh;
+  @media only screen and (min-width: 1024px) {
+    position: sticky;
+    top: 0;
+  }
 }

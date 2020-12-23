@@ -147,30 +147,18 @@ class Thread extends React.Component<ThreadProps, ThreadState> {
               <Spinner></Spinner>
             </VisibilitySensor>
           ) : (
-            thread.messages.map((message, idx, all) =>
-              this.getMessage(message, idx, all)
-            )
+            thread.messages.map((message, idx, all) => (
+              <Message
+                message={message}
+                key={message.id}
+                email={this.props.email}
+                attachments={definitely(this.state.attachments)}
+                previous={all[idx - 1]}
+              ></Message>
+            ))
           )}
         </div>
       </div>
-    );
-  }
-  getMessage(
-    message: gapi.client.gmail.Message,
-    idx: number,
-    all: gapi.client.gmail.Message[]
-  ) {
-    const isUnread = (message: gapi.client.gmail.Message) =>
-      definitely(message.labelIds).includes("UNREAD");
-
-    return (
-      <Message
-        message={message}
-        key={message.id}
-        email={this.props.email}
-        attachments={definitely(this.state.attachments)}
-        previous={all[idx - 1]}
-      ></Message>
     );
   }
 

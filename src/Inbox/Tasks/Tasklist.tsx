@@ -26,7 +26,7 @@ export class Tasklist extends React.Component<Props, State> {
   onTaskUpdate(id: string, updatedTask?: Task) {
     if (!updatedTask) {
       this.setState({
-        tasks: this.state.tasks.filter((task) => task.id === id),
+        tasks: this.state.tasks.filter((task) => task.id !== id),
       });
     } else {
       this.setState({
@@ -43,6 +43,7 @@ export class Tasklist extends React.Component<Props, State> {
       showCompleted: false,
       maxResults: 100,
     });
+    console.log(tasks);
     this.setState({
       tasks: tasks.result.items.sort(
         (a, b) => parseInt(a.position) - parseInt(b.position)
@@ -64,10 +65,11 @@ export class Tasklist extends React.Component<Props, State> {
             data-trigger="focus"
           ></div>
           <div className="Tasks">
-            {tasks.map((task) => (
+            {tasks.map((task, idx) => (
               <TaskEntry
                 key={task.id}
                 task={task}
+                position={idx}
                 lastId={this.state.tasks[this.state.tasks.length - 1].id}
                 onUpdate={(updatedTask?: Task) =>
                   this.onTaskUpdate(task.id, updatedTask)

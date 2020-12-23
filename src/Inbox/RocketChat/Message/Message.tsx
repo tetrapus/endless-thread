@@ -16,6 +16,7 @@ interface Props {
   unloadedChildren?: number;
   onExpand: () => void;
   onUpdate: () => void;
+  onSubmit: () => void;
 }
 interface State {
   isActive: bool;
@@ -200,7 +201,10 @@ export class Message extends React.Component<Props, State> {
             rocketchat={this.props.rocketchat}
             roomId={this.props.message.rid}
             onUpdate={this.props.onUpdate}
-            onSubmit={() => this.setState({ isActive: false })}
+            onSubmit={() => {
+              this.setState({ isActive: false });
+              this.props.onSubmit();
+            }}
             parent={this.props.message._id}
           ></MessageBox>
         ) : null}
