@@ -29,26 +29,26 @@
   position: sticky;
   top: 26px;
   z-index: 101;
-  background: #eee;
-  box-shadow: 0 0 3px #eee;
+  background: white;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .ThreadContent {
-    flex-grow: 1;
-    max-width: 100%
+  flex-grow: 1;
+  max-width: 100%;
 }
 
 .Chevron {
-    transition: transform 0.4s;
-    padding: 4px;
-    position: sticky;
-    top: 48px;
+  transition: transform 0.4s;
+  padding: 4px;
+  position: sticky;
+  top: 48px;
 }
 
 .collapsed {
-    transform: scaleY(-1);
+  transform: scaleY(-1);
 }
 
 .expanded {
-    transform: scaleY(1);
+  transform: scaleY(1);
 }

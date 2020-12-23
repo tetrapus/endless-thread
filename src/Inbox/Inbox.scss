@@ -1,26 +1,25 @@
 .EmailViewer {
   min-height: 100vh;
-  background-color: #eeeeee;
   display: grid;
   grid:
-    "header" auto
     "events" auto
+    "header" auto
     "tasks" auto
     "content" 1fr
     / 1fr;
 
   @media only screen and (min-width: 1024px) {
     grid:
+      "events events" auto
       "header tasks" auto
-      "events tasks" auto
       "content tasks" 1fr
       / 800px 1fr;
   }
 
   @media only screen and (min-width: 1280px) {
     grid:
+      "events events events" auto
       "whitespace header tasks" auto
-      "events events tasks" auto
       ". content tasks" 1fr
       / 1fr 800px 1fr;
   }

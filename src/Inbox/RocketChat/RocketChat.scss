@@ -24,6 +24,7 @@
 
 .MessageAuthor {
   margin-top: 8px;
+  color: #888;
 
   @media only screen and (min-width: 1280px) {
     position: absolute;
@@ -41,8 +42,8 @@ p {
   position: sticky;
   top: 26px;
   z-index: 101;
-  background: #eee;
-  box-shadow: 0 0 3px #eee;
+  background: white;
+  border-bottom: 1px solid #e0e0e0;
   padding: 16px 0;
   margin: 0;
   display: flex;
