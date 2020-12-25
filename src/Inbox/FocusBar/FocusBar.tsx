@@ -167,10 +167,12 @@ export class FocusBar extends React.Component<Props, State> {
         </div>
         {topEvent ? (
           <div className="EventDetails">
-            <div
-              className="EventDescription"
-              dangerouslySetInnerHTML={{ __html: topEvent.description }}
-            ></div>
+            {topEvent.description ? (
+              <div
+                className="EventDescription"
+                dangerouslySetInnerHTML={{ __html: topEvent.description }}
+              ></div>
+            ) : null}
             <div className="EventAttendees">
               {(topEvent.attendees || [])
                 .filter((attendee) => !attendee.self)
