@@ -196,15 +196,14 @@ export class Room extends React.Component<Props, State> {
           {Channel(room)}
           <span className="UnreadCount">{messages && messages.length}</span>
           <span className="Participants">
-            {false &&
-              participants.map((username) => (
-                <img
-                  key={username}
-                  title={`@${username}`}
-                  src={`${document.rocketchatServer}/avatar/${username}`}
-                  width="16"
-                ></img>
-              ))}
+            {participants.map((username) => (
+              <img
+                key={username}
+                title={`@${username}`}
+                src={`${document.rocketchatServer}/avatar/${username}?rc_uid=${this.props.rocketchat?.credentials?.userId}&rc_token=${this.props.rocketchat?.credentials?.authToken}&size=16`}
+                width="16"
+              ></img>
+            ))}
           </span>
           <span className="ReadButton">
             <span
