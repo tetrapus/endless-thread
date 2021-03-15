@@ -13,6 +13,7 @@ interface Props {
   rocketchat: RocketChatService;
   pinned: boolean;
   onPin: () => void;
+  onRead: () => void;
 }
 interface State {
   context: ReadonlyArray<any>;
@@ -130,6 +131,7 @@ export class Room extends React.Component<Props, State> {
       });
     } else {
       await this.fetchMessages();
+      this.props.onRead();
     }
     await this.props.updateAll();
   }
@@ -187,7 +189,7 @@ export class Room extends React.Component<Props, State> {
     }
 
     return (
-      <div className="ChatRoom" key={room.rid}>
+      <div className="ChatRoom" key={room.rid} id={room.rid}>
         <h3
           className="RoomTitle"
           data-shortcut="n"

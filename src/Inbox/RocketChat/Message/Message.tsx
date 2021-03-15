@@ -121,6 +121,7 @@ export class Message extends React.Component<Props, State> {
             {(message.attachments || []).map((attachment, idx: number) => (
               <RocketAttachment
                 attachment={attachment}
+                rocketchat={this.props.rocketchat}
                 key={idx}
               ></RocketAttachment>
             ))}

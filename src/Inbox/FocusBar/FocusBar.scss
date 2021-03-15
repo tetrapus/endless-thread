@@ -25,9 +25,8 @@
 }
 
 .Content {
-  max-width: 800px;
-  display: flex;
-  margin-left: auto;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   padding: 4px 8px 2px 8px;
 }
 
@@ -39,23 +38,32 @@
   padding-left: 4px;
 }
 
+.EventInfo {
+  margin-left: auto;
+  display: flex;
+}
+
 .EventTimestamp {
+  margin-left: auto;
   white-space: nowrap;
+  display: flex;
 }
 
 .EventDescription {
   padding: 4px;
+  max-width: 600px;
+  margin: auto;
 }
 
 .EventDetails {
-  max-width: 800px;
-  margin-left: auto;
-  display: flex;
+  display: grid;
   font-size: 14px;
+  grid: auto / 1fr auto 1fr;
 }
 
 .EventAttendees {
   max-height: 200px;
   min-width: 200px;
   overflow: scroll;
+  margin-left: auto;
 }

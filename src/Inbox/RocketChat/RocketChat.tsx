@@ -96,6 +96,16 @@ export class RocketChat extends React.Component<Props, State> {
     }
   }
 
+  scrollToRoom(rid: string) {
+    document
+      .getElementById(rid)
+      ?.scrollIntoView({
+        block: "start",
+        inline: "nearest",
+        behavior: "smooth",
+      });
+  }
+
   render() {
     return (
       <div className="RocketContainer">
@@ -117,7 +127,7 @@ export class RocketChat extends React.Component<Props, State> {
             }
           }}
         ></input>
-        {this.state.unreads.map((room) => (
+        {this.state.unreads.map((room, idx) => (
           <Room
             key={room._id}
             room={room}
@@ -126,6 +136,7 @@ export class RocketChat extends React.Component<Props, State> {
             emoji={this.state.emoji}
             pinned={this.state.pinned.includes(room._id)}
             onPin={() => this.onPinRoom(room._id)}
+            onRead={() => this.scrollToRoom(this.state.unreads[idx + 1]._id)}
           ></Room>
         ))}
       </div>

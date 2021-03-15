@@ -1,19 +1,16 @@
 import * as React from "react";
 import { Spinner } from "../../UI/Spinner";
 import { Base64 } from "js-base64";
-import gmail = gapi.client.gmail;
+import gmail from "gapi.client.gmail";
 import { definitely } from "../../../helpers";
 import { decode } from "urlsafe-base64";
+import sanitizeHtml from "sanitize-html";
+import {
+  Builder,
+  HtmlSanitizer,
+} from "ts-closure-library/lib/html/sanitizer/htmlsanitizer";
 import "./HtmlMessage.scss";
-
-declare const caja: {
-  load: (arg0: Element, arg1: any, arg2: any) => void;
-  policy: {
-    net: {
-      ALL: number;
-    };
-  };
-};
+import { SafeUrl } from "ts-closure-library/lib/html/safeurl";
 
 interface Props {
   data: string;
@@ -28,7 +25,7 @@ class HtmlMessage extends React.Component<Props, State> {
   constructor(props: Readonly<Props>) {
     super(props);
     this.renderTarget = React.createRef();
-    this.state = { loading: true };
+    this.state = { loading: false };
   }
 
   render() {
@@ -44,32 +41,37 @@ class HtmlMessage extends React.Component<Props, State> {
     if (!this.renderTarget.current) {
       return;
     }
-    const data = Base64.encode(
-      this.props.data
-        .replace(/<div><strong>REPOSITORY<.*/, "")
-        .replace(/<div><strong>TASK DETAIL<.*/, "")
-        .replace(/<div><strong>EMAIL PREFERENCES<.*/, "")
-        .replace(/<div><strong>POST DETAIL<.*/, "")
-    );
 
-    const uriPolicy = {
-      rewrite: (uri: { domain_?: string; scheme_?: string; path_: string }) => {
-        if (uri.domain_ === "attachments" && uri.scheme_ == "https") {
-          const part = this.props.attachments[uri.path_.slice(1)];
-          const data = Base64.btoa(
-            decode(definitely(definitely(part.body).data)).toString("binary")
-          );
-          return `data:${part.mimeType};base64,${data}#${uri.path_}`;
-        }
-        return uri;
-      },
-    };
+    const data = this.props.data
+      .replace(/<div><strong>REPOSITORY<.*/, "")
+      .replace(/<div><strong>TASK DETAIL<.*/, "")
+      .replace(/<div><strong>EMAIL PREFERENCES<.*/, "")
+      .replace(/<div><strong>POST DETAIL<.*/, "");
 
-    caja.load(this.renderTarget.current, uriPolicy, (frame: any) => {
-      frame
-        .code(`data:text/html;base64,${data}`, "text/html")
-        .run(() => this.setState({ loading: false }));
+    const sanitizerOptions = new Builder()
+      .withCustomNetworkRequestUrlPolicy(SafeUrl.sanitize)
+      .allowCssStyles();
+    const sanitizer = new HtmlSanitizer(sanitizerOptions);
+    this.renderTarget.current.appendChild(sanitizer.sanitizeToDomNode(data));
+
+    Array.from(
+      this.renderTarget.current.querySelectorAll(
+        "[src^='https://attachments/']"
+      )
+    ).forEach((node) => {
+      const src = node.getAttribute("src");
+      if (!src) {
+        return;
+      }
+      const part = this.props.attachments[src.slice(20)];
+      const data = Base64.btoa(
+        decode(definitely(definitely(part.body).data)).toString("binary")
+      );
+      node.setAttribute("src", `data:${part.mimeType};base64,${data}#${src}`);
     });
+    Array.from(
+      this.renderTarget.current.querySelectorAll("a")
+    ).forEach((node) => node.setAttribute("target", "_blank"));
   }
 }
 

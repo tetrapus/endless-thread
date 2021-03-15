@@ -125,6 +125,7 @@ export class FocusBar extends React.Component<Props, State> {
         })}
       >
         <div className="Content">
+          <div></div> {/* Spacer */}
           <div className="Event">
             {topEvent ? (
               <a
@@ -152,27 +153,29 @@ export class FocusBar extends React.Component<Props, State> {
                   <ReactTimeAgo date={topEvent.start.dateTime}></ReactTimeAgo>
                 </span>
               )}
+
+              <span
+                className="ActionBar"
+                onClick={() => this.skipEvent()}
+                data-shortcut="e"
+                data-trigger="click"
+              >
+                <Icon type="check" size={16}></Icon>
+              </span>
             </div>
-          ) : null}
-          {topEvent ? (
-            <span
-              className="ActionBar"
-              onClick={() => this.skipEvent()}
-              data-shortcut="e"
-              data-trigger="click"
-            >
-              <Icon type="check" size={16}></Icon>
-            </span>
           ) : null}
         </div>
         {topEvent ? (
           <div className="EventDetails">
+            <div></div>
             {topEvent.description ? (
               <div
                 className="EventDescription"
                 dangerouslySetInnerHTML={{ __html: topEvent.description }}
               ></div>
-            ) : null}
+            ) : (
+              <div></div>
+            )}
             <div className="EventAttendees">
               {(topEvent.attendees || [])
                 .filter((attendee) => !attendee.self)

@@ -32,6 +32,19 @@ export class RocketChatService {
     });
   }
 
+  getAssetUrl(url: string) {
+    return new Promise((resolve) => {
+      if (document.rocketchatCorsBypass === undefined) {
+        return;
+      }
+      document.rocketchatCorsBypass({
+        method: "HEAD",
+        url,
+        onload: (response) => resolve(response.finalUrl),
+      });
+    });
+  }
+
   async login() {
     const authResponse = gapi.auth2
       .getAuthInstance()

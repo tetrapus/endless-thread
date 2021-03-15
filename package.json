@@ -9,9 +9,9 @@
   "homepage": "http://tetrapus.github.io/endless-thread/",
   "scripts": {
     "clean": "rm dist/bundle.js",
-    "start": "GOOGLE_CLIENT_ID=404459806580-5a49qah83cbdrtchkhntvite1o56rnmc.apps.googleusercontent.com parcel -p 8080 src/index.html",
-    "build-prod": "GOOGLE_CLIENT_ID=967747671320-0ghlv5jtg7nagi7gm788ve175d0bh6m2.apps.googleusercontent.com parcel build src/index.html --public-url ./",
-    "predeploy": "GOOGLE_CLIENT_ID=967747671320-0ghlv5jtg7nagi7gm788ve175d0bh6m2.apps.googleusercontent.com parcel build src/index.html --public-url ./",
+    "start": "GOOGLE_CLIENT_ID=404459806580-5a49qah83cbdrtchkhntvite1o56rnmc.apps.googleusercontent.com parcel -p 8080 --no-source-maps src/index.html",
+    "build-prod": "GOOGLE_CLIENT_ID=967747671320-0ghlv5jtg7nagi7gm788ve175d0bh6m2.apps.googleusercontent.com parcel build src/index.html --no-source-maps --public-url ./",
+    "predeploy": "GOOGLE_CLIENT_ID=967747671320-0ghlv5jtg7nagi7gm788ve175d0bh6m2.apps.googleusercontent.com parcel build src/index.html --no-source-maps --public-url ./",
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
@@ -28,6 +28,7 @@
     "@types/node": "12.12.6",
     "@types/react-redux": "^7.1.5",
     "@types/react-timeago": "^4.1.1",
+    "@types/sanitize-html": "^1.27.0",
     "@types/timeago": "^1.6.0",
     "@types/urlsafe-base64": "^1.0.28",
     "base-64": "^0.1.0",
@@ -41,6 +42,8 @@
     "react-markdown": "^4.3.1",
     "react-timeago": "^4.4.0",
     "react-visibility-sensor": "^5.1.1",
+    "sanitize-html": "^2.3.0",
+    "ts-closure-library": "^2019.11.1-1.20",
     "ts-optchain": "^0.1.8",
     "urlsafe-base64": "^1.0.0"
   },

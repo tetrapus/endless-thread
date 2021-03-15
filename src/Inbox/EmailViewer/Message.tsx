@@ -7,10 +7,10 @@ import { HtmlMessage } from "./MessageTypes/HtmlMessage";
 import { TextMessage } from "./MessageTypes/TextMessage";
 import { oc } from "ts-optchain";
 import { encode, decode } from "urlsafe-base64";
-
-import gmail = gapi.client.gmail;
 import { definitely, isDefined, getValueByName } from "../../helpers";
 import ReactTimeAgo from "react-timeago";
+
+import gmail from "gapi.client.gmail";
 
 interface Props {
   message: gmail.Message;
