@@ -1,5 +1,5 @@
 
-.NotFirst .gmail_quote:not(blockquote):not(:hover), .NotFirst .gmail_signature:not(:hover) {
+.NotFirst blockquote:not(:hover) {
     height: 2rem;
     filter: opacity(0.5);
     overflow: hidden;

@@ -97,13 +97,11 @@ export class RocketChat extends React.Component<Props, State> {
   }
 
   scrollToRoom(rid: string) {
-    document
-      .getElementById(rid)
-      ?.scrollIntoView({
-        block: "start",
-        inline: "nearest",
-        behavior: "smooth",
-      });
+    document.getElementById(rid)?.scrollIntoView({
+      block: "start",
+      inline: "nearest",
+      behavior: "smooth",
+    });
   }
 
   render() {

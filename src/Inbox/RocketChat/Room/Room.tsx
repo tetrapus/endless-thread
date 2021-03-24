@@ -209,6 +209,14 @@ export class Room extends React.Component<Props, State> {
           </span>
           <span className="ReadButton">
             <span
+              onClick={() => this.onLoadMore()}
+              style={{ paddingTop: 4 }}
+              data-shortcut="m"
+              data-trigger="click"
+            >
+              ?
+            </span>
+            <span
               onClick={() => this.props.onPin()}
               style={{ paddingTop: 4 }}
               data-shortcut="p"
@@ -271,6 +279,27 @@ export class Room extends React.Component<Props, State> {
       </div>
     );
   }
+
+  onLoadMore(): void {
+    this.props.rocketchat
+      .call(
+        "GET",
+        `channels.history?roomId=${this.props.room.rid}&count=${(this.state
+          .messages as any[]).length + 10}`
+      )
+      .then((response: any) => {
+        console.log(response);
+        this.setState({
+          messages: [
+            ...response.messages
+              .slice((this.state.messages as any[]).length)
+              .map((msg) => ({ ...msg, isContext: true })),
+            ...this.state.messages,
+          ],
+        });
+      });
+  }
+
   async onExpandMessage(message: any) {
     const response = await this.props.rocketchat.call(
       "GET",

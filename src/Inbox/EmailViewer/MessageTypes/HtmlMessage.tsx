@@ -30,7 +30,7 @@ class HtmlMessage extends React.Component<Props, State> {
 
   render() {
     return (
-      <div>
+      <div style={{ overflow: "scroll" }}>
         {this.state.loading && <Spinner></Spinner>}
         <div ref={this.renderTarget}></div>
       </div>
