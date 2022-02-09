@@ -97,10 +97,15 @@ export class Room extends React.Component<Props, State> {
   async fetchMessages() {
     const unreadRoom = this.props.room;
     const type = { p: "groups", c: "channels", d: "im" }[unreadRoom.t];
-    const response = await this.props.rocketchat.call(
+    const response: any = await this.props.rocketchat.call(
       "GET",
-      `${type}.history?roomId=${unreadRoom.rid}&oldest=${unreadRoom.ls}&count=1000`
+      `${type}.history?roomId=${unreadRoom.rid}&count=1000`
     );
+    if (response.messages) {
+      response.messages = response.messages.filter(
+        (message: any) => message.ts >= unreadRoom.ls
+      );
+    }
     this.setState({
       messages: response.messages ? response.messages.reverse() : [],
     });
@@ -114,16 +119,19 @@ export class Room extends React.Component<Props, State> {
     const unreadRoom = this.props.room;
     const messages = this.state.messages;
     const type = { p: "groups", c: "channels", d: "im" }[unreadRoom.t];
-    let unreadMessages;
+    let unreadMessages: any;
     if (messages?.length) {
       const timestamps = messages.map((msg) => msg._updatedAt);
       timestamps.sort((a, b) => a.localeCompare(b));
       unreadMessages = await this.props.rocketchat.call(
         "GET",
-        `${type}.history?roomId=${unreadRoom.rid}&oldest=${
-          timestamps[timestamps.length - 1]
-        }&count=1000`
+        `${type}.history?roomId=${unreadRoom.rid}&count=1000`
       );
+      if (unreadMessages.messages) {
+        unreadMessages.messages = unreadMessages.messages.filter(
+          (message: any) => message.ts >= timestamps[timestamps.length - 1]
+        );
+      }
     }
     if (unreadMessages === undefined || !unreadMessages.messages.length) {
       await this.props.rocketchat.call("POST", "subscriptions.read", {

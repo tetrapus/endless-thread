@@ -89,7 +89,7 @@ export class TaskEntry extends React.Component<Props, State> {
     const { task } = this.props;
     return (
       <div className="Task">
-        <div className="Task-titleRow">
+        <div className={`Task-titleRow ${task.parent ? "Task-child" : ""}`}>
           <TaskButton
             icon="check"
             shortcut="d"

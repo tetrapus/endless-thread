@@ -53,7 +53,19 @@ export class Tasklist extends React.Component<Props, State> {
 
   render() {
     const tasks = [...this.state.tasks];
-    tasks.sort((a, b) => a.position.localeCompare(b.position));
+    tasks.sort((a, b) => {
+      const apos = a.parent
+        ? `${tasks.find((task) => task.id === a.parent)?.position} ${
+            a.position
+          }`
+        : a.position;
+      const bpos = b.parent
+        ? `${tasks.find((task) => task.id === b.parent)?.position} ${
+            b.position
+          }`
+        : b.position;
+      return apos.localeCompare(bpos);
+    });
     return (
       <div className="TasklistContainer">
         <div className="Tasklist">

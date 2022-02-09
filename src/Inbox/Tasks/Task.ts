@@ -9,4 +9,5 @@ export interface Task {
   title: string;
   notes?: string;
   position: string;
+  parent?: string;
 }

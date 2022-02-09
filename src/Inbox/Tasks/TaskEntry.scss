@@ -22,6 +22,10 @@
     align-items: center;
   }
 
+  &-child {
+    margin-left: 32px;
+  }
+
   &Title {
     flex-grow: 1;
     padding-left: 8px;
